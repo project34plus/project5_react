@@ -10,6 +10,12 @@ export const color = {
   gray: '#C9D7DD',
   midgray: '#758694',
   darkgray: '##31363F',
+  black: '#000',
+  white: '#fff',
 };
 
-export const buttonColor = {};
+export const buttonColor = {
+  navy: [color.navy, '#fff', color.navy],
+  midNavy: [color.midNavy, '#fff', color.midNavy],
+  lightNavy: [color.lightNavy, '#fff', color.lightNavy],
+};
