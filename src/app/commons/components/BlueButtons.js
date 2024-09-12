@@ -2,38 +2,35 @@
 import styled, { css } from 'styled-components';
 import fontSize from '@/app/styles/fontSize';
 import { color } from '@/app/styles/color';
+import fontWeight from '@/app/styles/fontWeight';
 
 const commonStyle = css`
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
   margin: 10px;
 
   &:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   }
 
   &:active {
-    background-color: ${color.navy};
     transform: translateY(2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 `;
 
-const { extraSmall, small, normal } = fontSize;
+const { extraSmall, small, normal, center } = fontSize;
 
-const {
-  midNavy,
-  white,
-} = color;
+const { midNavy, white } = color;
 
 export const ExtraSmallButton = styled.button`
   font-size: ${extraSmall};
   height: 30px;
   ${commonStyle}
   ${({ backgroundColor }) => css`
-    background-color: ${backgroundColor || midNavy};
+    background: ${backgroundColor || 'linear-gradient(to bottom, #7892c2 3%, #035397 100%)'};
   `}
   ${({ color }) => css`
     color: ${color || white};
@@ -48,7 +45,7 @@ export const SmallButton = styled.button`
   height: 40px;
   ${commonStyle}
   ${({ backgroundColor }) => css`
-    background-color: ${backgroundColor || midNavy};
+    background: ${backgroundColor || 'linear-gradient(to bottom, #7892c2 3%, #035397 100%)'};
   `}
   ${({ color }) => css`
     color: ${color || white};
@@ -63,7 +60,7 @@ export const MidButton = styled.button`
   height: 50px;
   ${commonStyle}
   ${({ backgroundColor }) => css`
-    background-color: ${backgroundColor || midNavy};
+    background: ${backgroundColor || 'linear-gradient(to bottom, #7892c2 3%, #035397 100%)'};
   `}
   ${({ color }) => css`
     color: ${color || white};
@@ -74,11 +71,11 @@ export const MidButton = styled.button`
 `;
 
 export const BigButton = styled.button`
-  font-size: ${normal};
-  height: 60px;
+  font-size: ${center};
+  height: 65px;
   ${commonStyle}
   ${({ backgroundColor }) => css`
-    background-color: ${backgroundColor || midNavy};
+     background: ${backgroundColor || 'linear-gradient(to bottom, #7892c2 3%, #035397 100%)'};
   `}
   ${({ color }) => css`
     color: ${color || white};
@@ -88,18 +85,18 @@ export const BigButton = styled.button`
   `}
 `;
 
-export const WideButton = styled.button`
-  font-size: ${normal};
-  height: 55px;
+export const GoodButton = styled.button`
+  font-size: ${center};
+  height: 75px;
   ${commonStyle}
   ${({ backgroundColor }) => css`
-    background-color: ${backgroundColor || midNavy};
+    background: ${backgroundColor || 'linear-gradient(to bottom, #7892c2 3%, #035397 100%)'};
   `}
   ${({ color }) => css`
     color: ${color || white};
   `}
   ${({ width }) => css`
-    width: ${width || '600px'};
+    width: ${width || '200px'};
   `}
 `;
 
@@ -109,7 +106,7 @@ export const SmallRoundButton = styled.button`
   height: 55px;
   ${commonStyle}
   ${({ backgroundColor }) => css`
-    background-color: ${backgroundColor || midNavy};
+    background: ${backgroundColor || 'linear-gradient(to bottom, #7892c2 3%, #035397 100%)'};
   `}
   ${({ color }) => css`
     color: ${color || white};
@@ -122,10 +119,10 @@ export const SmallRoundButton = styled.button`
 export const BigRoundButton = styled.button`
   border-radius: 40px !important;
   font-size: ${normal};
-  height: 60px;
+  height: 70px;
   ${commonStyle}
   ${({ backgroundColor }) => css`
-    background-color: ${backgroundColor || midNavy};
+    background: ${backgroundColor || 'linear-gradient(to bottom, #7892c2 3%, #035397 100%)'};
   `}
   ${({ color }) => css`
     color: ${color || white};

@@ -1,5 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
+import {
+  ExtraSmallButton,
+  BigButton,
+  SmallButton,
+  MidButton,
+  GoodButton,
+  SmallRoundButton,
+  BigRoundButton,
+} from './commons/components/BlueButtons';
 
 const Home = () => {
   return (
