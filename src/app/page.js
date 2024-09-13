@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
+import { ContentBox } from './commons/components/ContentBox';
 
 const Home = () => {
   return (
     <>
-      <h1>메인페이지</h1>
+      <ContentBox />
     </>
   );
 };

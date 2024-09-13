@@ -1,17 +1,18 @@
-import Header from "./commons/components/Header";
+import Header from './commons/components/Header';
+import Footer from './commons/components/Footer';
 
 export const metadata = {
-  title: "NonNull",
-  description: "",
+  title: '@NonNull',
+  description: '논문을 널위해 준비했어..',
 };
 
 export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-      <Header />
+        <Header />
         <main>{children}</main>
-        <h1>하단</h1>
+        <Footer />
       </body>
     </html>
   );

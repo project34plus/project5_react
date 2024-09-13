@@ -21,13 +21,13 @@ const HeaderBox = styled.header`
 
   .site-top {
     background: ${navy};
-    height: 45px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     .layout-width {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
