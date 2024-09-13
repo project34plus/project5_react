@@ -1,13 +1,15 @@
+import Header from "./commons/components/Header";
+
 export const metadata = {
-  title: "제목",
-  description: "설명",
+  title: "NonNull",
+  description: "",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html>
       <body>
-        <h1>상단</h1>
+      <Header />
         <main>{children}</main>
         <h1>하단</h1>
       </body>
