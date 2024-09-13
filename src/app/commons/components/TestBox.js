@@ -1,3 +1,4 @@
+/* 테스트용 입니다. */
 'use client';
 import React from 'react';
 import styled from 'styled-components';
@@ -22,7 +23,7 @@ const {
   gray,
 } = color;
 
-export const TextBox = styled.input`
+export const TestBox = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -31,10 +32,10 @@ export const TextBox = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${thin};
-  backGround: ${navy};
+  background: ${navy};
 `;
 
-export const TextBox0 = styled.input`
+export const TestBox0 = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -43,10 +44,10 @@ export const TextBox0 = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${thin};
-  backGround: ${midNavy};
+  background: ${midNavy};
 `;
 
-export const TextBox1 = styled.input`
+export const TestBox1 = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -55,10 +56,10 @@ export const TextBox1 = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${thin};
-  backGround: ${lightNavy};
+  background: ${lightNavy};
 `;
 
-export const TextBox2 = styled.input`
+export const TestBox2 = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -67,10 +68,10 @@ export const TextBox2 = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${extralight};
-  backGround: ${grayNavy};
+  background: ${grayNavy};
 `;
 
-export const TextBox3 = styled.input`
+export const TestBox3 = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -79,10 +80,10 @@ export const TextBox3 = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${light};
-  backGround: ${lightGrayNavy};
+  background: ${lightGrayNavy};
 `;
 
-export const TextBox4 = styled.input`
+export const TestBox4 = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -91,10 +92,10 @@ export const TextBox4 = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${regular};
-  backGround: ${whiteGrayNavy};
+  background: ${whiteGrayNavy};
 `;
 
-export const TextBox5 = styled.input`
+export const TestBox5 = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -103,10 +104,10 @@ export const TextBox5 = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${medium};
-  backGround: ${yellow};
+  background: ${yellow};
 `;
 
-export const TextBox6 = styled.input`
+export const TestBox6 = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -115,10 +116,10 @@ export const TextBox6 = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${semiBold};
-  backGround: ${lemon};
+  background: ${lemon};
 `;
 
-export const TextBox7 = styled.input`
+export const TestBox7 = styled.input`
   border: 1px solid black;
   height: 50px;
   width: 500px;
@@ -127,5 +128,5 @@ export const TextBox7 = styled.input`
   margin: 15px;
   font-size: ${medium};
   font-weight: ${extraBold};
-  backGround: ${gray};
+  background: ${gray};
 `;

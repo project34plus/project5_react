@@ -1,23 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { color } from '../../styles/color';
-import fontSize from '../../styles/fontSize';
-
-const { normedium } = fontSize;
-const { dark, danger } = color;
 
 const Box = styled.div`
   text-align: left;
   padding: 10px;
-  font-size: ${normedium};
   border-radius: 3px;
-  color: ${dark};
 
-  ${({ color: c }) =>
-    c &&
-    css`
-      color: ${danger};
-    `}
+  ${({ color: c }) => c && css``}
 `;
 
 const MessageBox = ({ messages, color, children, index = 0 }) => {
@@ -30,11 +19,7 @@ const MessageBox = ({ messages, color, children, index = 0 }) => {
   // 인덱스를 통해 특정 메시지만 사용
   const message = messages[index];
 
-  return message ? (
-    <Box color={color}>
-      {message}
-    </Box>
-  ) : null;
+  return message ? <Box color={color}>{message}</Box> : null;
 };
 
 export default React.memo(MessageBox);
