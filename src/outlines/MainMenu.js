@@ -1,8 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 import fontWeight from '@/theme/fontWeight';
+import { getCommonStates } from '@/commons/contexts/CommonContext';
+import styled, { css } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const { navy, white, gray } = color;
 
@@ -55,29 +57,34 @@ const MenuLink = styled.a`
 `;
 
 const MainMenu = () => {
+  const { showMainMenu } = getCommonStates();
+  const { t } = useTranslation();
+
   return (
+    showMainMenu && (
     <MenuContainer>
       <MenuList>
         <MenuItem>
-          <MenuLink href="#">논문/학술자료</MenuLink>
+          <MenuLink href="#">{t('논문학술자료')}</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink href="#">논문 등록</MenuLink>
+          <MenuLink href="#">{t('논문_등록')}</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink href="#">최신 연구 트렌드</MenuLink>
+          <MenuLink href="#">{t('최신_연구_트렌드')}</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink href="#">알고리즘</MenuLink>
+          <MenuLink href="#">{t('알고리즘')}</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink href="#">연구노트</MenuLink>
+          <MenuLink href="#">{t('연구노트')}</MenuLink>
         </MenuItem>
         <MenuItem>
-          <MenuLink href="#">이용안내</MenuLink>
+          <MenuLink href="#">{t('이용안내')}</MenuLink>
         </MenuItem>
       </MenuList>
     </MenuContainer>
+    )
   );
 };
 

@@ -1,7 +1,3 @@
-export const metadata = {
-  title: '마이페이지',
-};
-
 const MyPage = () => {
   return (
     <>
@@ -14,7 +10,7 @@ const MyPage = () => {
       <br />
       <a href="/mypage/MyWishList">내가 찜한 논문</a>
       <br />
-    </>
+      </>
   );
 };
 

@@ -2,7 +2,8 @@ import React, { useCallback, useContext } from 'react';
 import styled from 'styled-components';
 import cookies from 'react-cookies';
 import { useTranslation } from 'react-i18next';
-import UserInfoContext from '@/commons/contexts/UserInfoContext';
+import { getCommonStates } from '../commons/contexts/CommonContext';
+import { getUserContext } from '@/commons/contexts/UserInfoContext';
 import { color } from '@/theme/color';
 
 const { navy, white, gray } = color;
@@ -48,11 +49,11 @@ const HeaderBox = styled.header`
 
 const Header = () => {
   const { t } = useTranslation();
+  const { showHeader } = getCommonStates();
   const {
     states: { isLogin, userInfo, isAdmin },
     actions: { setIsLogin, setIsAdmin, setUserInfo },
-  } = useContext(UserInfoContext);
-
+  } = getUserContext();
   const onLogout = useCallback(() => {
     setIsLogin(false);
     setIsAdmin(false);
@@ -61,24 +62,26 @@ const Header = () => {
   }, [setIsLogin, setIsAdmin, setUserInfo]);
 
   return (
+    showHeader && (
     <HeaderBox>
       <section className="site-top">
         <div className="layout-width">
           {isLogin ? (
             <div>
-              <a href="/mypage">마이페이지</a>
-              <a onClick={onLogout}>로그아웃</a>
-              <a href="/admin">관리자 페이지</a>
+              <a href="/mypage">{t('마이페이지')}</a>
+              <a onClick={onLogout}>{t('로그아웃')}</a>
+              <a href="/admin">{t('사이트_관리')}</a>
             </div>
           ) : (
             <div>
-              <a href="/join">회원가입</a>
-              <a href="/login">로그인</a>
+              <a href="/join">{t('회원가입')}</a>
+              <a href="/login">{t('로그인')}</a>
             </div>
           )}
         </div>
       </section>
     </HeaderBox>
+    )
   );
 };
 
