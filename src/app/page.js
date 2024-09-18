@@ -1,11 +1,12 @@
+"use client";
 import React from 'react';
 import Link from 'next/link';
-import { ContentBox } from './commons/components/ContentBox';
+import Banner from '@/commons/components/Banner';
 
 const Home = () => {
   return (
     <>
-      <ContentBox />
+    <Banner />
     </>
   );
 };
