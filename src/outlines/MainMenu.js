@@ -15,8 +15,7 @@ const {bold} = fontWeight;
 const MenuContainer = styled.nav`
   background-color: ${white};
   border-bottom: 2px solid ${navy}; 
-  position: fixed;
-  top: 50px;
+  position: relative;
   left: 0;
   width: 100%;
   z-index: 1000;

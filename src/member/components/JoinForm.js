@@ -9,13 +9,16 @@ import { StyledButton } from '@/commons/components/buttons/StyledButton';
 import StyledMessage from '@/commons/components/StyledMessage';
 import userType from '../constants/userType';
 import userStatus from '../constants/userStatus';
+import Container from '@/commons/components/Container';
 
-const FormBox = styled.form``;
+const FormBox = styled.form`
+`;
 
 const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
   const { t } = useTranslation();
 
   return (
+    <Container>
     <FormBox onSubmit={onSubmit} autoComplete="off">
       <dl>
         <dt>{t('가입유형')}</dt>
@@ -330,6 +333,7 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
       </StyledButton>
       <StyledMessage variant="danger">{errors?.global}</StyledMessage>
     </FormBox>
+    </Container>
   );
 };
 

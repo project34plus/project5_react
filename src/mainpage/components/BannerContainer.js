@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import SearchBox from './SearchBox';
+import MainTitle from './MainTitle';
 
 const Container = styled.div`
   width: 100%;
@@ -9,8 +10,8 @@ const Container = styled.div`
 `;
 
 const BannerContainer = styled.section`
-  width: 80%;
-  height: 700px;
+  width: 90%;
+  height: 500px;
   margin-left: auto; 
   border-bottom-left-radius: 100px; 
   overflow: hidden;
@@ -19,7 +20,6 @@ const BannerContainer = styled.section`
     width: 100%;
     height: 700px;
     display: block;
-    opacity: 0.7; 
     object-fit: cover;
   }
 `;
@@ -28,7 +28,14 @@ const SearchBoxContainer = styled.div`
   position: absolute; 
   top: 50%; 
   left: 50%;
-   transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+`;
+
+const TitleContainer = styled.div`
+  position: absolute;
+  top: 3%;
+  left: 18%;
+  text-align: left;
 `;
 
 const Banner = () => {
@@ -36,6 +43,9 @@ const Banner = () => {
     <Container>
       <BannerContainer>
         <img src="/images/MainImg.jpg" alt="메인 이미지" />
+        <TitleContainer>
+          <MainTitle  />
+        </TitleContainer>
       </BannerContainer>
       <SearchBoxContainer>
         <SearchBox />
@@ -44,4 +54,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default React.memo(Banner);

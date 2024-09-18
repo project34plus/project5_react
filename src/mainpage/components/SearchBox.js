@@ -5,9 +5,8 @@ const SearchBoxContainer = styled.div`
   display: flex;
   align-items: center;
   border-radius: 5px;
-  padding: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  width: 700px;
+  width: 800px;
 `;
 
 const SearchInput = styled.input`
@@ -56,4 +55,4 @@ const SearchBox = () => {
   );
 };
 
-export default SearchBox;
+export default React.memo(SearchBox);

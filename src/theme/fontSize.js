@@ -6,7 +6,7 @@ center: '1.5rem',
 medium: '1.8rem',
 big: '2.5rem',
 extraBig: '3rem',
-giantBig: '3.5rem',
+giantBig: '4.5rem',
 };
 
 export default fontSize;

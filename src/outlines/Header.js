@@ -9,7 +9,7 @@ import { color } from '@/theme/color';
 const { navy, white, gray } = color;
 
 const HeaderBox = styled.header`
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0; 
   width: 100%;
@@ -74,8 +74,8 @@ const Header = () => {
             </div>
           ) : (
             <div>
-              <a href="/join">{t('회원가입')}</a>
-              <a href="/login">{t('로그인')}</a>
+              <a href="member/join">{t('회원가입')}</a>
+              <a href="member/login">{t('로그인')}</a>
             </div>
           )}
         </div>
