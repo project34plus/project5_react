@@ -64,7 +64,7 @@ const MainMenu = () => {
     <MenuContainer>
       <MenuList>
         <MenuItem>
-          <MenuLink href="#">{t('논문학술자료')}</MenuLink>
+          <MenuLink href="/thesis/list">{t('논문학술자료')}</MenuLink>
         </MenuItem>
         <MenuItem>
           <MenuLink href="#">{t('논문_등록')}</MenuLink>
