@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { apiGet } from '../apis/apiInfo.js';
-import Loading from '@/commons/components/Loading';
+import Loading from '@/commons/components/Loading.js';
 import ItemDescription from '../components/ItemDescription';
 
 const ThesisViewContainer = ({ setPageTitle }) => {

@@ -1,11 +1,11 @@
 'use client';
 import React, { useEffect, useState, useCallback } from 'react';
-import { useSearchParams } from 'next/navigation';
+// import { useSearchParams } from 'next/navigation';
 import { apiList } from '../apis/apiInfo.js';
 import Pagination from '@/commons/components/Pagination';
 import ItemsBox from '../components/ItemsBox';
 import SearchBox from '../components/SearchBox';
-import Loading from '@/commons/components/Loading';
+import Loading from '@/commons/components/Loading.js';
 
 function getQueryString(searchParams) {
   const qs = {};
@@ -18,7 +18,7 @@ function getQueryString(searchParams) {
   return qs;
 }
 
-const ThesisListContainer = ({searchParams}) => {
+const ThesisListContainer = ({ searchParams }) => {
   // const [searchParams] = useSearchParams();
   const [form, setForm] = useState(() => getQueryString(searchParams));
   const [search, setSearch] = useState(() => getQueryString(searchParams));
@@ -33,6 +33,7 @@ const ThesisListContainer = ({searchParams}) => {
       setPagination(res.pagination);
       setLoading(false);
     });
+    console.log(search);
   }, [search]);
 
   /* 검색 관련 함수 */
