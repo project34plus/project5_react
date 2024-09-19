@@ -1,9 +1,14 @@
 'use client';
-import React from "react";
-import TrendSub from "../components/TrendSub";
+import React from 'react';
+import TrendSub from '../components/TrendSub';
+import Container from '@/commons/components/Container';
 
 const TrendMain = () => {
-    return <TrendSub />
-  };
-  
-  export default React.memo(TrendMain);
+  return (
+    <Container>
+      <TrendSub />
+    </Container>
+  );
+};
+
+export default React.memo(TrendMain);

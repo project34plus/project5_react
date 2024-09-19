@@ -1,7 +1,27 @@
-import React from "react";
+import React from 'react';
 
-const RecentTrend = () => {
-    return <h1>최신인기논문</h1>
-}
+const RecentList = ({ item, className }) => {
+  const { title, poster, tid } = item;
+  const url = `/thesis/info/${tid}`;
+  return (
+    <li className={className}>
+      <div className="title">{title}</div>
+      <div className="poster">{poster}</div>
+    </li>
+  );
+};
 
-export default RecentTrend;
+const RecentTrend = ({ items }) => {
+  console.log('recentTrend items', items);
+  return (
+    items.length &&
+      <ul>
+        {items.map((item) => (
+          <RecentList key={item.tid} item={item} />
+        ))}
+      </ul>
+    
+  );
+};
+
+export default React.memo(RecentTrend);
