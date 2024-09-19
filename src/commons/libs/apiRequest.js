@@ -6,12 +6,6 @@ export default function apiRequest(url, method = 'GET', data, headers) {
    * url - http://jsonplaceholder.. https://
    */
   if (!/^http[s]?/i.test(url)) {
-    // 외부 URL이 아닌 경우 - http://localhost:4000/api/v1/account
-    // if (url.indexOf('/email') !== 0) {
-    //   url = process.env.REACT_APP_API_URL + url;
-    // } else {
-    //   url = process.env.REACT_APP_EMAIL_URL + url.replace('/email', '');
-    // }
     url = `/api${url}`;
   }
 
@@ -29,14 +23,15 @@ export default function apiRequest(url, method = 'GET', data, headers) {
   if (['POST', 'PUT', 'PATCH'].includes(method.toUpperCase()) && data) {
     options.data = data;
   }
-
-  const token = cookies.load('token'); //토큰이 있으면 토큰도 담아서 보냄
+  const token = cookies.load('token');
   if (token && token.trim()) {
     headers = headers ?? {};
     headers.Authorization = `Bearer ${token}`;
   }
 
-  if (headers) options.headers = headers;
-
-  return axios(options);
+  try {
+    return axios(options);
+  } catch (err) {
+    console.log('err', err);
+  }
 }
