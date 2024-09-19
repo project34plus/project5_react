@@ -2,28 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'next/navigation';
 
- const Wrapper = styled.div``;
+const Wrapper = styled.div``;
 
 const ItemDescription = ({ item }) => {
-    const {
-        title,
-        poster,
-        contributor,
-        thAbstract,
-        toc,
-        reference,
-        publisher,
-        keywords,
+  const {
+    title,
+    poster,
+    // contributor,
+    // thAbstract,
+    // toc,
+    // reference,
+    // publisher,
+    // keywords,
+  } = item;
 
-    } = item;
-return (
+  return (
     <Wrapper>
-        <dl>
-            <dt>논문명</dt>
-            <dd>{title}</dd>
-        </dl>
+      <dl>
+        <dt>논문명</dt>
+        <dd>{title}</dd>
+      </dl>
+      <dl>
+        <dt>작성자</dt>
+        <dd>{poster}</dd>
+      </dl>
     </Wrapper>
-    );
+  );
 };
 
 export default ItemDescription;

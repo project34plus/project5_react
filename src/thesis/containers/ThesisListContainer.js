@@ -5,7 +5,7 @@ import React, {
   useState,
   useCallback,
 } from 'react';
-// import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { apiList } from '../apis/apiInfo.js';
 import Pagination from '@/commons/components/Pagination';
 import ItemsBox from '../components/ItemsBox';
@@ -13,11 +13,11 @@ import SearchBox from '../components/SearchBox';
 import Loading from '@/commons/components/Loading.js';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
+import Container from '@/commons/components/Container.js';
 
 function getQueryString(searchParams) {
   const qs = {};
-  if (searchParams && searchParams.size > 0) {
-    //searchParams가 존재하는지, 실제 쿼리 파라미터가 있는지 체크
+  if (searchParams.size > 0) {
     for (const [k, v] of searchParams) {
       qs[k] = v;
     }
@@ -25,8 +25,9 @@ function getQueryString(searchParams) {
   return qs;
 }
 
-const ThesisListContainer = ({ searchParams }) => {
+const ThesisListContainer = () => {
   const { t } = useTranslation();
+  const searchParams = useSearchParams();
   const [form, setForm] = useState(() => getQueryString(searchParams));
   const [search, setSearch] = useState(() => getQueryString(searchParams));
   const [items, setItems] = useState([]);
@@ -41,11 +42,11 @@ const ThesisListContainer = ({ searchParams }) => {
   useEffect(() => {
     setLoading(true);
     apiList(search).then((res) => {
-      setItems(res.items);
-      setPagination(res.pagination);
+      console.log('res', res);
+      setItems(res.items || []);
+      setPagination(res.pagination || {});
       setLoading(false);
     });
-    console.log(search);
   }, [search]);
 
   /* 검색 관련 함수 */
@@ -61,6 +62,7 @@ const ThesisListContainer = ({ searchParams }) => {
     [form],
   );
 
+  //선택한 옵션으로 변경
   const selectChange = useCallback(
     (selectedOption) => {
       setForm(
@@ -84,7 +86,7 @@ const ThesisListContainer = ({ searchParams }) => {
   }
 
   return (
-    <>
+    <Container>
       <SearchBox
         form={form}
         onChange={onChangeSearch}
@@ -95,7 +97,7 @@ const ThesisListContainer = ({ searchParams }) => {
       {items.length > 0 && (
         <Pagination onClick={onChangePage} pagination={pagination} />
       )}
-    </>
+    </Container>
   );
 };
 

@@ -3,15 +3,15 @@ import styled from 'styled-components';
 import { ImSearch } from 'react-icons/im';
 import Select from 'react-select';
 
-const options = [].map((item) => ({
-  value: item.title,
-  label: '논문명',
-}));
+const options = [].map((item) => (
+  {value: item.title, label: '논문명'},
+  {value: item.poster, label: '저자명'}
+));
 
-const SearchBox = ({ form, onChange, onSubmit, selectChange, options }) => {
+const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
-      <div className="input_part">
+      <div className="inputBox">
         {/* <select name="sopt" onChange={onChange} defaultValue={form.sopt}>
             <option value="ALL">통합검색</option>
             <option value="TITLE">논문명</option>
