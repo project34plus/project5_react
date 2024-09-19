@@ -1,16 +1,15 @@
 'use client';
 import React, { useLayoutEffect, useState, useCallback } from 'react';
 import cookies from 'react-cookies';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import LoginForm from '../components/LoginForm';
 import { StyledWrapper } from '@/commons/components/layouts/StyledWrapper';
 import { apiLogin } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
-const LoginContainer = () => {
+const LoginContainer = ({searchParams}) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { t } = useTranslation();
   const { setMainTitle } = getCommonActions();
   useLayoutEffect(() => {
@@ -23,9 +22,6 @@ const LoginContainer = () => {
   const {
     setIsLogin,
     setIsAdmin,
-    setIsStudent,
-    setIsCounselor,
-    setIsProfessor,
     setUserInfo,
   } = getUserActions();
 
@@ -71,9 +67,6 @@ const LoginContainer = () => {
               setUserInfo(user);
 
               setIsAdmin(user.userType === 'ADMIN'); // 관리자 여부
-              setIsStudent(user.userType === 'STUDENT');
-              setIsCounselor(user.userType === 'COUNSELOR');
-              setIsProfessor(user.userType === 'PROFESSOR');
 
               /**
                * 후속 처리 : 회원 전용 서비스 URL로 이동
@@ -99,10 +92,7 @@ const LoginContainer = () => {
       router,
       searchParams,
       setIsAdmin,
-      setIsCounselor,
       setIsLogin,
-      setIsProfessor,
-      setIsStudent,
       setUserInfo,
       t,
     ],
