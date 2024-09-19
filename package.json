@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "set PORT=6000 & next dev",
+    "dev": "set PORT=6006 && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -11,16 +11,21 @@
   "dependencies": {
     "axios": "^1.7.7",
     "i18next": "^23.15.1",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-http-backend": "^2.6.1",
     "next": "14.2.9",
+    "next-i18next": "^15.3.1",
     "react": "^18",
     "react-cookies": "^0.1.1",
     "react-dom": "^18",
-    "react-i18next": "^15.0.1",
+    "react-i18next": "^15.0.2",
     "react-icons": "^5.3.0",
-    "styled-components": "^6.1.13"
+    "styled-components": "^6.1.13",
+    "tailwindcss": "^3.4.11"
   },
   "devDependencies": {
     "eslint": "^8",
-    "eslint-config-next": "14.2.9"
+    "eslint-config-next": "14.2.9",
+    "tailwindcss": "^3.4.1"
   }
 }
