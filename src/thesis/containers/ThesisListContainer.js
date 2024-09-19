@@ -1,11 +1,18 @@
 'use client';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {
+  useLayoutEffect, //렌더링 되기 전 실행됨
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 // import { useSearchParams } from 'next/navigation';
 import { apiList } from '../apis/apiInfo.js';
 import Pagination from '@/commons/components/Pagination';
 import ItemsBox from '../components/ItemsBox';
 import SearchBox from '../components/SearchBox';
 import Loading from '@/commons/components/Loading.js';
+import { useTranslation } from 'react-i18next';
+import { getCommonActions } from '@/commons/contexts/CommonContext';
 
 function getQueryString(searchParams) {
   const qs = {};
@@ -19,12 +26,17 @@ function getQueryString(searchParams) {
 }
 
 const ThesisListContainer = ({ searchParams }) => {
-  // const [searchParams] = useSearchParams();
+  const { t } = useTranslation();
   const [form, setForm] = useState(() => getQueryString(searchParams));
   const [search, setSearch] = useState(() => getQueryString(searchParams));
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({});
   const [loading, setLoading] = useState(false);
+  const { setMainTitle } = getCommonActions();
+
+  useLayoutEffect(() => {
+    setMainTitle(t('논문학술자료'));
+  }, [setMainTitle, t]);
 
   useEffect(() => {
     setLoading(true);
@@ -87,4 +99,4 @@ const ThesisListContainer = ({ searchParams }) => {
   );
 };
 
-export default ThesisListContainer;
+export default React.memo(ThesisListContainer);

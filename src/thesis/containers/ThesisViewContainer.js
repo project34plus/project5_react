@@ -1,15 +1,27 @@
 'use client';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {
+  useLayoutEffect,
+  useEffect,
+  useState,
+  useCallback,
+} from 'react';
 import { useParams } from 'next/navigation';
 import { apiGet } from '../apis/apiInfo.js';
 import Loading from '@/commons/components/Loading.js';
 import ItemDescription from '../components/ItemDescription';
+import { getCommonActions } from '@/commons/contexts/CommonContext';
 
 const ThesisViewContainer = ({ setPageTitle }) => {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const { seq } = useParams();
+
+  const { setMainTitle } = getCommonActions();
+
+  useLayoutEffect(() => {
+    setMainTitle(t('자료상세'));
+  }, [setMainTitle, t]);
 
   useEffect(() => {
     setLoading(true);
@@ -36,4 +48,4 @@ const ThesisViewContainer = ({ setPageTitle }) => {
   );
 };
 
-export default ThesisViewContainer;
+export default React.memo(ThesisViewContainer);
