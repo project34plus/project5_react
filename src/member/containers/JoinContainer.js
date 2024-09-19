@@ -6,6 +6,7 @@ import { getCommonActions } from '@/commons/contexts/CommonContext';
 import JoinForm from '../components/JoinForm';
 import { apiJoin } from '../apis/apiJoin';
 import Container from '@/commons/components/Container';
+import JoinBox from '../components/JoinBox';
 
 const JoinContainer = () => {
   const { t } = useTranslation();
@@ -26,12 +27,13 @@ const JoinContainer = () => {
 
       /* 필수 항목 검증 S */
       const requiredFields = {
-        email: t('이메일을_입력하세요.'),
-        password: t('비밀번호를_입력하세요.'),
-        confirmPassword: t('비밀번호를_확인하세요.'),
-        userName: t('회원명을_입력하세요.'),
-        birth: t('생년월일을_입력하세요.'),
-        gender: t('성별을_선택하세요.'),
+        email: t('이메일을_입력하세요'),
+        password: t('비밀번호를_입력하세요'),
+        confirmPassword: t('비밀번호를_확인하세요'),
+        userName: t('회원명을_입력하세요'),
+        birth: t('생년월일을_입력하세요'),
+        gender: t('성별을_선택하세요'),
+        job: t('직업을_선택하세요'),
       };
 
       for (const [field, message] of Object.entries(requiredFields)) {
@@ -43,14 +45,14 @@ const JoinContainer = () => {
       }
 
       if (!form.agree) {
-        _errors.agree = [t('회원가입_약관에_동의하세요.')];
+        _errors.agree = [t('회원가입_약관에_동의하세요')];
         hasErrors = true;
       }
       /* 필수 항목 검증 E */
 
       /* 비밀번호 및 비밀번호 확인 일치 여부 */
       if (form.password !== form.confirmPassword) {
-        _errors.confirmPassword = [t('비밀번호가_일치하지_않습니다.')];
+        _errors.confirmPassword = [t('비밀번호가_일치하지_않습니다')];
         hasErrors = true;
       }
 
@@ -95,13 +97,15 @@ const JoinContainer = () => {
 
   return (
     <Container>
-      <JoinForm
-        form={form}
-        onSubmit={onSubmit}
-        onChange={onChange}
-        onToggle={onToggle}
-        errors={errors}
-      />
+      <JoinBox>
+        <JoinForm
+          form={form}
+          onSubmit={onSubmit}
+          onChange={onChange}
+          onToggle={onToggle}
+          errors={errors}
+        />
+      </JoinBox>
     </Container>
   );
 };

@@ -30,8 +30,8 @@ const LoginContainer = ({ searchParams }) => {
 
       /* 필수 항목 검증 S */
       const requiredFields = {
-        email: t('이메일을_입력하세요.'),
-        password: t('비밀번호를_입력하세요.'),
+        email: t('이메일을_입력하세요'),
+        password: t('비밀번호를_입력하세요'),
       };
 
       for (const [field, message] of Object.entries(requiredFields)) {
