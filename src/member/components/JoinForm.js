@@ -114,80 +114,80 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
       <dl>
         <dt>{t('직업')}</dt>
         <dd>
-          <span onClick={() => onToggle('status', 'PROFESSOR')}>
-            {form?.status === 'PROFESSOR' ? (
+          <span onClick={() => onToggle('job', 'PROFESSOR')}>
+            {form?.job === 'PROFESSOR' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('교수')}
           </span>
-          <span onClick={() => onToggle('status', 'DOCTOR')}>
-            {form?.status === 'DOCTOR' ? (
+          <span onClick={() => onToggle('job', 'DOCTOR')}>
+            {form?.job === 'DOCTOR' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('박사')}
           </span>
-          <span onClick={() => onToggle('status', 'MASTER')}>
-            {form?.status === 'MASTER' ? (
+          <span onClick={() => onToggle('job', 'MASTER')}>
+            {form?.job === 'MASTER' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('석사')}
           </span>
-          <span onClick={() => onToggle('status', 'ACADEMIC')}>
-            {form?.status === 'ACADEMIC' ? (
+          <span onClick={() => onToggle('job', 'ACADEMIC')}>
+            {form?.job === 'ACADEMIC' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('학생')}
           </span>
-          <span onClick={() => onToggle('status', 'RESEARCHER')}>
-            {form?.status === 'RESEARCHER' ? (
+          <span onClick={() => onToggle('job', 'RESEARCHER')}>
+            {form?.job === 'RESEARCHER' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('연구원')}
           </span>
-          <span onClick={() => onToggle('status', 'LIBRARIAN')}>
-            {form?.status === 'LIBRARIAN' ? (
+          <span onClick={() => onToggle('job', 'LIBRARIAN')}>
+            {form?.job === 'LIBRARIAN' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('사서')}
           </span>
-          <span onClick={() => onToggle('status', 'UNIVERSITY_STAFF')}>
-            {form?.status === 'UNIVERSITY_STAFF' ? (
+          <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
+            {form?.job === 'UNIVERSITY_STAFF' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('대학직원')}
           </span>
-          <span onClick={() => onToggle('status', 'TEACHER')}>
-            {form?.status === 'TEACHER' ? (
+          <span onClick={() => onToggle('job', 'TEACHER')}>
+            {form?.job === 'TEACHER' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('교사')}
           </span>
-          <span onClick={() => onToggle('status', ' PUBLIC_OFFICIAL')}>
-            {form?.status === ' PUBLIC_OFFICIAL' ? (
+          <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
+            {form?.job === 'PUBLIC_OFFICIAL' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
             )}
             {t('공무원')}
           </span>
-          <span onClick={() => onToggle('status', 'GENERAL_MEMBER')}>
-            {form?.status === 'GENERAL_MEMBER' ? (
+          <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
+            {form?.job === 'GENERAL_MEMBER' ? (
               <IoMdRadioButtonOn />
             ) : (
               <IoMdRadioButtonOff />
