@@ -4,22 +4,14 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import JoinForm from '../components/JoinForm';
-import { StyledWrapper } from '@/commons/components/layouts/StyledWrapper';
 import { apiJoin } from '../apis/apiJoin';
 import Container from '@/commons/components/Container';
-
-const initalForm = {
-  userType: 'STUDENT',
-  status: 'ONCLASS',
-  gender: 'FEMALE',
-  agree: false,
-};
 
 const JoinContainer = () => {
   const { t } = useTranslation();
   const { setMainTitle } = getCommonActions();
   const router = useRouter();
-  const [form, setForm] = useState(initalForm);
+  const [form, setForm] = useState();
   const [errors, setErrors] = useState({});
   useLayoutEffect(() => {
     setMainTitle(t('회원가입'));
@@ -38,25 +30,9 @@ const JoinContainer = () => {
         password: t('비밀번호를_입력하세요.'),
         confirmPassword: t('비밀번호를_확인하세요.'),
         userName: t('회원명을_입력하세요.'),
-        userType: t('가입유형을_선택하세요.'),
-        zonecode: t('우편번호를_입력하세요.'),
-        address: t('주소를_입력하세요.'),
         birth: t('생년월일을_입력하세요.'),
         gender: t('성별을_선택하세요.'),
       };
-
-      if (form?.userType === 'STUDENT') {
-        requiredFields.deptNm = t('학과명을_입력하세요.');
-        requiredFields.deptNo = t('학과번호를_입력하세요.');
-        requiredFields.stdntNo = t('학번을_입력하세요.');
-        requiredFields.grade = t('학년을_입력하세요.');
-        requiredFields.professor = t('지도교수를_선택하세요.');
-      } else {
-        requiredFields.deptNm = t('부서명을_입력하세요.');
-        requiredFields.deptNo = t('부서번호를_입력하세요.');
-        requiredFields.empNo = t('사번을_입력하세요.');
-        requiredFields.subject = t('담당과목을_입력하세요.');
-      }
 
       for (const [field, message] of Object.entries(requiredFields)) {
         if (!form[field] || !form[field]?.trim()) {
@@ -88,7 +64,6 @@ const JoinContainer = () => {
       (async () => {
         try {
           await apiJoin(form);
-          setForm(initalForm);
           router.replace('/member/login'); // 회원가입 완료 후 페이지 이동
         } catch (err) {
           // 검증 실패, 가입 실패
