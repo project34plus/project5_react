@@ -8,6 +8,8 @@ import LoginForm from '../components/LoginForm';
 import { apiLogin } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
 import Container from '@/commons/components/Container';
+import JoinBox from '../components/JoinBox';
+
 const LoginContainer = ({ searchParams }) => {
   const router = useRouter();
   const { t } = useTranslation();
@@ -93,12 +95,14 @@ const LoginContainer = ({ searchParams }) => {
 
   return (
     <Container>
+      <JoinBox>
       <LoginForm
         form={form}
         errors={errors}
         onSubmit={onSubmit}
         onChange={onChange}
       />
+      </JoinBox>
     </Container>
   );
 };

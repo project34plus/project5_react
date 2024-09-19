@@ -2,7 +2,7 @@ import React from 'react';
 
 const JoinBox = ({ children }) => {
   const containerStyle = {
-    width: '900px',
+    width: '930px',
     margin: 'auto',
     padding: '20px',
     boxSizing: 'border-box',

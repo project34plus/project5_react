@@ -1,7 +1,7 @@
 const fontSize = {
   extraSmall: '1rem',
   small: '1.2rem',
-  normal: '1.4rem',
+  normal: '1.3rem',
   center: '1.5rem',
   medium: '1.8rem',
   big: '2.5rem',
