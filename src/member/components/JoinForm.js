@@ -13,6 +13,10 @@ import {
   IoLockClosedOutline,
   IoPersonCircleSharp,
   IoPhonePortraitOutline,
+  IoCheckbox,
+  IoCheckboxOutline,
+  IoCheckmarkCircleOutline,
+  IoCheckmarkCircleSharp,
 } from 'react-icons/io5';
 
 const FormBox = styled.form`
@@ -109,21 +113,21 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
           </dd>
         </dl>
         <dl>
-        <dt>{t('성별')}</dt>
+          <dt>{t('성별')}</dt>
           <dd>
             <span onClick={() => onToggle('gender', 'FEMALE')}>
               {form?.gender === 'FEMALE' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('여성')}
             </span>
             <span onClick={() => onToggle('gender', 'MALE')}>
               {form?.gender === 'MALE' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('남성')}
             </span>
@@ -135,81 +139,81 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
           <dd>
             <span onClick={() => onToggle('job', 'PROFESSOR')}>
               {form?.job === 'PROFESSOR' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('교수')}
             </span>
             <span onClick={() => onToggle('job', 'DOCTOR')}>
               {form?.job === 'DOCTOR' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('박사')}
             </span>
             <span onClick={() => onToggle('job', 'MASTER')}>
               {form?.job === 'MASTER' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('석사')}
             </span>
             <span onClick={() => onToggle('job', 'ACADEMIC')}>
               {form?.job === 'ACADEMIC' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('학생')}
             </span>
             <span onClick={() => onToggle('job', 'RESEARCHER')}>
               {form?.job === 'RESEARCHER' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('연구원')}
             </span>
             <span onClick={() => onToggle('job', 'LIBRARIAN')}>
               {form?.job === 'LIBRARIAN' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('사서')}
             </span>
             <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
               {form?.job === 'UNIVERSITY_STAFF' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('대학직원')}
             </span>
             <span onClick={() => onToggle('job', 'TEACHER')}>
               {form?.job === 'TEACHER' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('교사')}
             </span>
             <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
               {form?.job === 'PUBLIC_OFFICIAL' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('공무원')}
             </span>
             <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
               {form?.job === 'GENERAL_MEMBER' ? (
-                <IoMdRadioButtonOn />
+                <IoCheckmarkCircleSharp />
               ) : (
-                <IoMdRadioButtonOff />
+                <IoCheckmarkCircleOutline />
               )}
               {t('일반인')}
             </span>
@@ -221,7 +225,7 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
           suppressHydrationWarning
           onClick={() => onToggle('agree', !Boolean(form?.agree))}
         >
-          {form?.agree ? <FaCheckSquare /> : <FaRegCheckSquare />}
+          {form?.agree ? <IoCheckbox /> : <IoCheckboxOutline />}
           {t('약관에_동의')}
         </div>
         <StyledMessage variant="danger">{errors?.agree}</StyledMessage>
