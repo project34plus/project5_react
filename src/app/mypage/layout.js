@@ -1,10 +1,26 @@
-//마이페이지 전용 레이아웃 (공통적인 형태 구성해두기)
-export default function MypageLayout({ children }) {
+'use client';
+import styled from 'styled-components';
+import SubMenus from '@/mypage/components/SubMenus';
+
+const Wrapper = styled.div`
+  display: flex;
+  aside {
+    width: 180px;
+    margin-right: 20px;
+  }
+
+  .content {
+    flex-grow: 1;
+  }
+`;
+
+const MypageLayout = ({ children }) => {
   return (
-    <>
-      <h1>마이페이지 전용 레이아웃</h1>
-      {children}
-      <h1>마이페이지 전용 하단 부분</h1>
-    </>
+    <Wrapper className="layout-width">
+      <SubMenus />
+      <section className="content">{children}</section>
+    </Wrapper>
   );
-}
+};
+
+export default MypageLayout;
