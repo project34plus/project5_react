@@ -41,7 +41,6 @@ const UserInfoProvider = ({ children }) => {
 
         setUserInfo(user);
         setIsLogin(true);
-
         setIsAdmin(user.userType === 'ADMIN');
       } catch (err) {
         // 토큰 만료, 토큰이 잘못된 경우
