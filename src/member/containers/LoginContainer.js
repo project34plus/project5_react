@@ -8,7 +8,7 @@ import LoginForm from '../components/LoginForm';
 import { StyledWrapper } from '@/commons/components/layouts/StyledWrapper';
 import { apiLogin } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
-const LoginContainer = ({ searchParams }) => {
+const LoginContainer = ({searchParams}) => {
   const router = useRouter();
   const { t } = useTranslation();
   const { setMainTitle } = getCommonActions();
@@ -22,9 +22,6 @@ const LoginContainer = ({ searchParams }) => {
   const {
     setIsLogin,
     setIsAdmin,
-    setIsStudent,
-    setIsCounselor,
-    setIsProfessor,
     setUserInfo,
   } = getUserActions();
 
@@ -70,9 +67,6 @@ const LoginContainer = ({ searchParams }) => {
               setUserInfo(user);
 
               setIsAdmin(user.userType === 'ADMIN'); // 관리자 여부
-              setIsStudent(user.userType === 'STUDENT');
-              setIsCounselor(user.userType === 'COUNSELOR');
-              setIsProfessor(user.userType === 'PROFESSOR');
 
               /**
                * 후속 처리 : 회원 전용 서비스 URL로 이동
@@ -98,10 +92,7 @@ const LoginContainer = ({ searchParams }) => {
       router,
       searchParams,
       setIsAdmin,
-      setIsCounselor,
       setIsLogin,
-      setIsProfessor,
-      setIsStudent,
       setUserInfo,
       t,
     ],

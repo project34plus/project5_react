@@ -3,31 +3,33 @@ import MemberOnlyContainer from '@/member/containers/MemberOnlyContainer';
 import MyInterestsContainer from '@/mypage/containers/MyInterestsContainer';
 import MyRecentlyViewContainer from '@/mypage/containers/MyRecentlyViewContainer';
 import MyThesisContainer from '@/mypage/containers/MyThesisContainer';
+import MyWishListContainer from '@/mypage/containers/MyWishListContainer';
+import GuestOnlyContainer from '@/member/containers/GuestOnlyContainer';
 
 const MypageModePage = ({ params }) => {
   const { mode } = params;
 
   let Container = null;
   switch (mode) {
-    case 'Interests':
+    case 'MyInterests':
       Container = MyInterestsContainer;
       break;
-    case 'RecentlyView':
+    case 'MyRecentlyView':
       Container = MyRecentlyViewContainer;
       break;
-    case 'MyThesis':
+    case 'MyThesisList':
       Container = MyThesisContainer;
       break;
-    case 'WishList':
+    case 'MyWishList':
       Container = MyWishListContainer;
       break;
     default:
       Container = InfoContainer;
   }
   return (
-    <MemberOnlyContainer>
+    <GuestOnlyContainer>
       <Container />
-    </MemberOnlyContainer>
+    </GuestOnlyContainer>
   );
 };
 
