@@ -1,3 +1,4 @@
+
 import JoinContainer from '@/member/containers/JoinContainer';
 import GuestOnlyContainer from '@/member/containers/GuestOnlyContainer';
 const JoinPage = () => {
