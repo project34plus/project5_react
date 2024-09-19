@@ -1,18 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  compiler: {
-    styledComponents: true,
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
-      },
-    ];
-  },
-  //trailingSlash: true,
-};
 
-export default nextConfig;
+const nextConfig = {
+    webpack: (config) => {
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        // react-native를 react-native-web으로 매핑
+        'react-native$': 'react-native-web',
+      };
+      return config;
+    },
+  };
+  
+  export default nextConfig;
+  
