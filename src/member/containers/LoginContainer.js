@@ -19,14 +19,7 @@ const LoginContainer = ({ searchParams }) => {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
 
-  const {
-    setIsLogin,
-    setIsAdmin,
-    setIsStudent,
-    setIsCounselor,
-    setIsProfessor,
-    setUserInfo,
-  } = getUserActions();
+  const { setIsLogin, setIsAdmin, setUserInfo } = getUserActions();
 
   const onSubmit = useCallback(
     (e) => {
@@ -70,9 +63,6 @@ const LoginContainer = ({ searchParams }) => {
               setUserInfo(user);
 
               setIsAdmin(user.userType === 'ADMIN'); // 관리자 여부
-              setIsStudent(user.userType === 'STUDENT');
-              setIsCounselor(user.userType === 'COUNSELOR');
-              setIsProfessor(user.userType === 'PROFESSOR');
 
               /**
                * 후속 처리 : 회원 전용 서비스 URL로 이동
@@ -93,18 +83,7 @@ const LoginContainer = ({ searchParams }) => {
           setErrors({ ..._errors });
         });
     },
-    [
-      form,
-      router,
-      searchParams,
-      setIsAdmin,
-      setIsCounselor,
-      setIsLogin,
-      setIsProfessor,
-      setIsStudent,
-      setUserInfo,
-      t,
-    ],
+    [form, router, searchParams, setIsAdmin, setIsLogin, setUserInfo, t],
   );
 
   const onChange = useCallback((e) => {
@@ -112,14 +91,14 @@ const LoginContainer = ({ searchParams }) => {
   }, []);
 
   return (
-      <StyledWrapper>
-        <LoginForm
-          form={form}
-          errors={errors}
-          onSubmit={onSubmit}
-          onChange={onChange}
-        />
-      </StyledWrapper>
+    <StyledWrapper>
+      <LoginForm
+        form={form}
+        errors={errors}
+        onSubmit={onSubmit}
+        onChange={onChange}
+      />
+    </StyledWrapper>
   );
 };
 

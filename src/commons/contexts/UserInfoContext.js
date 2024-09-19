@@ -9,16 +9,12 @@ const UserInfoContext = createContext({
     // 상태 값
     userInfo: null,
     isLogin: false,
-    isCounselor: false,
-    isProfessor: false,
     isAdmin: false, // 관리자 여부
   },
   actions: {
     // 상태 변경 함수
     setUserInfo: null,
     setIsLogin: null,
-    setIsCounselor: null,
-    setIsProfessor: null,
     setIsAdmin: null,
   },
 });
@@ -26,20 +22,14 @@ const UserInfoContext = createContext({
 const UserInfoProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [isLogin, setIsLogin] = useState(null);
-  const [isStudent, setIsStudent] = useState(false);
-  const [isCounselor, setIsCounselor] = useState(false);
-  const [isProfessor, setIsProfessor] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
   const value = {
-    states: { userInfo, isLogin, isAdmin, isStudent, isCounselor, isProfessor },
+    states: { userInfo, isLogin, isAdmin },
     actions: {
       setUserInfo,
       setIsLogin,
       setIsAdmin,
-      setIsStudent,
-      setIsCounselor,
-      setIsProfessor,
     },
   };
 
@@ -53,9 +43,6 @@ const UserInfoProvider = ({ children }) => {
         setIsLogin(true);
 
         setIsAdmin(user.userType === 'ADMIN');
-        setIsCounselor(user.userType === 'COUNSELOR');
-        setIsProfessor(user.userType === 'PROFESSOR');
-        setIsStudent(user.userType === 'STUDENT');
       } catch (err) {
         // 토큰 만료, 토큰이 잘못된 경우
         cookies.remove('token', { path: '/' });
