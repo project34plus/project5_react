@@ -66,7 +66,7 @@ const MainMenu = () => {
             <a href="/mypage/info">{t('논문_등록')}</a>
           </MenuItem>
           <MenuItem>
-            <a href="/mypage/info">{t('최신_연구_트렌드')}</a>
+            <a href="/trend">{t('최신_연구_트렌드')}</a>
           </MenuItem>
           <MenuItem>
             <a href="/mypage/info">{t('알고리즘')}</a>
