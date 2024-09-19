@@ -6,6 +6,7 @@ import Container from '@/commons/components/Container';
 import SearchBox from '@/mainpage/components/SearchBox';
 import Pagination from '@/commons/components/Pagination';
 import { useSearchParams } from 'next/navigation';
+import RecentSort from '../components/RecentSort';
 
 function getQueryString(searchParams) {
   if (!searchParams) return { limit: 9 };
@@ -18,6 +19,7 @@ function getQueryString(searchParams) {
   }
   return qs;
 }
+
 const RecentTrendContainer = () => {
   const searchParams = useSearchParams();
 
@@ -28,7 +30,7 @@ const RecentTrendContainer = () => {
 
   useEffect(() => {
     apiList(search).then((res) => {
-      console.log("api response", res);
+      console.log('api response', res);
       setItems(res.items || []);
       setPagination(res.pagination || {});
     });
@@ -47,6 +49,19 @@ const RecentTrendContainer = () => {
     [form],
   );
 
+  /* 정렬 */
+  const onChangeSort = useCallback((e) => {
+    setSearch((search) => ({ ...search, sort: e.target.value }));
+  }, []);
+
+  const onSubmitSort = useCallback(
+    (e) => {
+      e.preventDefault();
+      setSearch({ ...search, page: 1 });
+    },
+    [search],
+  );
+
   /* 페이지 변경 함수 */
   const onChangePage = useCallback((p) => {
     setSearch((search) => ({ ...search, page: p }));
@@ -54,15 +69,16 @@ const RecentTrendContainer = () => {
   }, []);
   return (
     <Container>
-      <SearchBox
-        form={form}
-        onChange={onChangeSearch}
-        onSubmit={onSubmitSearch}
-      />
-      <RecentTrend items={items} />
-      {items.length > 0 && (
-        <Pagination onClick={onChangePage} pagination={pagination} />
-      )}
+        <SearchBox
+          form={form}
+          onChange={onChangeSearch}
+          onSubmit={onSubmitSearch}
+        />
+        <RecentTrend items={items} />
+        {items.length > 0 && (
+          <Pagination onClick={onChangePage} pagination={pagination} />
+        )}
+      <RecentSort search={search} onChange={onChangeSort} onSubmit={onSubmitSort} />
     </Container>
   );
 };
