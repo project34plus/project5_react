@@ -8,7 +8,8 @@ import LoginForm from '../components/LoginForm';
 import { StyledWrapper } from '@/commons/components/layouts/StyledWrapper';
 import { apiLogin } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
-const LoginContainer = ({searchParams}) => {
+import Container from '@/commons/components/Container';
+const LoginContainer = ({ searchParams }) => {
   const router = useRouter();
   const { t } = useTranslation();
   const { setMainTitle } = getCommonActions();
@@ -19,11 +20,7 @@ const LoginContainer = ({searchParams}) => {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
 
-  const {
-    setIsLogin,
-    setIsAdmin,
-    setUserInfo,
-  } = getUserActions();
+  const { setIsLogin, setIsAdmin, setUserInfo } = getUserActions();
 
   const onSubmit = useCallback(
     (e) => {
@@ -87,15 +84,7 @@ const LoginContainer = ({searchParams}) => {
           setErrors({ ..._errors });
         });
     },
-    [
-      form,
-      router,
-      searchParams,
-      setIsAdmin,
-      setIsLogin,
-      setUserInfo,
-      t,
-    ],
+    [form, router, searchParams, setIsAdmin, setIsLogin, setUserInfo, t],
   );
 
   const onChange = useCallback((e) => {
@@ -103,14 +92,14 @@ const LoginContainer = ({searchParams}) => {
   }, []);
 
   return (
-    <StyledWrapper>
+    <Container>
       <LoginForm
         form={form}
         errors={errors}
         onSubmit={onSubmit}
         onChange={onChange}
       />
-    </StyledWrapper>
+    </Container>
   );
 };
 
