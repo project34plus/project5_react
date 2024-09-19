@@ -64,22 +64,34 @@ const MainMenu = () => {
       <MenuContainer>
         <MenuList>
           <MenuItem>
-            <MenuLink>{t('논문학술자료')}</MenuLink>
+            <MenuLink>
+              <a href="/mypage/info">{t('논문학술자료')}</a>
+            </MenuLink>
           </MenuItem>
           <MenuItem>
-            <MenuLink href="#">{t('논문_등록')}</MenuLink>
+            <MenuLink>
+              <a href="/mypage/info">{t('논문_등록')}</a>
+            </MenuLink>
           </MenuItem>
           <MenuItem>
-            <MenuLink href="#">{t('최신_연구_트렌드')}</MenuLink>
+            <MenuLink>
+              <a href="/mypage/info">{t('최신_연구_트렌드')}</a>
+            </MenuLink>
           </MenuItem>
           <MenuItem>
-            <MenuLink href="#">{t('알고리즘')}</MenuLink>
+            <MenuLink>
+              <a href="/mypage/info">{t('알고리즘')}</a>
+            </MenuLink>
           </MenuItem>
           <MenuItem>
-            <MenuLink href="#">{t('연구노트')}</MenuLink>
+            <MenuLink>
+              <a href="/mypage/info">{t('연구노트')}</a>
+            </MenuLink>
           </MenuItem>
           <MenuItem>
-            <MenuLink href="#">{t('이용안내')}</MenuLink>
+            <MenuLink>
+              <a href="/mypage/info">{t('이용안내')}</a>
+            </MenuLink>
           </MenuItem>
         </MenuList>
       </MenuContainer>
