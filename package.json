@@ -6,6 +6,7 @@
     "dev": "set PORT=6006 && next dev",
     "build": "next build",
     "start": "next start",
+    "server": "pm2 start ecosystem.config.js --watch",
     "lint": "next lint"
   },
   "dependencies": {
@@ -15,6 +16,7 @@
     "i18next-http-backend": "^2.6.1",
     "next": "14.2.9",
     "next-i18next": "^15.3.1",
+    "pm2": "^5.4.2",
     "react": "^18",
     "react-cookies": "^0.1.1",
     "react-dom": "^18",
