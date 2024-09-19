@@ -64,7 +64,9 @@ const JoinContainer = () => {
       (async () => {
         try {
           await apiJoin(form);
-          router.replace('/member/login'); // 회원가입 완료 후 페이지 이동
+          router.replace('/member/login');
+          console.log(form);
+          // 회원가입 완료 후 페이지 이동
         } catch (err) {
           // 검증 실패, 가입 실패
           const messages =

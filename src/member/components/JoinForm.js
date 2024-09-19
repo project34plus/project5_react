@@ -205,7 +205,7 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
         {t('약관에_동의')}
       </div>
       <StyledMessage variant="danger">{errors?.agree}</StyledMessage>
-      <StyledButton type="submit" variant="primary">
+      <StyledButton type="submit" variant="navy">
         {t('회원가입')}
       </StyledButton>
       <StyledMessage variant="danger">{errors?.global}</StyledMessage>

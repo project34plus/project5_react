@@ -53,6 +53,7 @@ const LoginContainer = ({ searchParams }) => {
         .then((res) => {
           const token = res.data;
           cookies.save('token', token, { path: '/' });
+          console.log(form);
 
           (async () => {
             try {
