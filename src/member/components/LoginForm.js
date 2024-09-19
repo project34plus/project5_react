@@ -5,15 +5,12 @@ import { useTranslation } from 'react-i18next';
 import StyledMessage from '@/commons/components/StyledMessage';
 import { StyledInput } from '@/commons/components/inputs/StyledInput';
 import { StyledButton } from '@/commons/components/buttons/StyledButton';
-import Container from '@/commons/components/Container';
-const FormBox = styled.form`
-`;
+const FormBox = styled.form``;
 
 const LoginForm = ({ form, errors, onSubmit, onChange }) => {
   const { t } = useTranslation();
 
   return (
-    <Container>
     <FormBox onSubmit={onSubmit} autoComplete="off">
       <dl>
         <dt>{t('이메일')}</dt>
@@ -44,7 +41,6 @@ const LoginForm = ({ form, errors, onSubmit, onChange }) => {
       </StyledButton>
       <StyledMessage variant="danger">{errors?.global}</StyledMessage>
     </FormBox>
-    </Container>
   );
 };
 

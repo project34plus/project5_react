@@ -23,4 +23,4 @@ function skinRoute(skin) {
 const FormContainer = ({ setPageTitle }) => {
   const { nid, seq } = useParams();
 
-  
+}
