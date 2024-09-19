@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchBox from './SearchBox';
 import MainTitle from './MainTitle';
+import Image from 'next/image';
 
 const Container = styled.div`
   width: 100%;
@@ -12,8 +13,8 @@ const Container = styled.div`
 const BannerContainer = styled.section`
   width: 90%;
   height: 500px;
-  margin-left: auto; 
-  border-bottom-left-radius: 100px; 
+  margin-left: auto;
+  border-bottom-left-radius: 100px;
   overflow: hidden;
 
   img {
@@ -25,8 +26,8 @@ const BannerContainer = styled.section`
 `;
 
 const SearchBoxContainer = styled.div`
-  position: absolute; 
-  top: 50%; 
+  position: absolute;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
@@ -42,9 +43,14 @@ const Banner = () => {
   return (
     <Container>
       <BannerContainer>
-        <img src="/images/MainImg.jpg" alt="메인 이미지" />
+        <Image
+          src="/images/MainImg.jpg"
+          alt="메인 이미지"
+          width={1200}
+          height={700}
+        />
         <TitleContainer>
-          <MainTitle  />
+          <MainTitle />
         </TitleContainer>
       </BannerContainer>
       <SearchBoxContainer>
