@@ -5,7 +5,7 @@ export default function apiRequest(url, method = 'GET', data, headers) {
   /**
    * url - http://jsonplaceholder.. https://
    */
-  if (!/^http[s]?/i.test(url)) { //외부 URL이 아닌 경우
+  if (!/^http[s]?/i.test(url)) {
     url = process.env.NEXT_PUBLIC_API_URL + url; //url = `/api${url}`;
   }
 
