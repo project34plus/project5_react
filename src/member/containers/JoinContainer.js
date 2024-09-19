@@ -6,6 +6,7 @@ import { getCommonActions } from '@/commons/contexts/CommonContext';
 import JoinForm from '../components/JoinForm';
 import { StyledWrapper } from '@/commons/components/layouts/StyledWrapper';
 import { apiJoin } from '../apis/apiJoin';
+import Container from '@/commons/components/Container';
 
 const initalForm = {
   userType: 'STUDENT',
@@ -116,7 +117,7 @@ const JoinContainer = () => {
   }, []);
 
   return (
-    <StyledWrapper>
+    <Container>
       <JoinForm
         form={form}
         onSubmit={onSubmit}
@@ -124,7 +125,7 @@ const JoinContainer = () => {
         onToggle={onToggle}
         errors={errors}
       />
-    </StyledWrapper>
+    </Container>
   );
 };
 
