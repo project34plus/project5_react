@@ -8,6 +8,7 @@ import LoginForm from '../components/LoginForm';
 import { StyledWrapper } from '@/commons/components/layouts/StyledWrapper';
 import { apiLogin } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
+import Container from '@/commons/components/Container';
 const LoginContainer = ({ searchParams }) => {
   const router = useRouter();
   const { t } = useTranslation();
@@ -91,14 +92,14 @@ const LoginContainer = ({ searchParams }) => {
   }, []);
 
   return (
-    <StyledWrapper>
+    <Container>
       <LoginForm
         form={form}
         errors={errors}
         onSubmit={onSubmit}
         onChange={onChange}
       />
-    </StyledWrapper>
+    </Container>
   );
 };
 
