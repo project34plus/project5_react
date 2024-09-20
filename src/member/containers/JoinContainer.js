@@ -1,22 +1,33 @@
 'use client';
-import React, { useLayoutEffect, useCallback, useState } from 'react';
+import React, { useLayoutEffect, useCallback, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import JoinForm from '../components/JoinForm';
-import { apiJoin } from '../apis/apiJoin';
+import { apiJoin, apiEmailAuth, apiEmailAuthCheck } from '../apis/apiJoin';
 import Container from '@/commons/components/Container';
 import JoinBox from '../components/JoinBox';
+import apiRequest from '@/commons/libs/apiRequest';
 
 const JoinContainer = () => {
   const { t } = useTranslation();
   const { setMainTitle } = getCommonActions();
   const router = useRouter();
-  const [form, setForm] = useState();
   const [errors, setErrors] = useState({});
+  const authCountInterval = useRef();
+
   useLayoutEffect(() => {
     setMainTitle(t('회원가입'));
   }, [t, setMainTitle]);
+
+  const [form, setForm] = useState({
+    gid: '' + Date.now(),
+    agree: false,
+    authNum: '',
+    emailVerified: false,
+    authCount: 180,
+    authCountMin: '03:00',
+  });
 
   const onSubmit = useCallback(
     (e) => {
@@ -24,6 +35,82 @@ const JoinContainer = () => {
 
       const _errors = {};
       let hasErrors = false;
+
+   // 이메일 인증 코드 전송
+   const onSendAuthCode = useCallback(() => {
+    // 이메일을 입력하지 않은 경우
+    if (!form?.email?.trim()) {
+      setErrors((errors) => ({
+        ...errors,
+        email: [t('이메일을_입력하세요.')],
+      }));
+      return;
+    } else {
+      delete errors.email;
+      const _errors = errors;
+      setErrors(_errors);
+    }
+
+    form.authCount = 180;
+    // 3분 카운트 시작
+    authCountInterval.current = setInterval(() => {
+      form.authCount--;
+      const minutes = Math.floor(form.authCount / 60);
+      const seconds = form.authCount - minutes * 60;
+
+      const authCountMin =
+        ('' + minutes).padStart(2, '0') + ':' + ('' + seconds).padStart(2, '0');
+
+      if (form.authCount < 0) {
+        form.authCount = 0;
+        clearInterval(authCountInterval.current);
+      }
+
+      setForm((form) => ({
+        ...form,
+        authCount: form.authCount,
+        authCountMin,
+      }));
+    }, 1000);
+
+    // 인증 이메일 보내기
+    apiEmailAuth(form.email, form.gid);
+  }, [form, errors, t]);
+
+  // 인증 코드 재전송
+  const onReSendAuthCode = useCallback(() => {
+    clearTimeout(authCountInterval.current);
+    onSendAuthCode();
+  }, [onSendAuthCode]);
+
+  const onVerifyAuthCode = useCallback(() => {
+    if (!form.authNum?.trim()) {
+      setErrors((errors) => ({
+        ...errors,
+        email: [t('인증코드를_입력하세요.')],
+      }));
+      return;
+    }
+
+    (async () => {
+      try {
+        await apiEmailAuthCheck(form.authNum, form.gid);
+
+        setForm((form) => ({ ...form, emailVerified: true })); // 이메일 인증 처리
+
+        delete errors.email;
+        const _errors = errors;
+        setErrors(_errors);
+        // 인증 완료 시 타이머 멈춤
+        clearInterval(authCountInterval.current);
+      } catch (err) {
+        setErrors((errors) => ({
+          ...errors,
+          email: [t('이메일_인증에_실패하였습니다.')],
+        }));
+      }
+    })();
+  }, [t, form, errors]);
 
       /* 필수 항목 검증 S */
       const requiredFields = {
@@ -96,15 +183,21 @@ const JoinContainer = () => {
     setForm((form) => ({ ...form, [name]: value }));
   }, []);
 
+
+
   return (
     <Container>
       <JoinBox>
         <JoinForm
-          form={form}
-          onSubmit={onSubmit}
-          onChange={onChange}
-          onToggle={onToggle}
-          errors={errors}
+      form={form}
+      errors={errors}
+      onSubmit={onSubmit}
+      onChange={onChange}
+      onToggle={onToggle}
+      onReset={onReset}
+      onSendAuthCode={onSendAuthCode}
+      onReSendAuthCode={onReSendAuthCode}
+      onVerifyAuthCode={onVerifyAuthCode}
         />
       </JoinBox>
     </Container>
