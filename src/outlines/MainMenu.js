@@ -60,10 +60,10 @@ const MainMenu = () => {
       <MenuContainer>
         <MenuList>
           <MenuItem>
-            <a href="/mypage/info">{t('논문학술자료')}</a>
+            <a href="/thesis/list">{t('논문학술자료')}</a>
           </MenuItem>
           <MenuItem>
-            <a href="/mypage/info">{t('논문_등록')}</a>
+            <a href="/thesis/upload">{t('논문_등록')}</a>
           </MenuItem>
           <MenuItem>
             <a href="/trend">{t('최신_연구_트렌드')}</a>
