@@ -34,6 +34,7 @@ const JoinContainer = () => {
         birth: t('생년월일을_입력하세요'),
         gender: t('성별을_선택하세요'),
         job: t('직업을_선택하세요'),
+        mobile: t('전화번호를_입력하세요'),
       };
 
       for (const [field, message] of Object.entries(requiredFields)) {

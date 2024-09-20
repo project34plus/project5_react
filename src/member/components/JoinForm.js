@@ -21,7 +21,7 @@ import {
 
 const FormBox = styled.form`
   width: 100%;
-  padding: 30px 50px;
+  padding: 40px 50px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
 `;
@@ -38,7 +38,7 @@ const Subtitle = styled.h2`
   font-size: ${({ theme }) => theme.fontSize.center};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: ${({ theme }) => theme.color.darkgray};
   display: flex;
   align-items: center;
@@ -46,14 +46,13 @@ const Subtitle = styled.h2`
 
 const InputWrapper = styled.div`
   position: relative;
-  margin-bottom: 15px;
+  padding-bottom: 10px;
 `;
 
 const Icon = styled.div`
   position: absolute;
   left: 10px;
-  top: 50%;
-  transform: translateY(-90%);
+  top: 37%;
   font-size: ${({ theme }) => theme.fontSize.small};
   color: ${({ theme }) => theme.color.midgray};
 `;
@@ -70,17 +69,24 @@ const Icon3 = styled.span`
 `;
 
 const StyledInput = styled(JoinInput)`
-  padding-left: 35px;
+  padding-left: 40px;
   height: 40px;
-  font-size: ${({ theme }) => theme.fontSize.small};
+  font-size: ${({ theme }) => theme.fontSize.center};
 `;
 
 const OptionContainer = styled.div`
   display: flex;
-  gap: 20px;
-  font-size: ${({ theme }) => theme.fontSize.small};
+  gap: 80px;
+  font-size: ${({ theme }) => theme.fontSize.center};
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  margin-left: 25px;
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
 
   span {
     display: flex;
@@ -262,133 +268,142 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
         <dl>
           <dd>
             <OptionContainer>
-              <span onClick={() => onToggle('job', 'PROFESSOR')}>
-                {form?.job === 'PROFESSOR' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('교수')}
-              </span>
-              <span onClick={() => onToggle('job', 'DOCTOR')}>
-                {form?.job === 'DOCTOR' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('박사')}
-              </span>
-              <span onClick={() => onToggle('job', 'MASTER')}>
-                {form?.job === 'MASTER' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('석사')}
-              </span>
-              <span onClick={() => onToggle('job', 'ACADEMIC')}>
-                {form?.job === 'ACADEMIC' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('학생')}
-              </span>
-              <span onClick={() => onToggle('job', 'RESEARCHER')}>
-                {form?.job === 'RESEARCHER' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('연구원')}
-              </span>
-              <span onClick={() => onToggle('job', 'LIBRARIAN')}>
-                {form?.job === 'LIBRARIAN' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('사서')}
-              </span>
-              <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
-                {form?.job === 'UNIVERSITY_STAFF' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    {' '}
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('대학직원')}
-              </span>
-              <span onClick={() => onToggle('job', 'TEACHER')}>
-                {form?.job === 'TEACHER' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    {' '}
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('교사')}
-              </span>
-              <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
-                {form?.job === 'PUBLIC_OFFICIAL' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('공무원')}
-              </span>
-              <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
-                {form?.job === 'GENERAL_MEMBER' ? (
-                  <Icon3>
-                    <IoCheckmarkCircleSharp />
-                  </Icon3>
-                ) : (
-                  <Icon3>
-                    <IoCheckmarkCircleOutline />
-                  </Icon3>
-                )}
-                {t('일반인')}
-              </span>
+              <div className="options">
+                <span onClick={() => onToggle('job', 'PROFESSOR')}>
+                  {form?.job === 'PROFESSOR' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('교수')}
+                </span>
+                <span onClick={() => onToggle('job', 'DOCTOR')}>
+                  {form?.job === 'DOCTOR' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('박사')}
+                </span>
+              </div>
+              <div className="options">
+                <span onClick={() => onToggle('job', 'MASTER')}>
+                  {form?.job === 'MASTER' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('석사')}
+                </span>
+                <span onClick={() => onToggle('job', 'ACADEMIC')}>
+                  {form?.job === 'ACADEMIC' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('학생')}
+                </span>
+              </div>
+              <div className="options">
+                <span onClick={() => onToggle('job', 'RESEARCHER')}>
+                  {form?.job === 'RESEARCHER' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('연구원')}
+                </span>
+                <span onClick={() => onToggle('job', 'LIBRARIAN')}>
+                  {form?.job === 'LIBRARIAN' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('사서')}
+                </span>
+              </div>
+              <div className="options">
+                <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
+                  {form?.job === 'UNIVERSITY_STAFF' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      {' '}
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('대학직원')}
+                </span>
+                <span onClick={() => onToggle('job', 'TEACHER')}>
+                  {form?.job === 'TEACHER' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      {' '}
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('교사')}
+                </span>
+              </div>
+              <div className="options">
+                <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
+                  {form?.job === 'PUBLIC_OFFICIAL' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('공무원')}
+                </span>
+                <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
+                  {form?.job === 'GENERAL_MEMBER' ? (
+                    <Icon3>
+                      <IoCheckmarkCircleSharp />
+                    </Icon3>
+                  ) : (
+                    <Icon3>
+                      <IoCheckmarkCircleOutline />
+                    </Icon3>
+                  )}
+                  {t('일반인')}
+                </span>
+              </div>
             </OptionContainer>
             <StyledMessage variant="danger">{errors?.job}</StyledMessage>
           </dd>
         </dl>
-
         <OptionContainer>
           <div
             className="agree"
