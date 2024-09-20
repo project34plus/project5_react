@@ -452,8 +452,8 @@ const JoinForm = ({
         <select name="field" value={form.field || ''} onChange={onChange}>
           <option value="">{t('전공_선택')}</option>
           {fields.length > 0 ? (
-            fields.map((field) => (
-              <option key={field.name} value={field.name}>
+            fields.map((field, index) => (
+              <option key={index} value={field.name}>
                 {field.name}
               </option>
             ))
@@ -463,10 +463,10 @@ const JoinForm = ({
         </select>
 
         <select name="field" value={form.field || ''} onChange={onChange}>
-          <option value="">{t('부전공_선택')}</option>
+          <option value="">{t('전공_선택')}</option>
           {fields.length > 0 ? (
-            fields.map((field) => (
-              <option key={field.name} value={field.name}>
+            fields.map((field, index) => (
+              <option key={index} value={field.name}>
                 {field.name}
               </option>
             ))
