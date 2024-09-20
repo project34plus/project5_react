@@ -7,6 +7,7 @@ import SearchBox from '@/mainpage/components/SearchBox';
 import Pagination from '@/commons/components/Pagination';
 import { useSearchParams } from 'next/navigation';
 import RecentSort from '../components/RecentSort';
+import { format } from 'date-fns';
 
 function getQueryString(searchParams) {
   if (!searchParams) return { limit: 9 };
@@ -20,16 +21,24 @@ function getQueryString(searchParams) {
   return qs;
 }
 
+let today = format(new Date(), 'yyyy-MM-dd');
+let lastMonth = new Date();
+lastMonth.setMonth(lastMonth.getMonth() - 1);
+lastMonth = format(lastMonth, 'yyyy-MM-dd');
+
 const RecentTrendContainer = () => {
   const searchParams = useSearchParams();
 
   const [form, setForm] = useState(() => getQueryString(searchParams));
-  const [search, setSearch] = useState({});
+  const [search, setSearch] = useState({
+    sDate: lastMonth,
+    eDate: today,
+  });
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({});
 
   useEffect(() => {
-    console.log(search);
+    console.log('search', search);
     apiList(search).then((res) => {
       console.log('API response:', res);
       setItems(res.items || []);
@@ -45,15 +54,7 @@ const RecentTrendContainer = () => {
   const onSubmitSearch = useCallback(
     (e) => {
       e.preventDefault();
-      const today = new Date();
-      const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
-
-      setSearch({
-        ...form,
-        page: 1,
-        sDate: today.toDateString(),
-        eDate: lastMonth.toDateString(),
-      });
+      setSearch((search) => ({ ...search, ...form, page: 1 }));
     },
     [form],
   );
