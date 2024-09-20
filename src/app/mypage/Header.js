@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { IoMdHome } from 'react-icons/io';
-import CommonContext from "@/commons/modules/CommonContext";
+import CommonContext from "@/commons/contexts/CommonContext";
 
 
 const HeaderBox = styled.header`

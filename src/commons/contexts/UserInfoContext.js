@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { createContext, useState, useContext } from 'react';
+import React, { useEffect, createContext, useState, useContext } from 'react';
 
 import cookies from 'react-cookies';
 import { apiUser } from '@/member/apis/apiLogin';
@@ -32,22 +32,23 @@ const UserInfoProvider = ({ children }) => {
       setIsAdmin,
     },
   };
+  useEffect(() => {
+    const token = cookies.load('token');
+    if (!isLogin && token && token.trim()) {
+      (async () => {
+        try {
+          const user = await apiUser();
 
-  const token = cookies.load('token');
-  if (!isLogin && token && token.trim()) {
-    (async () => {
-      try {
-        const user = await apiUser();
-
-        setUserInfo(user);
-        setIsLogin(true);
-        setIsAdmin(user.userType === 'ADMIN');
-      } catch (err) {
-        // 토큰 만료, 토큰이 잘못된 경우
-        cookies.remove('token', { path: '/' });
-      }
-    })();
-  }
+          setUserInfo(user);
+          setIsLogin(true);
+          setIsAdmin(user.userType === 'ADMIN');
+        } catch (err) {
+          // 토큰 만료, 토큰이 잘못된 경우
+          cookies.remove('token', { path: '/' });
+        }
+      })();
+    }
+  }, [isLogin]);
 
   return (
     <UserInfoContext.Provider value={value}>

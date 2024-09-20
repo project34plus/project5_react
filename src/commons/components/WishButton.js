@@ -1,47 +1,42 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { GoHeart, GoHeartFill } from 'react-icons/go';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation'; // Next.js에서 경로 이동을 위한 훅
 import { addWish, removeWish } from '../libs/wish/apiWish';
-import UserInfoContext from '../../member/modules/UserInfoContext';
+import UserInfoContext from '../contexts/UserInfoContext';
 import WishListContext from '../contexts/WishListContext';
 import styled from 'styled-components';
-import { color } from '../../styles/color';
 
-const { mid_gray, white } = color;
+
 
 const Icon = styled.div`
   cursor: pointer;
-  color: ${(props) => (props.active ? '#ff6a39' : mid_gray)};
-  // background-color: ${white};
   transition: color 0.3s;
   font-size: 40px;
+  color: ${(props) => (props.active ? '#ff6a39' : '#ccc')};
 `;
 
-const WishButton = ({ IconOn, IconOff, tid}) => {
+const WishButton = ({ IconOn, IconOff, tid }) => {
   const [toggle, setToggle] = useState(false);
   const On = IconOn ?? GoHeartFill;
   const Off = IconOff ?? GoHeart;
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
+  const router = useRouter(); // useNavigate, useLocation 대신 useRouter 사용
   const {
     states: { isLogin },
   } = useContext(UserInfoContext);
 
-  const { states } = useContext(WishListContext);
-
-  const wishListKey = `ThesisWish`;
-  const wishList = states[wishListKey];
+  const { states, actions } = useContext(WishListContext);
+  const wishList = states.thesisWish ; // thesisWish 리스트 사용
 
   useEffect(() => {
-    setToggle(Boolean(wishList.includes(tid)));
+    setToggle(Boolean(Array.isArray(wishList) && wishList.includes(tid)));
   }, [wishList, tid, isLogin]);
 
   const onClick = useCallback(
     (status) => {
       if (!isLogin) {
-        navigate(`/member/login?redirectUrl=${location.pathname}`);
+        // 로그인 페이지로 리다이렉트
+        router.push(`/member/login?redirectUrl=${window.location.pathname}`);
         return;
       }
 
@@ -56,7 +51,7 @@ const WishButton = ({ IconOn, IconOff, tid}) => {
         }
       })();
     },
-    [tid, navigate, location.pathname, isLogin],
+    [tid, router, isLogin], // navigate와 location 대신 router 사용
   );
 
   const IconComponent = toggle ? On : Off;

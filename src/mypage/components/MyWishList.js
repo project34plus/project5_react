@@ -2,29 +2,50 @@ import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
+
 const Wrapper = styled.ul`
   list-style-type: none;
   padding: 0;
   margin: 0;
+  width: 100%;
+`;
+
+// 상단 바 스타일 (번호, 고유번호, 제목, 작성자)
+const Header = styled.div`
+  display: flex;
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0;
+
+  .header-tid {
+    width: 10%;
+  }
+
+  .header-gid {
+    width: 20%;
+  }
+
+  .header-title {
+    width: 50%;
+  }
+
+  .header-poster {
+    width: 20%;
+  }
 `;
 
 const WishListItems = ({ item, className }) => {
-  const { tid, title, gid, createdAt, approvalStatus } = item;
+  const { tid, title, gid, poster } = item;
 
   return (
     <div className="thesis-list">
-      <Link to={'/thesis/info/' + tid} className="subject">
+      <Link href={`/thesis/view/${tid}`} passHref>
         <li className={className}>
           <div className="tid">{tid}</div>
-          <div className="title">
-            {title}
-          </div>
-          <div className="thesis-info">
-            <div className="gid">GID: {gid}</div>
-            <div className="status">Status: {approvalStatus}</div>
-            <div className="createdAt">{new Date(createdAt).toLocaleDateString()}</div>
-          </div>
+          <div className="gid">{gid}</div>
+          <div className="title">{title}</div>
+          <div className="poster">{poster}</div>
         </li>
       </Link>
     </div>
@@ -43,41 +64,19 @@ const StyledThesisListItem = styled(WishListItems)`
 
   .tid {
     width: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding-left: 10px;
+  }
+
+  .gid {
+    width: 20%;
   }
 
   .title {
     width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  .thesis-info {
-    width: 40%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .gid {
-      width: 20%;
-      height: 18px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .status {
-      width: 30%;
-      text-align: center;
-    }
-
-    .createdAt {
-      width: 30%;
-      text-align: center;
-    }
+  .poster {
+    width: 20%;
   }
 `;
 
@@ -91,17 +90,10 @@ const NoData = styled.li`
 `;
 
 const MyWishList = ({ items }) => {
-  const { t } = useTranslation();
+
   return (
-    <Wrapper>
-      {items && items.length > 0 ? (
-        items.map((item) => <StyledThesisListItem key={item.tid} item={item} />)
-      ) : (
-        <NoData>
-            {t('즐겨찾기_한_논문이_없습니다.')}
-        </NoData>
-      )}
-    </Wrapper>
+    items.length > 0 &&
+    items.map((item) => <StyledThesisListItem key={item.tid} item={item} />)
   );
 };
 

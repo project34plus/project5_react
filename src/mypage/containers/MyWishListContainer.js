@@ -2,17 +2,15 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import MyWishList from '../components/MyWishList';
 import Container from '@/commons/components/Container';
-import CommonContext from '@/commons/modules/CommonContext';
-import { apiWishlist as getThesis } from '@/testThesis/apis/apiInfo';
+import { apiWishlist as getThesis } from '@/thesis/apis/apiInfo';
 import styled from 'styled-components';
 
 const MyWishListContainer = () => {
-
   const [items, setItems] = useState([]); // 위시리스트 아이템
-  const [pagination, setPagination] = useState({}); //페이지네이션 정보
-  const [currentPage, setCurrentPage] = useState(1); //현재 페이지
+  const [pagination, setPagination] = useState({}); // 페이지네이션 정보
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
 
-  const itemsPerPage = 10; //페이지당 아이템 수
+  const itemsPerPage = 10; // 페이지당 아이템 수
 
   // 페이지 변경 시 호출
   const onChangePage = useCallback((page) => {
@@ -35,6 +33,14 @@ const MyWishListContainer = () => {
 
   return (
     <Container>
+      {/* 상단 헤더는 항상 표시 */}
+      <Header>
+        <div className="header-tid">번호</div>
+        <div className="header-gid">고유번호</div>
+        <div className="header-title">제목</div>
+        <div className="header-poster">작성자</div>
+      </Header>
+
       {items && items.length > 0 ? (
         <>
           <MyWishList items={items} />
@@ -42,12 +48,37 @@ const MyWishListContainer = () => {
         </>
       ) : (
         <NoData>
-          등록된 논문이 없습니다.
+          즐겨찾기 한 논문이 없습니다.
         </NoData>
       )}
     </Container>
   );
 };
+
+// 상단 헤더 스타일 정의
+const Header = styled.div`
+  display: flex;
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0;
+
+  .header-tid {
+    width: 10%;
+  }
+
+  .header-gid {
+    width: 20%;
+  }
+
+  .header-title {
+    width: 50%;
+  }
+
+  .header-poster {
+    width: 20%;
+  }
+`;
 
 const NoData = styled.div`
   font-size: 1.5em;
