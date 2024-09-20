@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import StyledMessage from '@/commons/components/StyledMessage';
 import { StyledInput } from '@/commons/components/inputs/StyledInput';
-import { StyledButton } from '@/commons/components/buttons/StyledButton';
+import { MidButton } from '@/commons/components/buttons/BlueButtons';
 import { IoAtSharp, IoLockClosedOutline, IoPersonSharp } from 'react-icons/io5';
 import JoinInput from './JoinInput';
 
@@ -17,6 +17,10 @@ const FormBox = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  .midButton {
+    margin-top: 20px;
+  }
 `;
 
 const Title = styled.h1`
@@ -108,9 +112,9 @@ const LoginForm = ({ form, errors, onSubmit, onChange }) => {
             <StyledMessage variant="danger">{errors?.password}</StyledMessage>
           </dd>
         </dl>
-        <StyledButton type="submit" variant="navy">
+        <MidButton type="submit" width="200" className="midButton">
           {t('로그인')}
-        </StyledButton>
+        </MidButton>
         <StyledMessage variant="danger">{errors?.global}</StyledMessage>
       </FormBox>
     </>

@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'next-i18next';
-import { StyledButton } from '@/commons/components/buttons/StyledButton';
+import { MidButton } from '@/commons/components/buttons/BlueButtons';
 import StyledMessage from '@/commons/components/StyledMessage';
 import JoinInput from './JoinInput';
 import {
@@ -423,10 +423,9 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
           </div>
         </OptionContainer>
         <StyledMessage variant="danger">{errors?.agree}</StyledMessage>
-
-        <StyledButton type="submit" variant="navy">
+        <MidButton type="submit" width="700px">
           {t('회원가입')}
-        </StyledButton>
+        </MidButton>
         <StyledMessage variant="danger">{errors?.global}</StyledMessage>
       </FormBox>
     </>
