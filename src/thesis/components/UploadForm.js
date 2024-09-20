@@ -136,10 +136,10 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
           />
         </div>
 
-        {/* 파일 선택 버튼 */}
+        {/* 파일 선택 버튼 - 여러 파일 선택 가능 */}
         <div style={styles.formGroup}>
           <label style={styles.label}>파일 선택</label>
-          <input type="file" onChange={handleFileChange} style={styles.input} />
+          <input type="file" multiple onChange={handleFileChange} style={styles.input} />
         </div>
 
         {/* 제출 버튼 */}
