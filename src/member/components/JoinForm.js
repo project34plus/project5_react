@@ -7,8 +7,6 @@ import { IoMdRadioButtonOn, IoMdRadioButtonOff } from 'react-icons/io';
 import { StyledInput } from '@/commons/components/inputs/StyledInput';
 import { StyledButton } from '@/commons/components/buttons/StyledButton';
 import StyledMessage from '@/commons/components/StyledMessage';
-import userType from '../constants/userType';
-import userStatus from '../constants/userStatus';
 
 const FormBox = styled.form``;
 
@@ -17,26 +15,6 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
-      <dl>
-        <dt>{t('가입유형')}</dt>
-        <dd>
-          {Object.keys(userType)
-            .filter((k) => k != 'ADMIN')
-            .map((k, i) => (
-              <span
-                key={`userType_${k}`}
-                onClick={() => onToggle('userType', k)}
-              >
-                {form?.userType === k ? (
-                  <IoMdRadioButtonOn />
-                ) : (
-                  <IoMdRadioButtonOff />
-                )}
-                {userType[k]}
-              </span>
-            ))}
-        </dd>
-      </dl>
       <dl>
         <dt>{t('이메일')}</dt>
         <dd>
@@ -100,42 +78,6 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
         </dd>
       </dl>
       <dl>
-        <dt>{t('우편번호')}</dt>
-        <dd>
-          <StyledInput
-            type="text"
-            name="zonecode"
-            value={form?.zonecode ?? ''}
-            onChange={onChange}
-          />
-          <StyledMessage variant="danger">{errors?.zonecode}</StyledMessage>
-        </dd>
-      </dl>
-      <dl>
-        <dt>{t('주소')}</dt>
-        <dd>
-          <StyledInput
-            type="text"
-            name="address"
-            value={form?.address ?? ''}
-            onChange={onChange}
-          />
-          <StyledMessage variant="danger">{errors?.address}</StyledMessage>
-        </dd>
-      </dl>
-      <dl>
-        <dt>{t('나머지_주소')}</dt>
-        <dd>
-          <StyledInput
-            type="text"
-            name="addressSub"
-            value={form?.addressSub ?? ''}
-            onChange={onChange}
-          />
-          <StyledMessage variant="danger">{errors?.addressSub}</StyledMessage>
-        </dd>
-      </dl>
-      <dl>
         <dt>{t('생년월일')}</dt>
         <dd>
           <StyledInput
@@ -170,152 +112,90 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
         </dd>
       </dl>
       <dl>
-        <dt>{form?.userType === 'STUDENT' ? t('재학상태') : t('재직상태')}</dt>
+        <dt>{t('직업')}</dt>
         <dd>
-          {form?.userType === 'STUDENT' ? (
-            <>
-              <span onClick={() => onToggle('status', 'ONCLASS')}>
-                {form?.status === 'ONCLASS' ? (
-                  <IoMdRadioButtonOn />
-                ) : (
-                  <IoMdRadioButtonOff />
-                )}
-                {userStatus.ONCLASS}
-              </span>
-              <span onClick={() => onToggle('status', 'OUTCLASS')}>
-                {form?.status === 'OUTCLASS' ? (
-                  <IoMdRadioButtonOn />
-                ) : (
-                  <IoMdRadioButtonOff />
-                )}
-                {userStatus.OUTCLASS}
-              </span>
-            </>
-          ) : (
-            <>
-              <span onClick={() => onToggle('status', 'EMPLOYED')}>
-                {form?.status === 'EMPLOYED' ? (
-                  <IoMdRadioButtonOn />
-                ) : (
-                  <IoMdRadioButtonOff />
-                )}
-                {userStatus.EMPLOYED}
-              </span>
-              <span onClick={() => onToggle('status', 'LEAVE')}>
-                {form?.status === 'LEAVE' ? (
-                  <IoMdRadioButtonOn />
-                ) : (
-                  <IoMdRadioButtonOff />
-                )}
-                {userStatus.LEAVE}
-              </span>
-              <span onClick={() => onToggle('status', 'RESIGN')}>
-                {form?.status === 'REGISN' ? (
-                  <IoMdRadioButtonOn />
-                ) : (
-                  <IoMdRadioButtonOff />
-                )}
-                {userStatus.RESIGN}
-              </span>
-            </>
-          )}
+          <span onClick={() => onToggle('job', 'PROFESSOR')}>
+            {form?.job === 'PROFESSOR' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('교수')}
+          </span>
+          <span onClick={() => onToggle('job', 'DOCTOR')}>
+            {form?.job === 'DOCTOR' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('박사')}
+          </span>
+          <span onClick={() => onToggle('job', 'MASTER')}>
+            {form?.job === 'MASTER' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('석사')}
+          </span>
+          <span onClick={() => onToggle('job', 'ACADEMIC')}>
+            {form?.job === 'ACADEMIC' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('학생')}
+          </span>
+          <span onClick={() => onToggle('job', 'RESEARCHER')}>
+            {form?.job === 'RESEARCHER' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('연구원')}
+          </span>
+          <span onClick={() => onToggle('job', 'LIBRARIAN')}>
+            {form?.job === 'LIBRARIAN' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('사서')}
+          </span>
+          <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
+            {form?.job === 'UNIVERSITY_STAFF' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('대학직원')}
+          </span>
+          <span onClick={() => onToggle('job', 'TEACHER')}>
+            {form?.job === 'TEACHER' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('교사')}
+          </span>
+          <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
+            {form?.job === 'PUBLIC_OFFICIAL' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('공무원')}
+          </span>
+          <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
+            {form?.job === 'GENERAL_MEMBER' ? (
+              <IoMdRadioButtonOn />
+            ) : (
+              <IoMdRadioButtonOff />
+            )}
+            {t('일반인')}
+          </span>
         </dd>
       </dl>
-      <dl>
-        <dt>{form?.userType === 'COUNSELOR' ? t('부서명') : t('학과명')}</dt>
-        <dd>
-          <StyledInput
-            type="text"
-            name="deptNm"
-            value={form?.deptNm ?? ''}
-            onChange={onChange}
-          />
-          <StyledMessage variant="danger">{errors?.deptNm}</StyledMessage>
-        </dd>
-      </dl>
-      <dl>
-        <dt>
-          {form?.userType === 'COUNSELOR' ? t('부서번호') : t('학과번호')}
-        </dt>
-        <dd>
-          <StyledInput
-            type="text"
-            name="deptNo"
-            value={form?.deptNo ?? ''}
-            onChange={onChange}
-          />
-          <StyledMessage variant="danger">{errors?.deptNo}</StyledMessage>
-        </dd>
-      </dl>
-      {form?.userType === 'STUDENT' ? (
-        <>
-          <dl>
-            <dt>{t('학번')}</dt>
-            <dd>
-              <StyledInput
-                type="text"
-                name="stdntNo"
-                value={form?.stdntNo ?? ''}
-                onChange={onChange}
-              />
-              <StyledMessage variant="danger">{errors?.stdntNo}</StyledMessage>
-            </dd>
-          </dl>
-          <dl>
-            <dt>{t('학년')}</dt>
-            <dd>
-              <StyledInput
-                type="text"
-                name="grade"
-                value={form?.grade ?? ''}
-                onChange={onChange}
-              />
-              <StyledMessage variant="danger">{errors?.grade}</StyledMessage>
-            </dd>
-          </dl>
-          <dl>
-            <dt>{t('지도교수')}</dt>
-            <dd>
-              <StyledInput
-                type="text"
-                name="professor"
-                value={form?.professor ?? ''}
-                onChange={onChange}
-              />
-              <StyledMessage variant="danger">
-                {errors?.professor}
-              </StyledMessage>
-            </dd>
-          </dl>
-        </>
-      ) : (
-        <>
-          <dl>
-            <dt>{t('사번')}</dt>
-            <dd>
-              <StyledInput
-                type="text"
-                name="empNo"
-                value={form?.empNo ?? ''}
-                onChange={onChange}
-              />
-              <StyledMessage variant="danger">{errors?.empNo}</StyledMessage>
-            </dd>
-          </dl>
-          <dl>
-            <dt>{t('담당과목')}</dt>
-            <dd>
-              <StyledInput
-                type="text"
-                name="subject"
-                value={form?.subject ?? ''}
-                onChange={onChange}
-              />
-              <StyledMessage variant="danger">{errors?.subject}</StyledMessage>
-            </dd>
-          </dl>
-        </>
-      )}
       <div
         className="agree"
         suppressHydrationWarning
