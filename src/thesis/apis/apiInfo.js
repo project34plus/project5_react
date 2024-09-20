@@ -25,3 +25,8 @@ export const apiGet = (tid) => requestData(`http://localhost:4003/info/${tid}`);
 export const apiWishlist = (page = 1, limit = 8) => {
   return requestData(`/thesis/wish?page=${page}&limit=${limit}`);
 };
+
+// 최근 본 논문 조회
+export const apiUserLog = (page = 1, limit = 8) => {
+  return requestData(`/thesis/myView?page=${page}&limit=${limit}`);
+};

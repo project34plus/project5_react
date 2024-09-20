@@ -5,6 +5,7 @@ import Header from './Header';
 
 const Wrapper = styled.div`
   display: flex;
+  margin-top: 20px;
   aside {
     width: 180px;
     margin-right: 20px;
@@ -17,11 +18,13 @@ const Wrapper = styled.div`
 
 const MypageLayout = ({ children }) => {
   return (
-    <Wrapper className="layout-width">
-      <SubMenus />
-      <Header/>
-      <section className="content">{children}</section>
-    </Wrapper>
+    <>
+      <Header />
+      <Wrapper className="layout-width">
+        <SubMenus />
+        <section className="content">{children}</section>
+      </Wrapper>
+    </>
   );
 };
 
