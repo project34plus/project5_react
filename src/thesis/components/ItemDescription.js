@@ -1,10 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'next/navigation';
+import { useTranslation } from 'react-i18next';
 
 const Wrapper = styled.div``;
 
 const ItemDescription = ({ item }) => {
+  const { t } = useTranslation();
   const {
     title,
     poster,
@@ -19,39 +21,39 @@ const ItemDescription = ({ item }) => {
   return (
     <Wrapper>
       <dl>
-        <dt>논문명</dt>
+        <dt>(t{'논문명'})</dt>
         <dd>{title}</dd>
       </dl>
       <dl>
-        <dt>작성자</dt>
+        <dt>(t{'저자'})</dt>
         <dd>{poster}</dd>
       </dl>
       <dl>
-        <dt>기여자</dt>
+        <dt>(t{'기여자'})</dt>
         <dd>{contributor}</dd>
       </dl>
       <dl>
-        <dt>초록</dt>
+        <dt>(t{'초록'})</dt>
         <dd>{thAbstract}</dd>
       </dl>
       <dl>
-        <dt>목차</dt>
+        <dt>(t{'목차'})</dt>
         <dd>{toc}</dd>
       </dl>
       <dl>
-        <dt>참고문헌</dt>
+        <dt>(t{'참고문헌'})</dt>
         <dd>{reference}</dd>
       </dl>
       <dl>
-        <dt>발행기관</dt>
+        <dt>(t{'발행기관'})</dt>
         <dd>{publisher}</dd>
       </dl>
       <dl>
-        <dt>키워드</dt>
+        <dt>(t{'키워드'})</dt>
         <dd>{keywords}</dd>
       </dl>
     </Wrapper>
   );
 };
 
-export default ItemDescription;
+export default React.memo(ItemDescription);

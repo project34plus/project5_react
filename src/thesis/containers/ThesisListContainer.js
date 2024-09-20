@@ -5,7 +5,6 @@ import React, {
   useState,
   useCallback,
 } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { apiList } from '../apis/apiInfo.js';
 import Pagination from '@/commons/components/Pagination';
 import ItemsBox from '../components/ItemsBox';
@@ -14,6 +13,7 @@ import Loading from '@/commons/components/Loading.js';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import Container from '@/commons/components/Container.js';
+import { List } from 'react-content-loader';
 
 function getQueryString(searchParams) {
   const qs = {};
@@ -24,6 +24,8 @@ function getQueryString(searchParams) {
   }
   return qs;
 }
+
+const MyListLoader = () => <List />;
 
 const ThesisListContainer = ({ searchParams }) => {
   const { t } = useTranslation();
@@ -81,7 +83,7 @@ const ThesisListContainer = ({ searchParams }) => {
 
   /* 로딩 처리 */
   if (loading) {
-    return <Loading />;
+    return <MyListLoader />;
   }
 
   return (

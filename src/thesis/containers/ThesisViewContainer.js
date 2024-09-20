@@ -7,25 +7,28 @@ import React, {
   useContext,
 } from 'react';
 import { List } from 'react-content-loader';
-import { useParams } from 'next/navigation';
 import { apiGet } from '../apis/apiInfo.js';
-import ItemDescription from '../components/ItemDescription';
+import { getInfo } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
 import Container from '@/commons/components/Container.js';
 import UserInfoContext from '@/commons/modules/UserInfoContext.js';
-import errors from '@/langs/ko/errors.js';
+import { useRouter } from 'next/navigation'; //CSR ->router는 SSR
 import View from '../components/View.js';
 
 const MyListLoader = () => <List />;
 
-const ThesisViewContainer = () => {
+const ThesisViewContainer = ({ params }) => {
   const { t } = useTranslation();
   const [item, setItem] = useState(null);
   const [commentForm, setCommentForm] = useState(null);
 
-  const { seq } = useParams();
+  const [errors, setErrors] = useState({});
+  const [message, setMessage] = useState('');
+  const router = useRouter();
 
+  const { tid } = params;
+  console.log(tid);
   const { setMainTitle } = getCommonActions();
 
   const {
@@ -37,36 +40,31 @@ const ThesisViewContainer = () => {
   }, [setMainTitle, t]);
 
   useEffect(() => {
-    apiGet(seq).then((item) => {
-      setMainTitle(item.title);
-      setItem(item);
-      console.log('item', item); // 데이터 확인용
-    });
-  }, [seq, setMainTitle]);
-
-  useEffect(() => {
     (async () => {
       try {
-        const res = await getInfo(seq);
-        setData(res);
+        const item = await apiGet(tid);
+        setMainTitle(item.title);
+        setItem(item);
+      } catch (err) {
+        console.error(err);
+        router.back();
+      }
+
+      try {
+        const res = await getInfo(tid);
 
         /* 댓글 기본 양식 */
         setCommentForm({
-          tid: seq,
+          tid: tid,
           mode: 'write',
           commenter: userInfo?.userName,
         });
         window.scrollTo(0, 0);
       } catch (err) {
         console.error(err);
-        setMessage(err.message);
-        setTimeout(function () {
-          setMessage('');
-          navigate(-1);
-        }, 3000);
       }
     })();
-  }, [seq, userInfo]);
+  }, [tid, router, userInfo, setMainTitle]);
 
   //댓글 작성 처리
   const onSubmit = useCallback(
@@ -80,6 +78,11 @@ const ThesisViewContainer = () => {
       const requiredFields = {
         content: t('댓글을_입력하세요'),
       };
+
+      if (!isLogin) {
+        // 로그인 상태가 아닌 경우
+        router.replace(`/member/login?redirectUrl=${location.pathname}`);
+      }
 
       for (const [field, message] of Object.entries(requiredFields)) {
         if (!commentForm[field]?.trim()) {
@@ -106,7 +109,7 @@ const ThesisViewContainer = () => {
             }),
           );
           setCommentForm({
-            tid: data.seq,
+            tid: item.tid,
             mode: 'write',
             commenter: userInfo?.userName,
           });
@@ -115,7 +118,7 @@ const ThesisViewContainer = () => {
         }
       })();
     },
-    [t, commentForm, userInfo],
+    [t, router, isLogin, item, commentForm, userInfo],
   );
 
   if (!item) {
@@ -125,7 +128,13 @@ const ThesisViewContainer = () => {
   return (
     <Container>
       <div>
-        <ItemDescription item={item} />
+        {/* <ItemDescription item={item} /> */}
+        <View
+          item={item}
+          form={commentForm}
+          onSubmit={onSubmit}
+          errors={errors}
+        />
       </div>
     </Container>
   );
