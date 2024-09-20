@@ -270,7 +270,15 @@ const JoinForm = ({
           </Subtitle>
           <dd>
             <OptionContainer>
-              <span onClick={() => onToggle('gender', 'FEMALE')}>
+              <span
+                onClick={() => {
+                  if (form?.gender === 'FEMALE') {
+                    onToggle('gender', null); // 체크 해제
+                  } else {
+                    onToggle('gender', 'FEMALE'); // 체크
+                  }
+                }}
+              >
                 {form?.gender === 'FEMALE' ? (
                   <Icon3>
                     <IoCheckmarkCircleSharp />
@@ -282,7 +290,15 @@ const JoinForm = ({
                 )}
                 {t('여성')}
               </span>
-              <span onClick={() => onToggle('gender', 'MALE')}>
+              <span
+                onClick={() => {
+                  if (form?.gender === 'MALE') {
+                    onToggle('gender', null); // 체크 해제
+                  } else {
+                    onToggle('gender', 'MALE'); // 체크
+                  }
+                }}
+              >
                 {form?.gender === 'MALE' ? (
                   <Icon3>
                     <IoCheckmarkCircleSharp />
@@ -295,7 +311,6 @@ const JoinForm = ({
                 {t('남성')}
               </span>
             </OptionContainer>
-            <StyledMessage variant="danger">{errors?.gender}</StyledMessage>
           </dd>
         </dl>
         <Subtitle>
@@ -308,7 +323,15 @@ const JoinForm = ({
           <dd>
             <OptionContainer>
               <div className="options">
-                <span onClick={() => onToggle('job', 'PROFESSOR')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'PROFESSOR') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'PROFESSOR'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'PROFESSOR' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -320,7 +343,15 @@ const JoinForm = ({
                   )}
                   {t('교수')}
                 </span>
-                <span onClick={() => onToggle('job', 'DOCTOR')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'DOCTOR') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'DOCTOR'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'DOCTOR' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -334,7 +365,15 @@ const JoinForm = ({
                 </span>
               </div>
               <div className="options">
-                <span onClick={() => onToggle('job', 'MASTER')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'MASTER') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'MASTER'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'MASTER' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -346,7 +385,15 @@ const JoinForm = ({
                   )}
                   {t('석사')}
                 </span>
-                <span onClick={() => onToggle('job', 'ACADEMIC')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'ACADEMIC') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'ACADEMIC'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'ACADEMIC' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -360,7 +407,15 @@ const JoinForm = ({
                 </span>
               </div>
               <div className="options">
-                <span onClick={() => onToggle('job', 'RESEARCHER')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'RESEARCHER') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'RESEARCHER'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'RESEARCHER' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -372,7 +427,15 @@ const JoinForm = ({
                   )}
                   {t('연구원')}
                 </span>
-                <span onClick={() => onToggle('job', 'LIBRARIAN')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'LIBRARIAN') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'LIBRARIAN'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'LIBRARIAN' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -386,27 +449,41 @@ const JoinForm = ({
                 </span>
               </div>
               <div className="options">
-                <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'UNIVERSITY_STAFF') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'UNIVERSITY_STAFF'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'UNIVERSITY_STAFF' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
                     </Icon3>
                   ) : (
                     <Icon3>
-                      {' '}
                       <IoCheckmarkCircleOutline />
                     </Icon3>
                   )}
                   {t('대학직원')}
                 </span>
-                <span onClick={() => onToggle('job', 'TEACHER')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'TEACHER') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'TEACHER'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'TEACHER' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
                     </Icon3>
                   ) : (
                     <Icon3>
-                      {' '}
                       <IoCheckmarkCircleOutline />
                     </Icon3>
                   )}
@@ -414,7 +491,15 @@ const JoinForm = ({
                 </span>
               </div>
               <div className="options">
-                <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'PUBLIC_OFFICIAL') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'PUBLIC_OFFICIAL'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'PUBLIC_OFFICIAL' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -426,7 +511,15 @@ const JoinForm = ({
                   )}
                   {t('공무원')}
                 </span>
-                <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'GENERAL_MEMBER') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'GENERAL_MEMBER'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'GENERAL_MEMBER' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
