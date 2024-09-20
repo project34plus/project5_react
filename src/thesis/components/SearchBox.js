@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ImSearch } from 'react-icons/im';
 import Select from 'react-select';
 import { color } from '@/theme/color';
+import fontSize from '@/theme/fontSize';
+import { FaPlus } from 'react-icons/fa6';
+import { ImSearch } from 'react-icons/im';
 
-const { gray } = color;
+const { gray, white } = color;
+const { small, normal } = fontSize;
 
 const options = [].map(
   (item) => (
@@ -21,7 +24,11 @@ const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
             <option value="ALL">통합검색</option>
             <option value="TITLE">논문명</option>
           </select> */}
-        <Select onChange={selectChange} className="select" options={options} />
+        <Select
+          onChange={selectChange}
+          options={options}
+          styles={customStyles}
+        />
         <input
           type="text"
           name="skey"
@@ -35,24 +42,36 @@ const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
           <ImSearch />
         </Button>
       </div>
+      <button className="plus">
+        <FaPlus />
+      </button>
     </FormBox>
   );
 };
 
 const FormBox = styled.form`
-display: flex;
+  display: flex;
+  margin: 20px 0;
+  justify-content: center;
+
   .inputBox {
     display: flex;
 
     input {
       border: 1px solid ${gray};
-      height: 40px;
+      height: 60px;
+      width: 500px;
+      font-size: ${small};
     }
   }
-  
-  .select__control {
-  height: 40px;
+  .plus {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
   }
+`;
+
+const customStyles = styled(Select)`
 
 `;
 

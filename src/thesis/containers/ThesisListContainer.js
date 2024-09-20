@@ -16,7 +16,7 @@ import Container from '@/commons/components/Container.js';
 import { List } from 'react-content-loader';
 
 function getQueryString(searchParams) {
-  const qs = {};
+  const qs = { limit: 10 };
   if (searchParams?.size > 0) {
     for (const [k, v] of searchParams) {
       qs[k] = v;

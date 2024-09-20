@@ -8,13 +8,15 @@ const ItemsBox = ({ items }) => {
   return (
     <Wrapper>
       {items?.length > 0 &&
-        items.map(({ tid, title, poster, publisher, keywords }) => (
+        items.map(({ tid, title, poster, publisher, _fields }) => (
           <li key={tid}>
             <a href={`/thesis/view/${tid}`}>
               <div className="title">{title}</div>
               <div className="poster">{poster}</div>
               <div className="publisher">{publisher}</div>
-              <div className="keyword">{keywords}</div>
+              <div className="fields">
+                {Object.values(_fields)?.[0][0]} {/* 대분류만 렌더링 */}
+              </div>
             </a>
           </li>
         ))}

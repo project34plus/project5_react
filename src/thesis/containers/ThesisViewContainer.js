@@ -80,8 +80,9 @@ const ThesisViewContainer = ({ params }) => {
       };
 
       if (!isLogin) {
-        // 로그인 상태가 아닌 경우
-        router.replace(`/member/login?redirectUrl=${location.pathname}`);
+        // 로그인 상태가 아닌 경우 로그인 페이지로 리다이렉트
+        router.push(`/member/login?redirectUrl=${location.pathname}`);
+        return;
       }
 
       for (const [field, message] of Object.entries(requiredFields)) {

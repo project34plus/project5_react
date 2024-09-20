@@ -9,15 +9,12 @@ const FormBox = styled.form``;
 
 const CommentForm = ({ form, onChange, onSubmit, errors }) => {
   const { t } = useTranslation();
-  const {
-    states: { isLogin },
-  } = useContext(UserInfoContext);
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
       <div className="comment-form">
         <div className="field">
-          <div className="poster">{isLogin}</div>
+          <div className="poster">원래는 로그인한 회원명이 나와야 함{}</div>
           <textarea
             name="content"
             placeholder={t('소중한_의견을_남겨주세요')}

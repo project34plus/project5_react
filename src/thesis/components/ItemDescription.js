@@ -4,12 +4,39 @@ import { Link } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import WishButton from '@/commons/components/WishButton';
 import { color } from '@/theme/color';
+import fontSize from '@/theme/fontSize';
 
 const { gray } = color;
 
+const { small, normal } = fontSize;
+
 const Wrapper = styled.div`
+  word-break: break-all;
+
   dl {
-    border: 1px solid ${gray};
+    padding: 5px 15px;
+    line-height: 170%;
+  }
+
+  dt {
+    width: 140px;
+    font-weight: bold;
+    font-size: ${normal};
+    margin-bottom: 5px;
+  }
+
+  dd {
+    width: calc(100% - 140px);
+    font-size: ${small};
+  }
+
+  dl + dl {
+    border-top: 1px solid ${gray};
+  }
+
+  button {
+    width: 100px;
+    height: 40px;
   }
 `;
 
@@ -25,6 +52,7 @@ const ItemDescription = ({ item }) => {
     reference,
     publisher,
     keywords,
+    viewCount,
   } = item;
 
   return (
@@ -64,7 +92,12 @@ const ItemDescription = ({ item }) => {
         <dt>{t('키워드')}</dt>
         <dd>{keywords}</dd>
       </dl>
-      <button>다운로드</button>
+      <dl>
+        <dt>{t('조회수')}</dt>
+        <dd>{viewCount}</dd>
+      </dl>
+      <button>{t('원문보기')}</button>
+      <button>{t('다운로드')}</button>
     </Wrapper>
   );
 };
