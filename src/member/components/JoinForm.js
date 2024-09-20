@@ -29,7 +29,7 @@ const FormBox = styled.form`
 const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.big};
   font-weight: ${({ theme }) => theme.fontWeight.bold};
-  text-align: center; 
+  text-align: center;
   margin-bottom: 30px;
   color: ${({ theme }) => theme.color.black};
 `;
@@ -97,7 +97,7 @@ const OptionContainer = styled.div`
       font-weight: ${({ theme }) => theme.fontWeight.bold};
     }
   }
-    `;
+`;
 
 const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
   const { t } = useTranslation();
@@ -105,223 +105,310 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
     <>
       <Title>{t('회원가입')}</Title>
       <FormBox onSubmit={onSubmit} autoComplete="off">
-      <Subtitle><Icon2><IoPersonSharp /></Icon2>{t('기본정보입력')}</Subtitle>
-      <dl>
-        <dd>
-          <InputWrapper>
-            <Icon><IoAtSharp /></Icon>
-            <StyledInput
-              type="text"
-              name="email"
-              value={form?.email ?? ''}
-              onChange={onChange}
-              placeholder={t('메일_주소')}
-            />
-          </InputWrapper>
-          <StyledMessage variant="danger">{errors?.email}</StyledMessage>
-        </dd>
-      </dl>
-      <dl>
-        <dd>
-          <InputWrapper>
-            <Icon><IoLockClosedOutline /></Icon>
-            <StyledInput
-              type="password"
-              name="password"
-              value={form?.password ?? ''}
-              onChange={onChange}
-              placeholder={t('비밀번호')}
-            />
-          </InputWrapper>
-          <StyledMessage variant="danger">{errors?.password}</StyledMessage>
-        </dd>
-      </dl>
-      <dl>
-        <dd>
-          <InputWrapper>
-            <Icon><IoLockClosed /></Icon>
-            <StyledInput
-              type="password"
-              name="confirmPassword"
-              value={form?.confirmPassword ?? ''}
-              onChange={onChange}
-              placeholder={t('비밀번호_확인')}
-            />
-          </InputWrapper>
-          <StyledMessage variant="danger">{errors?.confirmPassword}</StyledMessage>
-        </dd>
-      </dl>
-      <dl>
-        <dd>
-          <InputWrapper>
-            <Icon><IoPersonCircleSharp /></Icon>
-            <StyledInput
-              type="text"
-              name="userName"
-              value={form?.userName ?? ''}
-              onChange={onChange}
-              placeholder={t('회원명')}
-            />
-          </InputWrapper>
-          <StyledMessage variant="danger">{errors?.userName}</StyledMessage>
-        </dd>
-      </dl>
-      <dl>
-        <dd>
-          <InputWrapper>
-            <Icon><IoPhonePortraitOutline /></Icon>
-            <StyledInput
-              type="text"
-              name="mobile"
-              value={form?.mobile ?? ''}
-              onChange={onChange}
-              placeholder={t('전화번호')}
-            />
-          </InputWrapper>
-          <StyledMessage variant="danger">{errors?.mobile}</StyledMessage>
-        </dd>
-      </dl>
+        <Subtitle>
+          <Icon2>
+            <IoPersonSharp />
+          </Icon2>
+          {t('기본정보입력')}
+        </Subtitle>
         <dl>
           <dd>
-          <InputWrapper>
-          <Icon><IoCalendarNumberOutline /></Icon>
-            <StyledInput
-              type="date"
-              name="birth"
-              value={form?.birth ?? ''}
-              onChange={onChange}
-            />
+            <InputWrapper>
+              <Icon>
+                <IoAtSharp />
+              </Icon>
+              <StyledInput
+                type="text"
+                name="email"
+                value={form?.email ?? ''}
+                onChange={onChange}
+                placeholder={t('메일_주소')}
+              />
+            </InputWrapper>
+            <StyledMessage variant="danger">{errors?.email}</StyledMessage>
+          </dd>
+        </dl>
+        <dl>
+          <dd>
+            <InputWrapper>
+              <Icon>
+                <IoLockClosedOutline />
+              </Icon>
+              <StyledInput
+                type="password"
+                name="password"
+                value={form?.password ?? ''}
+                onChange={onChange}
+                placeholder={t('비밀번호')}
+              />
+            </InputWrapper>
+            <StyledMessage variant="danger">{errors?.password}</StyledMessage>
+          </dd>
+        </dl>
+        <dl>
+          <dd>
+            <InputWrapper>
+              <Icon>
+                <IoLockClosed />
+              </Icon>
+              <StyledInput
+                type="password"
+                name="confirmPassword"
+                value={form?.confirmPassword ?? ''}
+                onChange={onChange}
+                placeholder={t('비밀번호_확인')}
+              />
+            </InputWrapper>
+            <StyledMessage variant="danger">
+              {errors?.confirmPassword}
+            </StyledMessage>
+          </dd>
+        </dl>
+        <dl>
+          <dd>
+            <InputWrapper>
+              <Icon>
+                <IoPersonCircleSharp />
+              </Icon>
+              <StyledInput
+                type="text"
+                name="userName"
+                value={form?.userName ?? ''}
+                onChange={onChange}
+                placeholder={t('회원명')}
+              />
+            </InputWrapper>
+            <StyledMessage variant="danger">{errors?.userName}</StyledMessage>
+          </dd>
+        </dl>
+        <dl>
+          <dd>
+            <InputWrapper>
+              <Icon>
+                <IoPhonePortraitOutline />
+              </Icon>
+              <StyledInput
+                type="text"
+                name="mobile"
+                value={form?.mobile ?? ''}
+                onChange={onChange}
+                placeholder={t('전화번호')}
+              />
+            </InputWrapper>
+            <StyledMessage variant="danger">{errors?.mobile}</StyledMessage>
+          </dd>
+        </dl>
+        <dl>
+          <dd>
+            <InputWrapper>
+              <Icon>
+                <IoCalendarNumberOutline />
+              </Icon>
+              <StyledInput
+                type="date"
+                name="birth"
+                value={form?.birth ?? ''}
+                onChange={onChange}
+              />
             </InputWrapper>
             <StyledMessage variant="danger">{errors?.birth}</StyledMessage>
           </dd>
         </dl>
 
         <dl>
-        <Subtitle><Icon2><IoPersonSharp /></Icon2>{t('성별')}</Subtitle>
+          <Subtitle>
+            <Icon2>
+              <IoPersonSharp />
+            </Icon2>
+            {t('성별')}
+          </Subtitle>
           <dd>
-          <OptionContainer>
-            <span onClick={() => onToggle('gender', 'FEMALE')}>
-              {form?.gender === 'FEMALE' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('여성')}
-            </span>
-            <span onClick={() => onToggle('gender', 'MALE')}>
-              {form?.gender === 'MALE' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('남성')}
-            </span>
+            <OptionContainer>
+              <span onClick={() => onToggle('gender', 'FEMALE')}>
+                {form?.gender === 'FEMALE' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('여성')}
+              </span>
+              <span onClick={() => onToggle('gender', 'MALE')}>
+                {form?.gender === 'MALE' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('남성')}
+              </span>
             </OptionContainer>
             <StyledMessage variant="danger">{errors?.gender}</StyledMessage>
           </dd>
         </dl>
-       
-        <Subtitle><Icon2><IoPersonSharp /></Icon2>{t('직업')}</Subtitle>
+
+        <Subtitle>
+          <Icon2>
+            <IoPersonSharp />
+          </Icon2>
+          {t('직업')}
+        </Subtitle>
         <dl>
           <dd>
-          <OptionContainer>
-            <span onClick={() => onToggle('job', 'PROFESSOR')}>
-              {form?.job === 'PROFESSOR' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('교수')}
-            </span>
-            <span onClick={() => onToggle('job', 'DOCTOR')}>
-              {form?.job === 'DOCTOR' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('박사')}
-            </span>
-            <span onClick={() => onToggle('job', 'MASTER')}>
-              {form?.job === 'MASTER' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-               <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('석사')}
-            </span>
-            <span onClick={() => onToggle('job', 'ACADEMIC')}>
-              {form?.job === 'ACADEMIC' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('학생')}
-            </span>
-            <span onClick={() => onToggle('job', 'RESEARCHER')}>
-              {form?.job === 'RESEARCHER' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('연구원')}
-            </span>
-            <span onClick={() => onToggle('job', 'LIBRARIAN')}>
-              {form?.job === 'LIBRARIAN' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('사서')}
-            </span>
-            <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
-              {form?.job === 'UNIVERSITY_STAFF' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-               <Icon3> <IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('대학직원')}
-            </span>
-            <span onClick={() => onToggle('job', 'TEACHER')}>
-              {form?.job === 'TEACHER' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-               <Icon3> <IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('교사')}
-            </span>
-            <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
-              {form?.job === 'PUBLIC_OFFICIAL' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('공무원')}
-            </span>
-            <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
-              {form?.job === 'GENERAL_MEMBER' ? (
-                <Icon3><IoCheckmarkCircleSharp /></Icon3>
-              ) : (
-                <Icon3><IoCheckmarkCircleOutline /></Icon3>
-              )}
-              {t('일반인')}
-            </span>
+            <OptionContainer>
+              <span onClick={() => onToggle('job', 'PROFESSOR')}>
+                {form?.job === 'PROFESSOR' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('교수')}
+              </span>
+              <span onClick={() => onToggle('job', 'DOCTOR')}>
+                {form?.job === 'DOCTOR' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('박사')}
+              </span>
+              <span onClick={() => onToggle('job', 'MASTER')}>
+                {form?.job === 'MASTER' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('석사')}
+              </span>
+              <span onClick={() => onToggle('job', 'ACADEMIC')}>
+                {form?.job === 'ACADEMIC' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('학생')}
+              </span>
+              <span onClick={() => onToggle('job', 'RESEARCHER')}>
+                {form?.job === 'RESEARCHER' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('연구원')}
+              </span>
+              <span onClick={() => onToggle('job', 'LIBRARIAN')}>
+                {form?.job === 'LIBRARIAN' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('사서')}
+              </span>
+              <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
+                {form?.job === 'UNIVERSITY_STAFF' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    {' '}
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('대학직원')}
+              </span>
+              <span onClick={() => onToggle('job', 'TEACHER')}>
+                {form?.job === 'TEACHER' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    {' '}
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('교사')}
+              </span>
+              <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
+                {form?.job === 'PUBLIC_OFFICIAL' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('공무원')}
+              </span>
+              <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
+                {form?.job === 'GENERAL_MEMBER' ? (
+                  <Icon3>
+                    <IoCheckmarkCircleSharp />
+                  </Icon3>
+                ) : (
+                  <Icon3>
+                    <IoCheckmarkCircleOutline />
+                  </Icon3>
+                )}
+                {t('일반인')}
+              </span>
             </OptionContainer>
             <StyledMessage variant="danger">{errors?.job}</StyledMessage>
           </dd>
         </dl>
 
         <OptionContainer>
-        <div
-          className="agree"
-          suppressHydrationWarning
-          onClick={() => onToggle('agree', !Boolean(form?.agree))}
-        >
-          {form?.agree ? <Icon3><IoCheckbox /></Icon3> : <Icon3><IoCheckboxOutline /></Icon3>}
-          {t('약관에_동의')}
-        </div>
+          <div
+            className="agree"
+            suppressHydrationWarning
+            onClick={() => onToggle('agree', !Boolean(form?.agree))}
+          >
+            {form?.agree ? (
+              <Icon3>
+                <IoCheckbox />
+              </Icon3>
+            ) : (
+              <Icon3>
+                <IoCheckboxOutline />
+              </Icon3>
+            )}
+            {t('약관에_동의')}
+          </div>
         </OptionContainer>
         <StyledMessage variant="danger">{errors?.agree}</StyledMessage>
-        
+
         <StyledButton type="submit" variant="navy">
           {t('회원가입')}
         </StyledButton>

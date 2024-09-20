@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import LoginForm from '../components/LoginForm';
-import { apiLogin } from '../apis/apiLogin';
+import { apiLogin, apiUser } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
 import Container from '@/commons/components/Container';
-import JoinBox from '../components/JoinBox';
+import LoginBox from '../components/LoginBox';
 
 const LoginContainer = ({ searchParams }) => {
   const router = useRouter();
@@ -95,14 +95,14 @@ const LoginContainer = ({ searchParams }) => {
 
   return (
     <Container>
-      <JoinBox>
-      <LoginForm
-        form={form}
-        errors={errors}
-        onSubmit={onSubmit}
-        onChange={onChange}
-      />
-      </JoinBox>
+      <LoginBox>
+        <LoginForm
+          form={form}
+          errors={errors}
+          onSubmit={onSubmit}
+          onChange={onChange}
+        />
+      </LoginBox>
     </Container>
   );
 };
