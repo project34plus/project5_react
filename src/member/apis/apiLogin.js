@@ -10,6 +10,7 @@ export const apiLogin = (form) =>
         if (!res.data.success) {
           // 검증 실패, 로그인 실패
           reject(res.data);
+          console.log(res);
           return;
         }
 
