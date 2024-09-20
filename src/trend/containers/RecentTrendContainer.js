@@ -29,8 +29,9 @@ const RecentTrendContainer = () => {
   const [pagination, setPagination] = useState({});
 
   useEffect(() => {
+    console.log(search);
     apiList(search).then((res) => {
-      console.log('api response', res);
+      console.log('API response:', res);
       setItems(res.items || []);
       setPagination(res.pagination || {});
     });
@@ -44,7 +45,15 @@ const RecentTrendContainer = () => {
   const onSubmitSearch = useCallback(
     (e) => {
       e.preventDefault();
-      setSearch({ ...form, page: 1 });
+      const today = new Date();
+      const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
+
+      setSearch({
+        ...form,
+        page: 1,
+        sDate: today.toDateString(),
+        eDate: lastMonth.toDateString(),
+      });
     },
     [form],
   );
@@ -54,14 +63,6 @@ const RecentTrendContainer = () => {
     setSearch((search) => ({ ...search, sort: e.target.value }));
   }, []);
 
-  const onSubmitSort = useCallback(
-    (e) => {
-      e.preventDefault();
-      setSearch({ ...search, page: 1 });
-    },
-    [search],
-  );
-
   /* 페이지 변경 함수 */
   const onChangePage = useCallback((p) => {
     setSearch((search) => ({ ...search, page: p }));
@@ -69,16 +70,16 @@ const RecentTrendContainer = () => {
   }, []);
   return (
     <Container>
-        <SearchBox
-          form={form}
-          onChange={onChangeSearch}
-          onSubmit={onSubmitSearch}
-        />
-        <RecentTrend items={items} />
-        {items.length > 0 && (
-          <Pagination onClick={onChangePage} pagination={pagination} />
-        )}
-      <RecentSort search={search} onChange={onChangeSort} onSubmit={onSubmitSort} />
+      <SearchBox
+        form={form}
+        onChange={onChangeSearch}
+        onSubmit={onSubmitSearch}
+      />
+      <RecentTrend items={items} />
+      {items.length > 0 && (
+        <Pagination onClick={onChangePage} pagination={pagination} />
+      )}
+      <RecentSort search={search} onChange={onChangeSort} />
     </Container>
   );
 };

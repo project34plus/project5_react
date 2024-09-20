@@ -13,11 +13,13 @@ const Wrapper = styled.div`
 
 const RecentList = ({ item, className }) => {
   const { title, poster, tid } = item;
-  const url = `/thesis/info/${tid}`;
+  const url = `/thesis/view/${tid}`;
   return (
-    <li className={className}>
+    <li key={tid} className={className}>
+      <a href={url}>
       <div className="title">{title}</div>
       <div className="poster">{poster}</div>
+      </a>
     </li>
   );
 };
