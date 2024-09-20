@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'next/navigation';
+import WishButton from '@/commons/components/WishButton';
 
 const Wrapper = styled.div``;
 
@@ -8,6 +9,7 @@ const ItemDescription = ({ item }) => {
   const {
     title,
     poster,
+    tid,
     // contributor,
     // thAbstract,
     // toc,
@@ -26,6 +28,9 @@ const ItemDescription = ({ item }) => {
         <dt>작성자</dt>
         <dd>{poster}</dd>
       </dl>
+      <div className="button">
+        <WishButton tid={tid}></WishButton>
+      </div>
     </Wrapper>
   );
 };
