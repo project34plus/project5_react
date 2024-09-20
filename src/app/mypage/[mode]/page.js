@@ -4,7 +4,6 @@ import MyInterestsContainer from '@/mypage/containers/MyInterestsContainer';
 import MyRecentlyViewContainer from '@/mypage/containers/MyRecentlyViewContainer';
 import MyThesisContainer from '@/mypage/containers/MyThesisContainer';
 import MyWishListContainer from '@/mypage/containers/MyWishListContainer';
-import GuestOnlyContainer from '@/member/containers/GuestOnlyContainer';
 
 const MypageModePage = ({ params }) => {
   const { mode } = params;
@@ -27,9 +26,9 @@ const MypageModePage = ({ params }) => {
       Container = InfoContainer;
   }
   return (
-    <GuestOnlyContainer>
+    <MemberOnlyContainer>
       <Container />
-    </GuestOnlyContainer>
+    </MemberOnlyContainer>
   );
 };
 

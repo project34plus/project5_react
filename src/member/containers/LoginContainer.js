@@ -8,6 +8,8 @@ import LoginForm from '../components/LoginForm';
 import { apiLogin, apiUser } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
 import Container from '@/commons/components/Container';
+import LoginBox from '../components/LoginBox';
+
 const LoginContainer = ({ searchParams }) => {
   const router = useRouter();
   const { t } = useTranslation();
@@ -30,8 +32,8 @@ const LoginContainer = ({ searchParams }) => {
 
       /* 필수 항목 검증 S */
       const requiredFields = {
-        email: t('이메일을_입력하세요.'),
-        password: t('비밀번호를_입력하세요.'),
+        email: t('이메일을_입력하세요'),
+        password: t('비밀번호를_입력하세요'),
       };
 
       for (const [field, message] of Object.entries(requiredFields)) {
@@ -53,6 +55,7 @@ const LoginContainer = ({ searchParams }) => {
         .then((res) => {
           const token = res.data;
           cookies.save('token', token, { path: '/' });
+          console.log(form);
 
           (async () => {
             try {
@@ -92,12 +95,14 @@ const LoginContainer = ({ searchParams }) => {
 
   return (
     <Container>
-      <LoginForm
-        form={form}
-        errors={errors}
-        onSubmit={onSubmit}
-        onChange={onChange}
-      />
+      <LoginBox>
+        <LoginForm
+          form={form}
+          errors={errors}
+          onSubmit={onSubmit}
+          onChange={onChange}
+        />
+      </LoginBox>
     </Container>
   );
 };

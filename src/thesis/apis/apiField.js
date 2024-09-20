@@ -1,20 +1,20 @@
 import apiRequest from '../../commons/libs/apiRequest';
-import cookies from 'react-cookies';
 
 // 로그인 처리
-export const apiLogin = (form) =>
+export const apiField = () =>
   new Promise((resolve, reject) => {
-    cookies.remove('token', { path: '/' });
-    apiRequest('/member/account/token', 'POST', form)
+    apiRequest('/thesis/field/list')
       .then((res) => {
         if (!res.data.success) {
           // 검증 실패, 로그인 실패
           reject(res.data);
+          console.log(res);
           return;
         }
 
         // 로그인 성공시 - 토큰 데이터
-        resolve(res.data);
+        console.log(res.data.data[0]);
+        return res.data.data
       })
       .catch((err) => reject(err));
   });

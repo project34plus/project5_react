@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import WishButton from '@/commons/components/WishButton';
 
 const Wrapper = styled.div``;
 
@@ -52,6 +53,9 @@ const ItemDescription = ({ item }) => {
         <dt>(t{'키워드'})</dt>
         <dd>{keywords}</dd>
       </dl>
+      <div className="button">
+        <WishButton tid={tid}></WishButton>
+      </div>
     </Wrapper>
   );
 };
