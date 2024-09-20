@@ -5,18 +5,19 @@ import React, {
   useState,
   useCallback,
 } from 'react';
+import { List } from 'react-content-loader';
 import { useParams } from 'next/navigation';
 import { apiGet } from '../apis/apiInfo.js';
-import Loading from '@/commons/components/Loading.js';
 import ItemDescription from '../components/ItemDescription';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
 import Container from '@/commons/components/Container.js';
 
-const ThesisViewContainer = ({ setPageTitle }) => {
+const MyListLoader = () => <List />;
+
+const ThesisViewContainer = () => {
   const { t } = useTranslation();
   const [item, setItem] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const { seq } = useParams();
 
@@ -27,19 +28,15 @@ const ThesisViewContainer = ({ setPageTitle }) => {
   }, [setMainTitle, t]);
 
   useEffect(() => {
-    setLoading(true);
-
     apiGet(seq).then((item) => {
-      setPageTitle(item.title);
+      setMainTitle(item.title);
       setItem(item);
       console.log('item', item); // 데이터 확인용
     });
+  }, [seq, setMainTitle]);
 
-    setLoading(false);
-  }, [seq, setPageTitle]);
-
-  if (loading || !item) {
-    return <Loading />;
+  if (!item) {
+    return <MyListLoader />;
   }
 
   return (
