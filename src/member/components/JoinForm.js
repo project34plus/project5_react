@@ -18,6 +18,7 @@ import {
   IoPersonSharp,
   IoCalendarNumberOutline,
 } from 'react-icons/io5';
+import DatePicker from 'react-datepicker';
 
 const FormBox = styled.form`
   width: 100%;
@@ -542,12 +543,12 @@ const JoinForm = ({
           </Icon2>
           {t('전공')}
         </Subtitle>
-        <select name="field" value={form.field || ''} onChange={onChange}>
+        <select name="memMajor" value={form.memMajor} onChange={onChange}>
           <option value="">{t('전공_선택')}</option>
           {fields.length > 0 ? (
             fields.map((field, index) => (
-              <option key={index} value={field.name}>
-                {field.name}
+              <option key={index} value={field}>
+                {field}
               </option>
             ))
           ) : (
@@ -555,12 +556,12 @@ const JoinForm = ({
           )}
         </select>
 
-        <select name="field" value={form.field || ''} onChange={onChange}>
+        <select name="memMinor" value={form.memMinor} onChange={onChange}>
           <option value="">{t('전공_선택')}</option>
           {fields.length > 0 ? (
             fields.map((field, index) => (
-              <option key={index} value={field.name}>
-                {field.name}
+              <option key={index} value={field}>
+                {field}
               </option>
             ))
           ) : (

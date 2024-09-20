@@ -5,14 +5,19 @@ import Header from './Header';
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 20px;
+
   aside {
     width: 180px;
     margin-right: 20px;
   }
 
   .content {
-    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -21,8 +26,12 @@ const MypageLayout = ({ children }) => {
     <>
       <Header />
       <Wrapper className="layout-width">
-        <SubMenus />
-        <section className="content">{children}</section>
+        <section className="content">
+          <div className="submenu">
+            <SubMenus />
+          </div>
+          <div className="main-content">{children}</div>
+        </section>
       </Wrapper>
     </>
   );

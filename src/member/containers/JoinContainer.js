@@ -28,7 +28,9 @@ const JoinContainer = ({ searchParams }) => {
   const { t } = useTranslation();
   const { setMainTitle } = getCommonActions();
   const router = useRouter();
-  const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    interests: [],
+  });
   const [errors, setErrors] = useState({});
   const [fields, setfields] = useState([]);
   const [search, setSearch] = useState(() => getQueryString(searchParams));
@@ -51,7 +53,7 @@ const JoinContainer = ({ searchParams }) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-
+      console.log('form:', form);
       const _errors = {};
       let hasErrors = false;
 
