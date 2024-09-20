@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { apiField } from '@/thesis/apis/apiField';
 
 const SubMenuBox = styled.aside`
   min-height: 650px;
@@ -35,6 +36,8 @@ const SubMenuBox = styled.aside`
 
 const SubMenus = () => {
   const { t } = useTranslation();
+  const field = apiField();
+  console.log(field);
   return (
     <>
       <SubMenuBox>
