@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import LoginForm from '../components/LoginForm';
-import { apiLogin } from '../apis/apiLogin';
+import { apiLogin, apiUser } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
 import Container from '@/commons/components/Container';
 const LoginContainer = ({ searchParams }) => {
@@ -58,7 +58,7 @@ const LoginContainer = ({ searchParams }) => {
             try {
               // 로그인 처리
               const user = await apiUser();
-
+              console.log('user', user);
               setIsLogin(true); // 로그인 상태
               setUserInfo(user);
 
