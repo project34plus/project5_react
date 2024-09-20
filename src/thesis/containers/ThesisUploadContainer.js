@@ -14,7 +14,7 @@ const initialFormData = {
     visible: "false",
     publisher: "",
     title: "",
-    gid: "",
+    gid: "12",
     fields: [],
     userName: "테스트 사용자",
     email: "testuser@example.com",
