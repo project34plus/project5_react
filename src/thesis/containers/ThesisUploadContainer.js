@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import ThesisUploadForm from "../components/UploadForm"; // form.js에서 가져옴
 import { uploadFile, uploadThesis } from "../apis/apiUpload";
+import Container from "@/commons/components/Container";
 
 const initialFormData = {
     category: "DOMESTIC",
@@ -50,13 +51,16 @@ const initialFormData = {
     };
   
     return (
-      <ThesisUploadForm
-        formData={formData}
-        handleInputChange={handleInputChange}
-        handleFieldsChange={handleFieldsChange}
-        handleFileChange={handleFileChange}
-        handleSubmit={handleSubmit}
-      />
+
+      <Container>
+        <ThesisUploadForm
+          formData={formData}
+          handleInputChange={handleInputChange}
+          handleFieldsChange={handleFieldsChange}
+          handleFileChange={handleFileChange}
+          handleSubmit={handleSubmit}
+        />
+      </Container>
     );
   };
   
