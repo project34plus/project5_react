@@ -14,6 +14,3 @@ export const apiList = (search) => {
 
     return requestData(url);
   };
-
-  // 상세 조회
-export const apiGet = (tid) => requestData(`/thesis/info/${tid}`);
