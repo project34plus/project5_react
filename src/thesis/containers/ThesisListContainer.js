@@ -24,7 +24,7 @@ function getQueryString(searchParams) {
   return qs;
 }
 
-const ThesisListContainer = ({searchParams}) => {
+const ThesisListContainer = ({ searchParams }) => {
   const { t } = useTranslation();
   const [form, setForm] = useState(() => getQueryString(searchParams));
   const [search, setSearch] = useState(() => getQueryString(searchParams));

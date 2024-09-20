@@ -69,13 +69,13 @@ const MainMenu = () => {
             <a href="/trend">{t('최신_연구_트렌드')}</a>
           </MenuItem>
           <MenuItem>
-            <a href="/mypage/info">{t('알고리즘')}</a>
+            <a href="/recommend">{t('추천_논문')}</a>
           </MenuItem>
           <MenuItem>
-            <a href="/mypage/info">{t('연구노트')}</a>
+            <a href="/note">{t('연구노트')}</a>
           </MenuItem>
           <MenuItem>
-            <a href="/mypage/info">{t('이용안내')}</a>
+            <a href="/info">{t('이용안내')}</a>
           </MenuItem>
         </MenuList>
       </MenuContainer>

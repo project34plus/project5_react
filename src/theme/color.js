@@ -12,6 +12,7 @@ export const color = {
   darkgray: '#31363F',
   black: '#000',
   white: '#fff',
+  danger: '#FF0000',
 };
 
 export const buttonColor = {

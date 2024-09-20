@@ -16,7 +16,7 @@ export const StyledButton = styled.button`
     `;
   }}
 
-  border-radius: 12px;
+  border-radius: 5px;
   letter-spacing: 0;
   cursor: pointer;
   &:focus {
