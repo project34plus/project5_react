@@ -1,10 +1,9 @@
 import React from 'react';
 
-const Container = ({ children }) => {
+const LoginBox = ({ children }) => {
   const containerStyle = {
-    width: '1400px',
-    minHeight: '699px',
-    margin: '50px auto',
+    width: '700px',
+    margin: 'auto',
     padding: '20px',
     boxSizing: 'border-box',
   };
@@ -12,4 +11,4 @@ const Container = ({ children }) => {
   return <div style={containerStyle}>{children}</div>;
 };
 
-export default React.memo(Container);
+export default React.memo(LoginBox);
