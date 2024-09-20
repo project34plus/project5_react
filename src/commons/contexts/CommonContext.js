@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { createContext, useState, useContext } from 'react';
 
+//사이트 공통으로 필요한 게 생기면 더 추가하기
 const CommonContext = createContext({
   mainTitle: '',
   subTitle: '',
@@ -24,7 +25,7 @@ const CommonProvider = ({ children }) => {
       setShowHeader,
       setShowFooter,
       setShowMainMenu,
-    },
+    }, //주소 매핑으로 접근 가능, 필요한 것만 비구조할당으로 가져옴
   };
 
   return (
@@ -42,6 +43,7 @@ export const getCommonStates = () => {
 };
 
 export const getCommonActions = () => {
+  //변화감지
   const { actions } = useContext(CommonContext);
   return actions;
 };
