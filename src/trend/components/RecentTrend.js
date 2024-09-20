@@ -35,7 +35,7 @@ const RecentTrend = ({ items }) => {
           ))}
         </ul>
       ) : (
-        <div>{t('최신_논문_업로드_중입니다')}</div>
+        <div>...Loading...</div>
       )}
     </Wrapper>
   );

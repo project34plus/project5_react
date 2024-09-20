@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { apiList } from '../apis/apiInfo';
 import RecentTrend from '../components/RecentTrend';
 import Container from '@/commons/components/Container';
-import SearchBox from '@/mainpage/components/SearchBox';
 import Pagination from '@/commons/components/Pagination';
 import { useSearchParams } from 'next/navigation';
 import RecentSort from '../components/RecentSort';
@@ -33,6 +32,8 @@ const RecentTrendContainer = () => {
   const [search, setSearch] = useState({
     sDate: lastMonth,
     eDate: today,
+    page: 1,
+    limit: 10,
   });
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({});
@@ -46,7 +47,7 @@ const RecentTrendContainer = () => {
     });
   }, [search]);
 
-  /* 검색 관련 함수 */
+  /* 검색 관련 함수(사용할 수도 있으니까... 지우지마세요) */
   const onChangeSearch = useCallback((e) => {
     setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
   }, []);
@@ -71,16 +72,14 @@ const RecentTrendContainer = () => {
   }, []);
   return (
     <Container>
-      <SearchBox
-        form={form}
-        onChange={onChangeSearch}
-        onSubmit={onSubmitSearch}
-      />
+      <h1>
+        {lastMonth}부터 {today}까지의 최신 논문 목록
+      </h1>
+      <RecentSort search={search} onChange={onChangeSort} />
       <RecentTrend items={items} />
       {items.length > 0 && (
         <Pagination onClick={onChangePage} pagination={pagination} />
       )}
-      <RecentSort search={search} onChange={onChangeSort} />
     </Container>
   );
 };

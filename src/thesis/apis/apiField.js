@@ -3,7 +3,7 @@ import apiRequest from '../../commons/libs/apiRequest';
 // 로그인 처리
 export const apiField = () =>
   new Promise((resolve, reject) => {
-    apiRequest('/thesis/field/list')
+    apiRequest('/thesis/field/')
       .then((res) => {
         if (!res.data.success) {
           // 검증 실패, 로그인 실패

@@ -1,3 +1,8 @@
+export const metadata = {
+  title: '최신 연구 트렌드',
+  description: '최신 연구 트렌드',
+};
+
 const Trend = () => {
   return (
     <>
