@@ -12,7 +12,7 @@ import { getInfo } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
 import Container from '@/commons/components/Container.js';
-import UserInfoContext from '@/commons/modules/UserInfoContext.js';
+import UserInfoContext from '@/commons/contexts/UserInfoContext.js';
 import { useRouter } from 'next/navigation'; //CSR ->router는 SSR
 import View from '../components/View.js';
 
@@ -47,7 +47,7 @@ const ThesisViewContainer = ({ params }) => {
         setItem(item);
       } catch (err) {
         console.error(err);
-        router.back();
+        //router.back();
       }
 
       try {
@@ -128,7 +128,6 @@ const ThesisViewContainer = ({ params }) => {
   return (
     <Container>
       <div>
-        {/* <ItemDescription item={item} /> */}
         <View
           item={item}
           form={commentForm}
