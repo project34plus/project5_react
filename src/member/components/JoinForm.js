@@ -447,19 +447,33 @@ const JoinForm = ({
           <Icon2>
             <IoPersonSharp />
           </Icon2>
-          {t('전공선택')}
+          {t('전공')}
         </Subtitle>
-        <dl>
+        <select name="field" value={form.field || ''} onChange={onChange}>
+          <option value="">{t('전공_선택')}</option>
           {fields.length > 0 ? (
             fields.map((field) => (
-              <div key={field.id}>
-                <dt className="name">{field.name}</dt>
-              </div>
+              <option key={field.name} value={field.name}>
+                {field.name}
+              </option>
             ))
           ) : (
-            <div>{t('필드가 없습니다.')}</div>
+            <option disabled>{t('필드가 없습니다.')}</option>
           )}
-        </dl>
+        </select>
+
+        <select name="field" value={form.field || ''} onChange={onChange}>
+          <option value="">{t('부전공_선택')}</option>
+          {fields.length > 0 ? (
+            fields.map((field) => (
+              <option key={field.name} value={field.name}>
+                {field.name}
+              </option>
+            ))
+          ) : (
+            <option disabled>{t('필드가 없습니다.')}</option>
+          )}
+        </select>
         <OptionContainer2>
           <textarea
             value="01.고객의 개인정보 보호 ㈜NonNull (이하 회사라고 함)는 고객의

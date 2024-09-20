@@ -8,7 +8,7 @@ export const apiList = (search) => {
     qs.push(`${k}=${v}`);
   }
 
-  let url = '/thesis/field/list';
+  let url = '/thesis/field/mainField';
   if (qs.length > 0) url += `?${qs.join('&')}`;
 
   return requestData(url);

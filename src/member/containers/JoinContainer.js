@@ -41,7 +41,7 @@ const JoinContainer = ({ searchParams }) => {
     apiList(search)
       .then((res) => {
         console.log('API response:', res);
-        setfields(res.fields || []);
+        setfields(res || []);
       })
       .catch((error) => {
         console.error('실패사유:', error);
