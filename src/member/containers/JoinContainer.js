@@ -1,33 +1,52 @@
 'use client';
-import React, { useLayoutEffect, useCallback, useState, useRef } from 'react';
+import React, {
+  useLayoutEffect,
+  useCallback,
+  useState,
+  useEffect,
+} from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import JoinForm from '../components/JoinForm';
-import { apiJoin, apiEmailAuth, apiEmailAuthCheck } from '../apis/apiJoin';
+import { apiJoin } from '../apis/apiJoin';
 import Container from '@/commons/components/Container';
 import JoinBox from '../components/JoinBox';
-import apiRequest from '@/commons/libs/apiRequest';
+import { apiList } from '../apis/apiFields';
 
-const JoinContainer = () => {
+function getQueryString(searchParams) {
+  const qs = {};
+  if (searchParams?.size > 0) {
+    for (const [k, v] of searchParams) {
+      qs[k] = v;
+    }
+  }
+  return qs;
+}
+
+const JoinContainer = ({ searchParams }) => {
   const { t } = useTranslation();
   const { setMainTitle } = getCommonActions();
   const router = useRouter();
+  const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
-  const authCountInterval = useRef();
+  const [fields, setfields] = useState([]);
+  const [search, setSearch] = useState(() => getQueryString(searchParams));
 
   useLayoutEffect(() => {
     setMainTitle(t('회원가입'));
   }, [t, setMainTitle]);
 
-  const [form, setForm] = useState({
-    gid: '' + Date.now(),
-    agree: false,
-    authNum: '',
-    emailVerified: false,
-    authCount: 180,
-    authCountMin: '03:00',
-  });
+  useEffect(() => {
+    apiList(search)
+      .then((res) => {
+        console.log('API response:', res);
+        setfields(res.fields || []);
+      })
+      .catch((error) => {
+        console.error('실패사유:', error);
+      });
+  }, [search]);
 
   const onSubmit = useCallback(
     (e) => {
@@ -35,82 +54,6 @@ const JoinContainer = () => {
 
       const _errors = {};
       let hasErrors = false;
-
-   // 이메일 인증 코드 전송
-   const onSendAuthCode = useCallback(() => {
-    // 이메일을 입력하지 않은 경우
-    if (!form?.email?.trim()) {
-      setErrors((errors) => ({
-        ...errors,
-        email: [t('이메일을_입력하세요.')],
-      }));
-      return;
-    } else {
-      delete errors.email;
-      const _errors = errors;
-      setErrors(_errors);
-    }
-
-    form.authCount = 180;
-    // 3분 카운트 시작
-    authCountInterval.current = setInterval(() => {
-      form.authCount--;
-      const minutes = Math.floor(form.authCount / 60);
-      const seconds = form.authCount - minutes * 60;
-
-      const authCountMin =
-        ('' + minutes).padStart(2, '0') + ':' + ('' + seconds).padStart(2, '0');
-
-      if (form.authCount < 0) {
-        form.authCount = 0;
-        clearInterval(authCountInterval.current);
-      }
-
-      setForm((form) => ({
-        ...form,
-        authCount: form.authCount,
-        authCountMin,
-      }));
-    }, 1000);
-
-    // 인증 이메일 보내기
-    apiEmailAuth(form.email, form.gid);
-  }, [form, errors, t]);
-
-  // 인증 코드 재전송
-  const onReSendAuthCode = useCallback(() => {
-    clearTimeout(authCountInterval.current);
-    onSendAuthCode();
-  }, [onSendAuthCode]);
-
-  const onVerifyAuthCode = useCallback(() => {
-    if (!form.authNum?.trim()) {
-      setErrors((errors) => ({
-        ...errors,
-        email: [t('인증코드를_입력하세요.')],
-      }));
-      return;
-    }
-
-    (async () => {
-      try {
-        await apiEmailAuthCheck(form.authNum, form.gid);
-
-        setForm((form) => ({ ...form, emailVerified: true })); // 이메일 인증 처리
-
-        delete errors.email;
-        const _errors = errors;
-        setErrors(_errors);
-        // 인증 완료 시 타이머 멈춤
-        clearInterval(authCountInterval.current);
-      } catch (err) {
-        setErrors((errors) => ({
-          ...errors,
-          email: [t('이메일_인증에_실패하였습니다.')],
-        }));
-      }
-    })();
-  }, [t, form, errors]);
 
       /* 필수 항목 검증 S */
       const requiredFields = {
@@ -176,28 +119,29 @@ const JoinContainer = () => {
   );
 
   const onChange = useCallback((e) => {
-    setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
+    const name = e.target.name;
+    const value = e.target.value;
+    if (name === 'skey') {
+      setSkey(value);
+    } else {
+      setForm((form) => ({ ...form, [name]: value }));
+    }
   }, []);
 
   const onToggle = useCallback((name, value) => {
     setForm((form) => ({ ...form, [name]: value }));
   }, []);
 
-
-
   return (
     <Container>
       <JoinBox>
         <JoinForm
-      form={form}
-      errors={errors}
-      onSubmit={onSubmit}
-      onChange={onChange}
-      onToggle={onToggle}
-      onReset={onReset}
-      onSendAuthCode={onSendAuthCode}
-      onReSendAuthCode={onReSendAuthCode}
-      onVerifyAuthCode={onVerifyAuthCode}
+          form={form}
+          onSubmit={onSubmit}
+          onChange={onChange}
+          onToggle={onToggle}
+          errors={errors}
+          fields={fields}
         />
       </JoinBox>
     </Container>
