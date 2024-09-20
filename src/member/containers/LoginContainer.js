@@ -5,10 +5,11 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import LoginForm from '../components/LoginForm';
-import { StyledWrapper } from '@/commons/components/layouts/StyledWrapper';
-import { apiLogin } from '../apis/apiLogin';
+import { apiLogin, apiUser } from '../apis/apiLogin';
 import { getUserActions } from '@/commons/contexts/UserInfoContext';
 import Container from '@/commons/components/Container';
+import LoginBox from '../components/LoginBox';
+
 const LoginContainer = ({ searchParams }) => {
   const router = useRouter();
   const { t } = useTranslation();
@@ -31,8 +32,8 @@ const LoginContainer = ({ searchParams }) => {
 
       /* 필수 항목 검증 S */
       const requiredFields = {
-        email: t('이메일을_입력하세요.'),
-        password: t('비밀번호를_입력하세요.'),
+        email: t('이메일을_입력하세요'),
+        password: t('비밀번호를_입력하세요'),
       };
 
       for (const [field, message] of Object.entries(requiredFields)) {
@@ -54,12 +55,13 @@ const LoginContainer = ({ searchParams }) => {
         .then((res) => {
           const token = res.data;
           cookies.save('token', token, { path: '/' });
+          console.log(form);
 
           (async () => {
             try {
               // 로그인 처리
               const user = await apiUser();
-
+              console.log('user', user);
               setIsLogin(true); // 로그인 상태
               setUserInfo(user);
 
@@ -93,12 +95,14 @@ const LoginContainer = ({ searchParams }) => {
 
   return (
     <Container>
-      <LoginForm
-        form={form}
-        errors={errors}
-        onSubmit={onSubmit}
-        onChange={onChange}
-      />
+      <LoginBox>
+        <LoginForm
+          form={form}
+          errors={errors}
+          onSubmit={onSubmit}
+          onChange={onChange}
+        />
+      </LoginBox>
     </Container>
   );
 };
