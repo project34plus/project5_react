@@ -2,11 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { ImSearch } from 'react-icons/im';
 import Select from 'react-select';
+import { color } from '@/theme/color';
 
-const options = [].map((item) => (
-  {value: item.title, label: '논문명'},
-  {value: item.poster, label: '저자명'}
-));
+const { gray } = color;
+
+const options = [].map(
+  (item) => (
+    { value: item.title, label: '논문명' },
+    { value: item.poster, label: '저자명' }
+  ),
+);
 
 const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
   return (
@@ -25,7 +30,7 @@ const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
           placeholder="검색어를 입력하세요"
         />
       </div>
-      <div className="rsv_searchBar">
+      <div className="searchBar">
         <Button>
           <ImSearch />
         </Button>
@@ -34,8 +39,26 @@ const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
   );
 };
 
-const FormBox = styled.form``;
+const FormBox = styled.form`
+display: flex;
+  .inputBox {
+    display: flex;
 
-const Button = styled.button``;
+    input {
+      border: 1px solid ${gray};
+      height: 40px;
+    }
+  }
+  
+  .select__control {
+  height: 40px;
+  }
+
+`;
+
+const Button = styled.button`
+  height: 40px;
+  width: 50px;
+`;
 
 export default SearchBox;

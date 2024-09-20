@@ -13,10 +13,10 @@ const ViewPage = () => {
       <Head>
         <title>논문 상세 정보</title>
       </Head>
-      <h1>상세보기페이지</h1>
+      <h1>상세보기 페이지</h1>
       <ThesisViewContainer />
     </>
   );
 };
 
-export default ViewPage;
+export default React.memo(ViewPage);

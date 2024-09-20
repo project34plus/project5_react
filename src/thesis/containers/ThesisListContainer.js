@@ -17,7 +17,7 @@ import Container from '@/commons/components/Container.js';
 
 function getQueryString(searchParams) {
   const qs = {};
-  if (searchParams.size > 0) {
+  if (searchParams?.size > 0) {
     for (const [k, v] of searchParams) {
       qs[k] = v;
     }
@@ -25,9 +25,8 @@ function getQueryString(searchParams) {
   return qs;
 }
 
-const ThesisListContainer = () => {
+const ThesisListContainer = ({ searchParams }) => {
   const { t } = useTranslation();
-  const searchParams = useSearchParams();
   const [form, setForm] = useState(() => getQueryString(searchParams));
   const [search, setSearch] = useState(() => getQueryString(searchParams));
   const [items, setItems] = useState([]);
