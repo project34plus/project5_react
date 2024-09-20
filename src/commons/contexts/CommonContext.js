@@ -3,6 +3,10 @@ import React, { createContext, useState, useContext } from 'react';
 
 //사이트 공통으로 필요한 게 생기면 더 추가하기
 const CommonContext = createContext({
+  state: {
+    linkText: '',
+    linkHref: '',
+  },
   mainTitle: '',
   subTitle: '',
   showHeader: true, // 헤더 보임 통제
@@ -11,6 +15,8 @@ const CommonContext = createContext({
 });
 
 const CommonProvider = ({ children }) => {
+  const [linkText, setLinkText] = useState('');
+  const [linkHref, setLinkHref] = useState('');
   const [mainTitle, setMainTitle] = useState('');
   const [subTitle, setSubTitle] = useState('');
   const [showHeader, setShowHeader] = useState(true);
@@ -18,13 +24,23 @@ const CommonProvider = ({ children }) => {
   const [showMainMenu, setShowMainMenu] = useState(true);
 
   const value = {
-    states: { mainTitle, subTitle, showHeader, showFooter, showMainMenu },
+    states: {
+      mainTitle,
+      subTitle,
+      showHeader,
+      showFooter,
+      showMainMenu,
+      linkText,
+      linkHref,
+    },
     actions: {
       setMainTitle,
       setSubTitle,
       setShowHeader,
       setShowFooter,
       setShowMainMenu,
+      setLinkText,
+      setLinkHref,
     }, //주소 매핑으로 접근 가능, 필요한 것만 비구조할당으로 가져옴
   };
 

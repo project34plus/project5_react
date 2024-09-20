@@ -1,9 +1,11 @@
 'use client';
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useContext } from 'react';
 import MyWishList from '../components/MyWishList';
 import Container from '@/commons/components/Container';
 import { apiWishlist as getThesis } from '@/thesis/apis/apiInfo';
 import styled from 'styled-components';
+import Pagination from '@/commons/components/Pagination';
+import CommonContext from '@/commons/contexts/CommonContext';
 
 const MyWishListContainer = () => {
   const [items, setItems] = useState([]); // 위시리스트 아이템
@@ -17,6 +19,10 @@ const MyWishListContainer = () => {
     setCurrentPage(page);
   }, []);
 
+  const {
+    actions: { setLinkText, setLinkHref },
+  } = useContext(CommonContext);
+
   // API 호출 및 데이터 설정
   useEffect(() => {
     (async () => {
@@ -25,11 +31,13 @@ const MyWishListContainer = () => {
         console.log('API Response:', res);
         setItems(res.items);
         setPagination(res.pagination);
+        setLinkText('즐겨찾기 한 논문');
+        setLinkHref(`/mypage/MyWishList`);
       } catch (err) {
         console.error('Failed to fetch wishlist items:', err);
       }
     })();
-  }, [currentPage]); // currentPage가 변경될 때마다 호출
+  }, [currentPage, setLinkHref, setLinkText]); // currentPage가 변경될 때마다 호출
 
   return (
     <Container>
@@ -44,12 +52,10 @@ const MyWishListContainer = () => {
       {items && items.length > 0 ? (
         <>
           <MyWishList items={items} />
-          {/* <Pagination onClick={onChangePage} pagination={pagination} /> */}
+          <Pagination onClick={onChangePage} pagination={pagination} />
         </>
       ) : (
-        <NoData>
-          즐겨찾기 한 논문이 없습니다.
-        </NoData>
+        <NoData>즐겨찾기 한 논문이 없습니다.</NoData>
       )}
     </Container>
   );

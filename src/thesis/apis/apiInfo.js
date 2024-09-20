@@ -10,8 +10,8 @@ export const apiList = (search) => {
     qs.push(`${k}=${v}`);
   }
 
- let url = '/thesis/list'; //실서버 DB
-//  let url = 'http://localhost:4003/list'; //로컬 DB
+  let url = '/thesis/list'; //실서버 DB
+  //  let url = 'http://localhost:4003/list'; //로컬 DB
   if (qs.length > 0) url += `?${qs.join('&')}`; //검색 조건이 있을 때
 
   return requestData(url);
@@ -24,4 +24,9 @@ export const apiGet = (tid) => requestData(`/thesis/info/${tid}`);
 // 찜한 목록 조회
 export const apiWishlist = (page = 1, limit = 8) => {
   return requestData(`/thesis/wish?page=${page}&limit=${limit}`);
+};
+
+// 최근 본 논문 조회
+export const apiUserLog = (page = 1, limit = 8) => {
+  return requestData(`/thesis/myView?page=${page}&limit=${limit}`);
 };
