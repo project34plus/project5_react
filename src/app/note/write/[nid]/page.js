@@ -1,9 +1,22 @@
-const NoteWrite = () => {
+"use client";
+import NoteForm from '@/note/components/NoteForm';
+
+const NoteWritePage = () => {
+    const handleSave = async (formData) => {
+        try {
+            await write("note", formData); // nid는 "note"로 고정
+            // 성공 메시지나 리디렉션 처리
+        } catch (err) {
+            console.error(err);
+            // 오류 처리
+        }
+    };
+
     return (
-        <h1>
-       44445
-    </h1>
+        <div>
+            <h1>노트 작성</h1>
+            <NoteForm onSave={handleSave} />
+        </div>
     );
 };
-
-export default NoteWrite;
+export default NoteWritePage;
