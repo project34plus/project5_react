@@ -5,7 +5,9 @@ import Header from './Header';
 
 const Wrapper = styled.div`
   display: flex;
-  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+
   aside {
     width: 180px;
     margin-right: 20px;
