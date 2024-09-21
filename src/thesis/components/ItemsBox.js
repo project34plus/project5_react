@@ -2,15 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { color } from '@/theme/color';
 import { useTranslation } from 'react-i18next';
+import fontSize from '@/theme/fontSize';
 
 const { gray } = color;
+const { small, normal } = fontSize;
 
 const ItemsBox = ({ items, pagination }) => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <Wrapper>
       {/* 총 검색 결과 표시 */}
-      <div>{`${t('총 검색 결과')}: ${pagination.total || 0}`}</div>
+      <div className="total">{`${t('총 검색 결과')}: ${
+        pagination.total || 0
+      }`}</div>
       {items?.length > 0 ? (
         items.map(({ tid, title, poster, publisher, _fields }) => (
           <li key={tid}>
@@ -23,18 +27,28 @@ const ItemsBox = ({ items, pagination }) => {
               </div>
             </a>
           </li>
-      ))                
+        ))
       ) : (
-        <p>{t('검색결과가_없습니다')}</p>  // 검색 결과 논문이 없을 때
+        <p>{t('검색결과가_없습니다')}</p> // 검색 결과 논문이 없을 때
       )}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  margin-top: 50px;
   li {
     border: 1px solid ${gray};
+    padding: 10px 10px;
+    margin-top: 5px;
+  }
+  .title {
+    font-size: ${normal};
+  }
+  .total {
+    margin-bottom: 10px;
+    font-size: ${normal};
   }
 `;
 
-export default ItemsBox;
+export default React.memo(ItemsBox);

@@ -5,10 +5,28 @@ import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
+import { format } from 'date-fns';
+import { registerLocale } from 'react-datepicker';
+import { ko } from 'date-fns/locale/ko';
+import FieldFilter from './FieldFilter';
+registerLocale('ko', ko);
 
-const { gray, white, navy } = color;
+const { gray, white, navy, black } = color;
 const { small, normal } = fontSize;
+
+const fieldList = [
+  { name: '공학', value: '공학' },
+  { name: '농수해양학', value: '농수해양학' },
+  { name: '복합학', value: '복합학' },
+  { name: '사회과학', value: '사회과학' },
+  { name: '예술체육학', value: '예술체육학' },
+  { name: '의약학', value: '의약학' },
+  { name: '인문학', value: '인문학' },
+  { name: '자연과학', value: '자연과학' },
+  { name: '미분류', value: '미분류' },
+];
 
 const options = [
   { value: 'ALL', label: '전체' },
@@ -24,6 +42,15 @@ const SearchItemRows = ({ options, form, onChange, i }) => {
   return (
     <div className="inputBox">
       <select
+        name="operators"
+        value={form?.operators?.length > i ? form?.operators[i] : ''}
+        onChange={(e) => onChange(e, i)}
+      >
+        <option value="AND">AND</option>
+        <option value="OR">OR</option>
+        <option value="NOT">NOT</option>
+      </select>
+      <select
         name="sopts"
         value={form?.sopts?.length > i ? form?.sopts[i] : ''}
         onChange={(e) => onChange(e, i)}
@@ -35,15 +62,6 @@ const SearchItemRows = ({ options, form, onChange, i }) => {
         ))}
       </select>
 
-      <select
-        name="operators"
-        value={form?.operators?.length > i ? form?.operators[i] : ''}
-        onChange={(e) => onChange(e, i)}
-      >
-        <option value="AND">AND</option>
-        <option value="OR">OR</option>
-        <option value="NOT">NOT</option>
-      </select>
       <input
         type="text"
         name="skeys"
@@ -59,6 +77,7 @@ const SearchItemRows = ({ options, form, onChange, i }) => {
 const SearchBox = ({ form, onChange, onSubmit }) => {
   const [itemsRows, setItemRows] = useState([]);
   const { t } = useTranslation();
+  const [filteredField, setFilteredField] = useState(null); // 필터링된 필드 상태
 
   useEffect(() => {
     setItemRows(
@@ -83,6 +102,11 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
     },
     [onChange],
   );
+
+  // 대분류 필터링 처리
+  const handleFieldChange = (selectedField) => {
+    setFilteredField(selectedField);
+  };
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
@@ -117,9 +141,10 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
       </div>
       <div className="field-subject">
         <p>주제분류</p>
+        <FieldFilter fieldList={fieldList} onFieldChange={handleFieldChange} />
       </div>
       <div className="publish-date">
-        <p>발행연도</p>
+        <p>발행일</p>
         <div className="sdate">
           <DatePicker
             className="pick_sdate"
@@ -134,6 +159,7 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
             placeholderText={t('검색시작일')}
           />
         </div>
+        <div>~</div>
         <div className="edate">
           <DatePicker
             className="pick_edate"
@@ -149,8 +175,10 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
           />
         </div>
       </div>
-      <Button>검색하기</Button>
-      <Button type='reset'>초기화</Button>
+      <div className="btn-group">
+        <Button>검색하기</Button>
+        <Button type="reset">초기화</Button>
+      </div>
     </FormBox>
   );
 };
@@ -172,6 +200,26 @@ const FormBox = styled.form`
     font-size: ${small};
     padding-left: 10px;
   }
+  .word-search {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    > p {
+      margin: 0 20px 0 0;
+    }
+  }
+
+  .field-subject {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    > p {
+      margin: 0 20px 0 0;
+            text-align: left; /* 왼쪽 정렬 */
+    }
+  }
   .plus,
   .minus {
     width: 50px;
@@ -186,44 +234,62 @@ const FormBox = styled.form`
   .publish-date {
     height: 45px;
     display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    align-items: center;
+    > p {
+      margin: 0 10px 0 0;
+    }
 
     .pick_sdate,
     .pick_edate {
       border: 1px solid ${gray};
       display: flex;
       align-items: center;
-      width: 120px;
+      width: 160px;
       height: 45px;
       text-align: center;
-      margin-right: 3px;
       box-sizing: border-box;
-      font-size: ${normal};
+      font-size: ${small};
       padding: 8px 20px;
       border-radius: 4px;
     }
+
     .react-datepicker {
+      width: 300px;
+      height: 300px;
       border-radius: 10px;
-      border: 1px solid ${gray};
-      width: 250px;
-      height: 240px;
+    }
+
+    .react-datepicker__navigation--next,
+    .react-datepicker__navigation--previous {
+      margin: 5px 5px 0 5px;
     }
 
     .react-datepicker__month-container {
       width: 100%;
       height: 100%;
+      border-radius: 10px;
+      border: 1px solid ${gray};
+    }
+
+    .react-datepicker__triangle {
+      fill: ${white};
+      color: ${white};
     }
 
     .react-datepicker__header {
-      background-color: #e2f7dd;
+      background: #e2f7dd;
       width: 100%;
       padding: 10px;
       border-radius: 10px 10px 0 0;
+      text-align: center;
     }
 
     //요일
     .react-datepicker__day-names {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
       margin-top: 10px;
       width: 100%;
@@ -233,14 +299,26 @@ const FormBox = styled.form`
     .react-datepicker__week {
       justify-content: space-between;
       display: flex;
-      padding: 5px 15px;
+      padding: 5px;
+
+      > * {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        justify-content: center;
+        align-items: center;
+        color: ${black};
+        text-align: center;
+        font-size: ${small};
+        line-height: 1;
+      }
     }
 
     //날짜
     .react-datepicker__month {
       display: flex;
       flex-direction: column;
-      margin: 5px 0 0 0;
+      margin-top: 5px;
     }
 
     .react-datepicker__day {
@@ -248,8 +326,12 @@ const FormBox = styled.form`
       margin: 0;
     }
 
+    react-datepicker__day--weekend {
+      color: #red;
+    }
+
     .react-datepicker__current-month {
-      font-size: ${normal};
+      font-size: ${small};
       margin-top: 3px;
     }
 
@@ -279,47 +361,55 @@ const FormBox = styled.form`
       background-color: ${navy};
     }
   }
+
+  .btn-group {
+    display: flex;
+    gap: 10px;
+  }
+
+  select {
+    margin-right: 5px;
+    width: 100px;
+    border: ${gray} 1px solid;
+    font-size: ${small};
+  }
 `;
 
-// 셀렉트박스
-const StyledSelect = {
-  control: (provided) => ({
-    ...provided,
-    border: `1px solid ${gray}`,
-    height: '60px', // 컨트롤 높이
-    marginRight: '10px',
-    width: '170px',
-    fontSize: `${small}`,
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    padding: '15px 10px',
-    backgroundColor: state.isSelected ? `${navy}` : `${white}`,
-    color: state.isSelected ? `${white}` : `${navy}`,
-    '&:hover': {
-      backgroundColor: `${navy}`,
-      color: `${white}`,
-    },
-  }),
-  menu: (provided) => ({
-    ...provided,
-    zIndex: 100, // 드롭다운 메뉴 z-index
-    fontSize: `${small}`,
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    color: `${navy}`, // 선택된 값 색상
-  }),
-};
+// 셀렉트
+// const StyledSelect = {
+//   control: (provided) => ({
+//     ...provided,
+//     border: `1px solid ${gray}`,
+//     height: '60px', // 컨트롤 높이
+//     marginRight: '10px',
+//     width: '170px',
+//     fontSize: `${small}`,
+//   }),
+//   option: (provided, state) => ({
+//     ...provided,
+//     padding: '15px 10px',
+//     backgroundColor: state.isSelected ? `${navy}` : `${white}`,
+//     color: state.isSelected ? `${white}` : `${navy}`,
+//     '&:hover': {
+//       backgroundColor: `${navy}`,
+//       color: `${white}`,
+//     },
+//   }),
+//   menu: (provided) => ({
+//     ...provided,
+//     zIndex: 100, // 드롭다운 메뉴 z-index
+//     fontSize: `${small}`,
+//   }),
+//   singleValue: (provided) => ({
+//     ...provided,
+//     color: `${navy}`, // 선택된 값 색상
+//   }),
+// };
 
 const Button = styled.button`
   height: 50px;
-  width: 150px;
-
-  svg {
-    width: 25px;
-    height: 25px;
-  }
+  width: 140px;
+  font-size: ${normal};
 `;
 
 export default SearchBox;

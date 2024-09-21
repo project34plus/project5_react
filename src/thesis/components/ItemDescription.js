@@ -26,7 +26,6 @@ const Wrapper = styled.div`
   }
 
   dd {
-    width: calc(100% - 140px);
     font-size: ${small};
   }
 
@@ -37,6 +36,16 @@ const Wrapper = styled.div`
   button {
     width: 100px;
     height: 40px;
+  }
+
+  .btn-group {
+    display: flex;
+    gap: 10px;
+  }
+
+  .info_wrap {
+    margin-top: 40px;
+    border-top: 2px solid black;
   }
 `;
 
@@ -61,6 +70,10 @@ const ItemDescription = ({ item }) => {
         <WishButton tid={tid}></WishButton>
       </div>
       <dl>
+        <dt>{t('조회수')}</dt>
+        <dd>{viewCount}</dd>
+      </dl>
+      <dl>
         <dt>{t('논문명')}</dt>
         <dd>{title}</dd>
       </dl>
@@ -73,6 +86,15 @@ const ItemDescription = ({ item }) => {
         <dd>{contributor}</dd>
       </dl>
       <dl>
+        <dt>{t('발행기관')}</dt>
+        <dd>{publisher}</dd>
+      </dl>
+      <dl>
+        <dt>{t('키워드')}</dt>
+        <dd>{keywords}</dd>
+      </dl>
+      <div className='info_wrap'>
+      <dl>
         <dt>{t('초록')}</dt>
         <dd>{thAbstract}</dd>
       </dl>
@@ -84,20 +106,11 @@ const ItemDescription = ({ item }) => {
         <dt>{t('참고문헌')}</dt>
         <dd>{reference}</dd>
       </dl>
-      <dl>
-        <dt>{t('발행기관')}</dt>
-        <dd>{publisher}</dd>
-      </dl>
-      <dl>
-        <dt>{t('키워드')}</dt>
-        <dd>{keywords}</dd>
-      </dl>
-      <dl>
-        <dt>{t('조회수')}</dt>
-        <dd>{viewCount}</dd>
-      </dl>
-      <button>{t('원문보기')}</button>
-      <button>{t('다운로드')}</button>
+      </div>
+      <div className='btn-group'>
+        <button>{t('원문보기')}</button>
+        <button>{t('다운로드')}</button>
+      </div>
     </Wrapper>
   );
 };
