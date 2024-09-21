@@ -129,7 +129,7 @@ const ThesisViewContainer = ({ params }) => {
   }
 
   return (
-    <Container>
+    <>
       <div>
         <View
           item={item}
@@ -138,7 +138,7 @@ const ThesisViewContainer = ({ params }) => {
           errors={errors}
         />
       </div>
-    </Container>
+    </>
   );
 };
 

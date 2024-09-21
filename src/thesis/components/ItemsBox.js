@@ -5,10 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 const { gray } = color;
 
-const ItemsBox = ({ items }) => {
+const ItemsBox = ({ items, pagination }) => {
   const {t} = useTranslation();
   return (
     <Wrapper>
+      {/* 총 검색 결과 표시 */}
+      <div>{`${t('총 검색 결과')}: ${pagination.total || 0}`}</div>
       {items?.length > 0 ? (
         items.map(({ tid, title, poster, publisher, _fields }) => (
           <li key={tid}>

@@ -9,7 +9,6 @@ import { apiList } from '../apis/apiInfo.js';
 import Pagination from '@/commons/components/Pagination';
 import ItemsBox from '../components/ItemsBox';
 import SearchBox from '../components/SearchBox';
-import Loading from '@/commons/components/Loading.js';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import Container from '@/commons/components/Container.js';
@@ -126,18 +125,18 @@ const ThesisListContainer = ({ searchParams }) => {
   }
 
   return (
-    <Container>
+    <>
       <SearchBox
         form={form}
         onChange={onChangeSearch}
         onSubmit={onSubmitSearch}
         selectChange={selectChange}
       />
-      <ItemsBox items={items} />
+      <ItemsBox items={items} pagination={pagination}/>
       {items.length > 0 && (
-        <Pagination onClick={onChangePage} pagination={pagination} />
+     <Pagination onClick={onChangePage} pagination={pagination} />
       )}
-    </Container>
+      </>
   );
 };
 
