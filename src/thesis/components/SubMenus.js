@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { apiField, apiMainField } from '@/thesis/apis/apiField';
 
 const SubMenuBox = styled.aside`
-    min-height: 650px;
+    min-height: 100px;
+    max-width: 800px;
     background: ${({ theme }) => theme.color.white};
     border-radius: 10px;
     padding: 10px;

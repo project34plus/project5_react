@@ -1,6 +1,7 @@
 import Container from '@/commons/components/Container';
+import RecommendList from './components/RecommendList';
 
-const { default: SubMenus } = require('./components/SubMenus');
+const { default: SubMenus } = require('../../thesis/components/SubMenus');
 
 const Recommend = () => {
   return (
@@ -8,6 +9,7 @@ const Recommend = () => {
       <Container>
         <h1>논문 추천페이지</h1>
         <SubMenus />
+        <RecommendList />
       </Container>
     </>
   );
