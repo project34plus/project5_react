@@ -10,13 +10,12 @@ import {
   IoLockClosedOutline,
   IoPersonCircleSharp,
   IoPhonePortraitOutline,
-  IoCheckbox,
-  IoCheckboxOutline,
   IoCheckmarkCircleOutline,
   IoCheckmarkCircleSharp,
   IoPersonSharp,
   IoCalendarNumberOutline,
 } from 'react-icons/io5';
+import JoinInput from '@/member/components/JoinInput';
 
 const FormBox = styled.form`
   width: 100%;
@@ -66,6 +65,12 @@ const Icon3 = styled.span`
   margin-right: 3px;
   color: ${({ theme }) => theme.color.navy};
 `;
+
+// const StyledInput = styled(JoinInput)`
+//   padding-left: 40px;
+//   height: 40px;
+//   font-size: ${({ theme }) => theme.fontSize.center};
+// `;
 
 const OptionContainer = styled.div`
   display: flex;
