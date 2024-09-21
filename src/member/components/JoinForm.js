@@ -18,7 +18,6 @@ import {
   IoPersonSharp,
   IoCalendarNumberOutline,
 } from 'react-icons/io5';
-import DatePicker from 'react-datepicker';
 
 const FormBox = styled.form`
   width: 100%;
