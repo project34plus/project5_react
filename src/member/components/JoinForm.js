@@ -575,7 +575,11 @@ const JoinForm = ({
           </Icon2>
           {t('관심분야')}
         </Subtitle>
-        <select name="interests" value={form.id} onChange={onChange}>
+        <select
+          name="interest1"
+          value={form.interests[0] || ''}
+          onChange={onChange}
+        >
           <option value="">{t('관심분야_선택')}</option>
           {interests.length > 0 ? (
             interests.map((interest) => (
@@ -588,7 +592,11 @@ const JoinForm = ({
           )}
         </select>
 
-        <select name="interests" value={form.id} onChange={onChange}>
+        <select
+          name="interest2"
+          value={form.interests[1] || ''}
+          onChange={onChange}
+        >
           <option value="">{t('관심분야_선택')}</option>
           {interests.length > 0 ? (
             interests.map((interest) => (

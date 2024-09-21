@@ -134,8 +134,13 @@ const JoinContainer = ({ searchParams }) => {
   const onChange = useCallback((e) => {
     const name = e.target.name;
     const value = e.target.value;
-    if (name === 'skey') {
-      setSkey(value);
+    if (name.startsWith('interest')) {
+      const index = parseInt(name.replace('interest', '')) - 1; // interest1, interest2에 따라 인덱스 추출
+      setForm((prevForm) => {
+        const interests = [...prevForm.interests];
+        interests[index] = value; // 해당 인덱스에 값 설정
+        return { ...prevForm, interests }; // 관심 분야 업데이트
+      });
     } else {
       setForm((form) => ({ ...form, [name]: value }));
     }
