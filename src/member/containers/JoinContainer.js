@@ -13,6 +13,7 @@ import { apiJoin } from '../apis/apiJoin';
 import Container from '@/commons/components/Container';
 import JoinBox from '../components/JoinBox';
 import { apiList } from '../apis/apiFields';
+import { apiFieldList } from '../apis/apiFields';
 
 function getQueryString(searchParams) {
   const qs = {};
@@ -33,6 +34,7 @@ const JoinContainer = ({ searchParams }) => {
   });
   const [errors, setErrors] = useState({});
   const [fields, setfields] = useState([]);
+  const [interests, setinterests] = useState([]);
   const [search, setSearch] = useState(() => getQueryString(searchParams));
 
   useLayoutEffect(() => {
@@ -42,8 +44,17 @@ const JoinContainer = ({ searchParams }) => {
   useEffect(() => {
     apiList(search)
       .then((res) => {
-        console.log('API response:', res);
         setfields(res || []);
+      })
+      .catch((error) => {
+        console.error('실패사유:', error);
+      });
+  }, [search]);
+
+  useEffect(() => {
+    apiFieldList(search)
+      .then((res) => {
+        setinterests(res || []);
       })
       .catch((error) => {
         console.error('실패사유:', error);
@@ -144,6 +155,7 @@ const JoinContainer = ({ searchParams }) => {
           onToggle={onToggle}
           errors={errors}
           fields={fields}
+          interests={interests}
         />
       </JoinBox>
     </Container>

@@ -145,9 +145,10 @@ const JoinForm = ({
   onToggle,
   onReset,
   fields,
+  interests,
 }) => {
   const { t } = useTranslation();
-  console.log('JoinForm fields:', fields);
+  console.log(form);
   return (
     <>
       <Title>{t('회원가입')}</Title>
@@ -557,7 +558,7 @@ const JoinForm = ({
         </select>
 
         <select name="memMinor" value={form.memMinor} onChange={onChange}>
-          <option value="">{t('전공_선택')}</option>
+          <option value="">{t('부전공_선택')}</option>
           {fields.length > 0 ? (
             fields.map((field, index) => (
               <option key={index} value={field}>
@@ -568,6 +569,38 @@ const JoinForm = ({
             <option disabled>{t('필드가 없습니다.')}</option>
           )}
         </select>
+        <Subtitle>
+          <Icon2>
+            <IoPersonSharp />
+          </Icon2>
+          {t('관심분야')}
+        </Subtitle>
+        <select name="interests" value={form.id} onChange={onChange}>
+          <option value="">{t('관심분야_선택')}</option>
+          {interests.length > 0 ? (
+            interests.map((interest) => (
+              <option key={interest.id} value={interest.id}>
+                {interest.subfield}
+              </option>
+            ))
+          ) : (
+            <option disabled>{t('필드가 없습니다.')}</option>
+          )}
+        </select>
+
+        <select name="interests" value={form.id} onChange={onChange}>
+          <option value="">{t('관심분야_선택')}</option>
+          {interests.length > 0 ? (
+            interests.map((interest) => (
+              <option key={interest.id} value={interest.id}>
+                {interest.subfield}
+              </option>
+            ))
+          ) : (
+            <option disabled>{t('필드가 없습니다.')}</option>
+          )}
+        </select>
+
         <OptionContainer2>
           <textarea
             value="01.고객의 개인정보 보호 ㈜NonNull (이하 회사라고 함)는 고객의
@@ -622,7 +655,7 @@ const JoinForm = ({
             {t('다시입력')}
           </MidButton>
           <MidButton type="submit" width="300px">
-            {t('다음으로')}
+            {t('가입하기')}
           </MidButton>
           <StyledMessage variant="danger">{errors?.global}</StyledMessage>
         </StyledButtons>
