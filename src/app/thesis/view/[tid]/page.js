@@ -7,16 +7,16 @@ export const metadata = {
   description: '논문 상세 페이지',
 };
 
-const ViewPage = () => {
+const ViewPage = ({ params }) => {
   return (
     <>
       <Head>
         <title>논문 상세 정보</title>
       </Head>
-      <h1>상세보기페이지</h1>
-      <ThesisViewContainer />
+      <h1>상세보기 페이지</h1>
+      <ThesisViewContainer params={params} />
     </>
   );
 };
 
-export default ViewPage;
+export default React.memo(ViewPage);

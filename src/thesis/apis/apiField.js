@@ -1,6 +1,4 @@
 import requestData from '@/commons/libs/requestData';
-import apiRequest from '../../commons/libs/apiRequest';
-import { resolve } from 'styled-jsx/css';
 
 // 로그인 처리
 export const apiField = () => {
