@@ -1,13 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { color } from '@/theme/color';
+import { useTranslation } from 'react-i18next';
 
 const { gray } = color;
 
 const ItemsBox = ({ items }) => {
+  const {t} = useTranslation();
   return (
     <Wrapper>
-      {items?.length > 0 &&
+      {items?.length > 0 ? (
         items.map(({ tid, title, poster, publisher, _fields }) => (
           <li key={tid}>
             <a href={`/thesis/view/${tid}`}>
@@ -19,7 +21,10 @@ const ItemsBox = ({ items }) => {
               </div>
             </a>
           </li>
-        ))}
+      ))                
+      ) : (
+        <p>{t('검색결과가_없습니다')}</p>  // 검색 결과 논문이 없을 때
+      )}
     </Wrapper>
   );
 };

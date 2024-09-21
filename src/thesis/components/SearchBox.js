@@ -1,55 +1,98 @@
-import React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import Select from 'react-select';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
-import { FaPlus } from 'react-icons/fa6';
-import { ImSearch } from 'react-icons/im';
+import { FaPlus, FaMinus } from 'react-icons/fa6';
+import DatePicker from 'react-datepicker';
 
 const { gray, white, navy } = color;
 const { small, normal } = fontSize;
 
 const options = [
-    { value: 'ALL', label: '전체' },
-    { value: 'TITLE', label: '논문명' },
-    { value: 'POSTER', label: '저자명' }
+  { value: 'ALL', label: '전체' },
+  { value: 'TITLE', label: '논문명' },
+  { value: 'POSTER', label: '저자명' },
 ];
 
-const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
+const SearchItemRows = ({options, form, onChange, i}) => {
+  return (
+    <div className="inputBox">
+      <select name='sopts'
+        value={form?.sopts?.length > i ? form?.sopts[i] : ''}
+        onChange={(e) => onChange(e, i)}>
+          {options.map(({value, label}) => <option key={`sopt_${value}`} value={value}>{label}</option>)}
+      </select>
+      
+      <select name='operators' value={form?.operators?.length > i ? form?.operators[i] : ''} onChange={(e) => onChange(e, i)}>
+        <option value='AND'>AND</option>
+        <option value='OR'>OR</option>
+        <option value='NOT'>NOT</option>
+      </select>
+      <input
+        type="text"
+        name="skeys"
+        value={form?.skeys?.length > i ? form?.skeys[i] : ''}
+        onChange={(e) => onChange(e, i)}
+        placeholder="검색어를 입력하세요"
+        className="inputBar"
+      />
+    </div>
+  );
+};
+
+
+
+const SearchBox = ({ form, onChange, onSubmit }) => {
+
+  const [itemsRows, setItemRows] = useState([]);
+
+  useEffect(() => {
+    setItemRows(form.searchRowsLast > 0 ? [...new Array(form.searchRowsLast).keys()].map(_ => SearchItemRows) : []);
+  }, [form.searchRowsLast]);
+
+  const onClick = useCallback((mode) => {
+   
+    setItemRows(items => {
+       const newitems = mode === 'minus' ? items.filter((_, i) => i !== items.length - 1) : items.concat(SearchItemRows);
+       onChange({target: {name: 'searchRowsLast', value: newitems.length}});
+       return newitems;
+    });
+  }, [onChange]);
+
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
-      <div className="inputBox">
-        <Select
-          onChange={selectChange}
-          options={options}
-          styles={StyledSelect}
-          placeholder='검색옵션'
-        />
-        <input
-          type="text"
-          name="skey"
-          value={form.skey}
-          onChange={onChange}
-          placeholder="검색어를 입력하세요"
-          className="inputBar"
-        />
+      <div className="word-search">
+        <p>검색어</p>
+        <SearchItemRows options={options} form={form} onChange={onChange} i={0}/>
+        {itemsRows.map((ItemRow, i) => <ItemRow key={`item-row-${i}`} options={options} form={form} onChange={onChange} i={i+1}/> )}
+      
+        <button type="button" className="plus" onClick={() => onClick('plus')}>
+          <FaPlus />
+        </button>
+        <button type="button" className="minus" onClick={() => onClick('minus')}>
+          <FaMinus />
+        </button>
       </div>
-      <div className="searchBar">
-        <Button>
-          <ImSearch />
-        </Button>
+      <div className="field-subject">
+        <p>주제분류</p>
       </div>
-      <button className="plus">
-        <FaPlus />
-      </button>
+      <div className="publish-date">
+        <p>발행연도</p>
+        <DatePicker></DatePicker>
+        <DatePicker></DatePicker>
+      </div>
+      <Button>검색하기</Button>
     </FormBox>
   );
 };
 
 const FormBox = styled.form`
   display: flex;
+  flex-direction: column;
   margin: 20px 0;
   justify-content: center;
+  align-items: center;
 
   .inputBox {
     display: flex;
@@ -61,9 +104,10 @@ const FormBox = styled.form`
     font-size: ${small};
     padding-left: 10px;
   }
-  .plus {
-    width: 60px;
-    height: 60px;
+  .plus,
+  .minus {
+    width: 50px;
+    height: 50px;
     margin-left: 10px;
 
     svg {
@@ -85,7 +129,7 @@ const StyledSelect = {
   }),
   option: (provided, state) => ({
     ...provided,
-    padding: '15px 10px', 
+    padding: '15px 10px',
     backgroundColor: state.isSelected ? `${navy}` : `${white}`,
     color: state.isSelected ? `${white}` : `${navy}`,
     '&:hover': {
@@ -105,8 +149,8 @@ const StyledSelect = {
 };
 
 const Button = styled.button`
-  height: 60px;
-  width: 60px;
+  height: 50px;
+  width: 150px;
 
   svg {
     width: 25px;

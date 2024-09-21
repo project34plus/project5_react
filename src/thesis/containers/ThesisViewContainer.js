@@ -36,7 +36,7 @@ const ThesisViewContainer = ({ params }) => {
   } = useContext(UserInfoContext);
 
   useLayoutEffect(() => {
-    setMainTitle(t('자료상세'));
+    setMainTitle(t('논문_상세정보'));
   }, [setMainTitle, t]);
 
   useEffect(() => {
