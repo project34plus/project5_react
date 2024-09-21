@@ -9,8 +9,9 @@ import { ImSearch } from 'react-icons/im';
 const { gray, white } = color;
 const { small, normal } = fontSize;
 
-const options = [].map(
+const options = [...new Array().keys()].map(
   (item) => (
+    { value: 'ALL', label: '전체' },
     { value: item.title, label: '논문명' },
     { value: item.poster, label: '저자명' }
   ),
@@ -27,7 +28,8 @@ const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
         <Select
           onChange={selectChange}
           options={options}
-          styles={customStyles}
+          styles={StyledSelect}
+          className="select"
         />
         <input
           type="text"
@@ -62,22 +64,65 @@ const FormBox = styled.form`
       height: 60px;
       width: 500px;
       font-size: ${small};
+      padding-left: 10px;
     }
   }
   .plus {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     margin-left: 10px;
+
+    svg {
+      width: 25px;
+      height: 25px;
+    }
   }
 `;
 
-const customStyles = styled(Select)`
-
-`;
+// 셀렉트박스
+const StyledSelect = {
+  control: (provided) => ({
+    ...provided,
+    border: `1px solid ${gray}`,
+    height: '60px', // 컨트롤 높이
+    marginRight: '10px',
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: gray,
+    lineHeight: '60px', // 선택된 값 세로 정렬
+  }),
+  indicatorContainer: (provided) => ({
+    ...provided,
+    height: '60px', // 드롭다운 화살표 높이
+    padding: '0 8px', // 패딩 조정
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? gray : 'white',
+    color: state.isSelected ? 'white' : gray,
+    '&:hover': {
+      backgroundColor: gray,
+      color: 'white',
+    },
+  }),
+  menu: (provided) => ({
+    ...provided,
+    zIndex: 100, // 드롭다운 메뉴 z-index
+  }),
+  hlgwow: () => ({
+    height: '60px',
+  })
+};
 
 const Button = styled.button`
-  height: 40px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
+
+  svg {
+    width: 25px;
+    height: 25px;
+  }
 `;
 
 export default SearchBox;
