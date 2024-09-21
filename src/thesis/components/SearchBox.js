@@ -6,30 +6,24 @@ import fontSize from '@/theme/fontSize';
 import { FaPlus } from 'react-icons/fa6';
 import { ImSearch } from 'react-icons/im';
 
-const { gray, white } = color;
+const { gray, white, navy } = color;
 const { small, normal } = fontSize;
 
-const options = [...new Array().keys()].map(
-  (item) => (
+const options = [
     { value: 'ALL', label: '전체' },
-    { value: item.title, label: '논문명' },
-    { value: item.poster, label: '저자명' }
-  ),
-);
+    { value: 'TITLE', label: '논문명' },
+    { value: 'POSTER', label: '저자명' }
+];
 
 const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
       <div className="inputBox">
-        {/* <select name="sopt" onChange={onChange} defaultValue={form.sopt}>
-            <option value="ALL">통합검색</option>
-            <option value="TITLE">논문명</option>
-          </select> */}
         <Select
           onChange={selectChange}
           options={options}
           styles={StyledSelect}
-          className="select"
+          placeholder='검색옵션'
         />
         <input
           type="text"
@@ -37,6 +31,7 @@ const SearchBox = ({ form, onChange, onSubmit, selectChange }) => {
           value={form.skey}
           onChange={onChange}
           placeholder="검색어를 입력하세요"
+          className="inputBar"
         />
       </div>
       <div className="searchBar">
@@ -58,14 +53,13 @@ const FormBox = styled.form`
 
   .inputBox {
     display: flex;
-
-    input {
-      border: 1px solid ${gray};
-      height: 60px;
-      width: 500px;
-      font-size: ${small};
-      padding-left: 10px;
-    }
+  }
+  .inputBar {
+    border: 1px solid ${gray};
+    height: 60px;
+    width: 500px;
+    font-size: ${small};
+    padding-left: 10px;
   }
   .plus {
     width: 60px;
@@ -86,33 +80,28 @@ const StyledSelect = {
     border: `1px solid ${gray}`,
     height: '60px', // 컨트롤 높이
     marginRight: '10px',
-  }),
-  singleValue: (provided) => ({
-    ...provided,
-    color: gray,
-    lineHeight: '60px', // 선택된 값 세로 정렬
-  }),
-  indicatorContainer: (provided) => ({
-    ...provided,
-    height: '60px', // 드롭다운 화살표 높이
-    padding: '0 8px', // 패딩 조정
+    width: '170px',
+    fontSize: `${small}`,
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected ? gray : 'white',
-    color: state.isSelected ? 'white' : gray,
+    padding: '15px 10px', 
+    backgroundColor: state.isSelected ? `${navy}` : `${white}`,
+    color: state.isSelected ? `${white}` : `${navy}`,
     '&:hover': {
-      backgroundColor: gray,
-      color: 'white',
+      backgroundColor: `${navy}`,
+      color: `${white}`,
     },
   }),
   menu: (provided) => ({
     ...provided,
     zIndex: 100, // 드롭다운 메뉴 z-index
+    fontSize: `${small}`,
   }),
-  hlgwow: () => ({
-    height: '60px',
-  })
+  singleValue: (provided) => ({
+    ...provided,
+    color: `${navy}`, // 선택된 값 색상
+  }),
 };
 
 const Button = styled.button`

@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { List } from 'react-content-loader';
 import { apiGet } from '../apis/apiInfo.js';
-import { getInfo } from '../apis/apiComment.js';
+import { getInfo, write } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
 import Container from '@/commons/components/Container.js';
@@ -47,7 +47,7 @@ const ThesisViewContainer = ({ params }) => {
         setItem(item);
       } catch (err) {
         console.error(err);
-        //router.back();
+        router.back();
       }
 
       try {
@@ -57,8 +57,9 @@ const ThesisViewContainer = ({ params }) => {
         setCommentForm({
           tid: tid,
           mode: 'write',
-          commenter: userInfo?.userName,
+          username: userInfo?.userName,
         });
+        console.log(userInfo.userName);
         window.scrollTo(0, 0);
       } catch (err) {
         console.error(err);
@@ -69,6 +70,7 @@ const ThesisViewContainer = ({ params }) => {
   //댓글 작성 처리
   const onSubmit = useCallback(
     (e) => {
+      console.log(e);
       e.preventDefault();
 
       const _errors = {};
@@ -103,7 +105,7 @@ const ThesisViewContainer = ({ params }) => {
       // 댓글 등록 처리
       (async () => {
         try {
-          const comments = await writeComment(commentForm);
+          const comments = await write(commentForm);
           setData(
             produce((draft) => {
               draft.comments = comments;
@@ -112,7 +114,7 @@ const ThesisViewContainer = ({ params }) => {
           setCommentForm({
             tid: item.tid,
             mode: 'write',
-            commenter: userInfo?.userName,
+            username: userInfo?.userName,
           });
         } catch (err) {
           setErrors(err.message);

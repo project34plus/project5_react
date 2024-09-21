@@ -68,7 +68,7 @@ const ThesisListContainer = ({ searchParams }) => {
     (selectedOption) => {
       setForm(
         produce((draft) => {
-          draft.persons = selectedOption ? selectedOption.value : null;
+          draft.options = selectedOption ? selectedOption.value : null;
         }),
       );
     },
