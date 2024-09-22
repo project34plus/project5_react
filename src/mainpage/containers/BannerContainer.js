@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import SearchBox from './SearchBox';
-import MainTitle from './MainTitle';
+import SearchBox from '../components/SearchBox';
+import MainTitle from '../components/MainTitle';
 import Image from 'next/image';
 
 const Container = styled.div`
   width: 100%;
-  height: 700px;
+  height: 600px;
   position: relative;
 `;
 
@@ -27,7 +27,7 @@ const BannerContainer = styled.section`
 
 const SearchBoxContainer = styled.div`
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
 `;
