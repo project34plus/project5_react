@@ -32,15 +32,34 @@ const FieldTrendContainer = ({ searchParams }) => {
     sDate: lastMonth,
     eDate: today,
   });
-  const [items, setItems] = useState([]);
+
+
+  const [stats, setStats] = useState(null);
+  const [field, setField] = useState(null);
 
   useEffect(() => {
     console.log('search', search);
     apiFieldRanking(search).then((res) => {
       console.log('API response: ', res);
-      const itemsArray = Object.values(res);
-      setItems(itemsArray || []);
-      console.log('itemsArrays: ', itemsArray);
+      const itemsArray = Object.values(res) ?? [];
+
+      /* 대분류로 묶어서 처리 */
+      const stats = {};
+      for (const item of itemsArray) {
+        stats[item.name] = stats[item.name] ?? { 'sub': [] };
+        stats[item.name].sub = stats[item.name].sub ?? [];
+        stats[item.name].sub.push(item);
+
+        // 대분류 별 조회 수 합계 */
+        stats[item.name].count = stats[item.name].count ?? 0;
+        stats[item.name].count += item.count;
+
+        // 대분류 별 찜하기 합계 */
+        stats[item.name].wishCount = stats[item.name].wishCount ?? 0;
+        stats[item.name].wishCount += item.wishCount;
+      }
+
+      setStats(stats);
     });
   }, [search]);
 
@@ -58,7 +77,8 @@ const FieldTrendContainer = ({ searchParams }) => {
         <label>종료 날짜:</label>
         <DatePicker selected={endDate} onChange={(date) => setEndDate(date)} />
       </div>
-      <FieldTrends items={items} />
+      {stats && <div>{Object.keys(stats).map(name => <span key={name} onClick={() => setField(name)}>{name}</span>)}</div>}
+      <FieldTrends stat={stats} field={field} />
     </Container>
   );
 };
