@@ -4,7 +4,7 @@ import { getCommonStates } from '../commons/contexts/CommonContext';
 
 const FooterContainer = styled.footer`
   background-color: ${({ theme }) => theme.color.darkgray};
-  color: white;
+  color: ${({ theme }) => theme.color.white};
   padding: 40px 0;
   text-align: left;
   position: relative;
@@ -51,8 +51,13 @@ const LeftText = styled.div`
 
 const RightText = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: right;
+
+  a {
+  color: ${({ theme }) => theme.color.white};
+  }
 `;
 
 const Footer = () => {
@@ -70,6 +75,7 @@ const Footer = () => {
         </LeftText>
         <RightText>
           <div>이용 약관 ㅣ 개인정보 처리방침 ㅣ 기관 소개</div>
+          <div>아이콘 출처:  <a href="https://kr.freepik.com/">Freepik 제작 아이콘</a></div>
         </RightText>
       </FooterText>
     </FooterContainer>
