@@ -24,6 +24,27 @@ const FormBox = styled.form`
   padding: 40px 50px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+
+  select {
+  padding: 10px;
+  border: 2px solid ${({ theme }) => theme.color.whiteGrayNavy};
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: ${({ theme }) => theme.color.black};
+  font-size: ${({ theme }) => theme.fontSize.small};
+  transition: border-color 0.3s;
+}
+
+  select:focus {
+  border-color: ${({ theme }) => theme.color.grayNavy};
+  outline: none;
+}
+  .selectBox {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 30px;
+  margin-left: 25px;
+  }
 `;
 
 const Title = styled.h1`
@@ -39,7 +60,7 @@ const Subtitle = styled.h2`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   text-align: left;
   margin-bottom: 30px;
-  color: ${({ theme }) => theme.color.darkgray};
+  color: ${({ theme }) => theme.color.navy};
   display: flex;
   align-items: center;
 `;
@@ -79,7 +100,7 @@ const OptionContainer = styled.div`
   gap: 80px;
   font-size: ${({ theme }) => theme.fontSize.center};
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   margin-left: 25px;
 
   .options {
@@ -312,6 +333,7 @@ const JoinForm = ({
                 {t('남성')}
               </span>
             </OptionContainer>
+            <StyledMessage variant="danger">{errors?.gender}</StyledMessage>
           </dd>
         </dl>
         <Subtitle>
@@ -543,6 +565,7 @@ const JoinForm = ({
           </Icon2>
           {t('전공')}
         </Subtitle>
+        <div className='selectBox'>
         <select name="memMajor" value={form.memMajor} onChange={onChange}>
           <option value="">{t('전공_선택')}</option>
           {fields.length > 0 ? (
@@ -568,12 +591,14 @@ const JoinForm = ({
             <option disabled>{t('필드가 없습니다.')}</option>
           )}
         </select>
+        </div>
         <Subtitle>
           <Icon2>
             <IoPersonSharp />
           </Icon2>
           {t('관심분야')}
         </Subtitle>
+        <div className='selectBox'>
         <select
           name="interest1"
           value={form.interests[0] || ''}
@@ -607,6 +632,7 @@ const JoinForm = ({
             <option disabled>{t('필드가 없습니다.')}</option>
           )}
         </select>
+        </div>
 
         <OptionContainer2>
           <textarea
@@ -664,8 +690,8 @@ const JoinForm = ({
           <MidButton type="submit" width="300px">
             {t('가입하기')}
           </MidButton>
-          <StyledMessage variant="danger">{errors?.global}</StyledMessage>
         </StyledButtons>
+        <StyledMessage variant="danger">{errors?.global}</StyledMessage>
       </FormBox>
     </>
   );

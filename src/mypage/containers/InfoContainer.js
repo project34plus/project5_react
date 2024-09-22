@@ -1,7 +1,7 @@
 'use client';
 import React, { useContext, useCallback, useState } from 'react';
 import ProfileForm from '../components/ProfileForm';
-import Container from '@/commons/components/Container';
+import Container2 from '@/commons/components/Container2';
 import UserInfoContext from '@/commons/contexts/UserInfoContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
@@ -120,7 +120,7 @@ const InfoContainer = () => {
   );
 
   return (
-    <Container>
+    <Container2>
       <ProfileForm
         form={form}
         _onChange={_onChange}
@@ -128,7 +128,7 @@ const InfoContainer = () => {
         onClick={deleteUserInfo}
         errors={errors}
       />
-    </Container>
+    </Container2>
   );
 };
 

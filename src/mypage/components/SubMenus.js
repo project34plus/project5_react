@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 const SubMenuBox = styled.aside`
-  min-height: 650px;
+  height: 600px;
   min-width: 200px;
+  width: 200px;
   background: ${({ theme }) => theme.color.white};
   background-image: linear-gradient(
     to bottom,

@@ -62,6 +62,8 @@ const Icon = styled.span`
   font-size: ${({ theme }) => theme.fontSize.small};
   color: ${({ theme }) => theme.color.white};
   margin-right: 5px;
+  position: relative;
+  top: 2px;
 `;
 
 const Header = () => {
