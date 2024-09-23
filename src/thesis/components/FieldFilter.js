@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { color } from '@/theme/color';
+import fontSize from '@/theme/fontSize';
 
-const {navy, white} = color;
+const { navy, white } = color;
+const { small } = fontSize;
 
 const FieldFilter = ({ fieldList, onFieldChange }) => {
   const [selectedField, setSelectedField] = useState(null);
@@ -14,14 +16,11 @@ const FieldFilter = ({ fieldList, onFieldChange }) => {
 
   return (
     <Wrapper>
-        {fieldList.map(({ value, name }) => (
-          <Button
-            key={value}
-            onClick={() => handleFieldClick(value)}
-          >
-            {name}
-          </Button>
-        ))}
+      {fieldList.map(({ value, name }) => (
+        <Button key={value} onClick={() => handleFieldClick(value)}>
+          {name}
+        </Button>
+      ))}
     </Wrapper>
   );
 };
@@ -29,7 +28,7 @@ const FieldFilter = ({ fieldList, onFieldChange }) => {
 const Wrapper = styled.div`
   display: flex;
   gap: 10px; //버튼 간격
-  `;
+`;
 
 const Button = styled.button`
   padding: 10px 15px;
@@ -37,7 +36,8 @@ const Button = styled.button`
   background: ${white};
   color: ${navy};
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
+  font-size: ${small};
 
   &:hover {
     background: ${navy};

@@ -39,15 +39,31 @@ const Wrapper = styled.div`
   margin-top: 50px;
   li {
     border: 1px solid ${gray};
-    padding: 10px 10px;
+    padding: 10px 15px;
     margin-top: 5px;
   }
   .title {
     font-size: ${normal};
+    margin: 5px 0;
   }
   .total {
-    margin-bottom: 10px;
     font-size: ${normal};
+    border-top: 1px solid ${gray};
+    border-bottom: 1px solid ${gray};
+    padding: 15px 10px;
+  }
+  .poster,
+  .publisher {
+    margin: 5px 0;
+  }
+
+  .fields {
+    background: ${gray};
+    width: 80px;
+    text-align: center;
+    border-radius: 50px;
+    padding: 3px 0;
+    margin-top: 5px;
   }
 `;
 
