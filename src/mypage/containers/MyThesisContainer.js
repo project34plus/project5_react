@@ -20,14 +20,20 @@ const MyThesisListContainer = () => {
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
   const { setMainTitle } = getCommonActions();
+
+
+  const itemsPerPage = 10; // 페이지당 아이템 수
 
   // 헤더 설정을 위한 CommonContext 사용
   const {
     actions: { setLinkText, setLinkHref },
   } = useContext(CommonContext);
+
+  const onChangePage = useCallback((page) => {
+    setCurrentPage(page);
+  }, []);
 
   useLayoutEffect(() => {
     setMainTitle(t('내가 등록한 논문'));
@@ -39,32 +45,21 @@ const MyThesisListContainer = () => {
     setLinkHref('/mypage/MyThesisList');
   }, [setLinkHref, setLinkText]);
 
-  // 내가 등록한 논문 목록 불러오기
+  // API 호출 및 데이터 설정
   useEffect(() => {
-    const fetchMyThesisList = async () => {
-      setLoading(true);
+    (async () => {
       try {
-        const response = await apiMyList(page); // 내가 등록한 논문 API 호출
-        setItems(response.items || []);
-        setPagination(response.pagination || {});
-      } catch (error) {
-        console.error('Failed to fetch my thesis list:', error);
-      } finally {
-        setLoading(false);
+        const res = await getThesis(currentPage, itemsPerPage);
+        console.log('API Response:', res);
+        setItems(res.items);
+        setPagination(res.pagination);
+        setLinkText('내가 등록한 논문');
+        setLinkHref(`/mypage/MyThesisList`);
+      } catch (err) {
+        console.error('Failed to fetch my thesis list:', err);
       }
-    };
-    fetchMyThesisList();
-  }, [page]);
-
-  /* 페이지 변경 함수 */
-  const onChangePage = useCallback((newPage) => {
-    setPage(newPage);
-  }, []);
-
-  /* 로딩 처리 */
-  if (loading) {
-    return <Loading />;
-  }
+    })();
+  }, [currentPage, setLinkHref, setLinkText]); // currentPage가 변경될 때마다 호출
 
   return (
     <Container2>

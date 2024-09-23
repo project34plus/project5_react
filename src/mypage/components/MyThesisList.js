@@ -1,64 +1,57 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { color } from '@/theme/color';
 
-const { gray } = color;
+const ThesisListItems = ({ item, className }) => {
+  const { tid, title, gid, poster } = item;
 
-const MyThesisListItems = ({ items }) => {
   return (
-    <Wrapper>
-      {items?.length > 0 &&
-        items.map(({ tid, title, gid, poster }) => (
-          <li key={tid}>
-            <Link href={`/thesis/view/${tid}`} passHref>
-              <a>
-                <div className="tid">{tid}</div>
-                <div className="gid">{gid}</div>
-                <div className="title">{title}</div>
-                <div className="poster">{poster}</div>
-              </a>
-            </Link>
-          </li>
-        ))}
-    </Wrapper>
+    <div className="thesis-list">
+      <Link href={`/thesis/view/${tid}`} passHref>
+        <li className={className}>
+          <div className="tid">{tid}</div>
+          <div className="gid">{gid}</div>
+          <div className="title">{title}</div>
+          <div className="poster">{poster}</div>
+        </li>
+      </Link>
+    </div>
   );
 };
 
-const Wrapper = styled.div`
-  li {
-    display: flex;
-    border-bottom: 1px solid ${gray};
-    height: 50px;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 1.2rem;
-    text-align: center;
-    padding: 10px 0;
+// 스타일 정의 (가로 정렬)
+const StyledThesisListItem = styled(ThesisListItems)`
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  height: 50px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2rem;
+  text-align: center;
 
-    a {
-      display: flex;
-      width: 100%;
-      justify-content: space-between;
-    }
+  .tid {
+    width: 10%;
+    padding-left: 10px;
+  }
 
-    .tid {
-      width: 10%;
-      padding-left: 10px;
-    }
+  .gid {
+    width: 20%;
+  }
 
-    .gid {
-      width: 20%;
-    }
+  .title {
+    width: 50%;
+  }
 
-    .title {
-      width: 50%;
-    }
-
-    .poster {
-      width: 20%;
-    }
+  .poster {
+    width: 20%;
   }
 `;
 
-export default React.memo(MyThesisListItems);
+const MyThesisList = ({ items }) => {
+  return (
+    items.length > 0 &&
+    items.map((item) => <StyledThesisListItem key={item.tid} item={item} />)
+  );
+};
+
+export default React.memo(MyThesisList);
