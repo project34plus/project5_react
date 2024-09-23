@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import fontSize from '@/theme/fontSize';
 import WishButton from '@/commons/components/WishButton';
 
-const { gray, midgray } = color;
+const { gray, midgray, lemon, lightgray } = color;
 const { small, normal, center } = fontSize;
 
 const ItemsBox = ({ items, pagination }) => {
@@ -40,7 +40,7 @@ const ItemsBox = ({ items, pagination }) => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   li {
     border: 1px solid ${gray};
     padding: 15px 30px;
@@ -63,7 +63,7 @@ const Wrapper = styled.div`
     border-top: 1px solid ${midgray};
     border-bottom: 1px solid ${midgray};
     padding: 15px 10px;
-    background: ${gray};
+    background: ${lightgray};
   }
   .poster,
   .publisher {
@@ -72,7 +72,7 @@ const Wrapper = styled.div`
   }
 
   .fields {
-    background: ${gray};
+    background: ${lemon};
     width: 110px;
     text-align: center;
     border-radius: 50px;

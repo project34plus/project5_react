@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 
-const { navy, white } = color;
+const { navy, white, yellow } = color;
 const { small } = fontSize;
 
 const FieldFilter = ({ fieldList, onFieldChange }) => {
@@ -40,7 +40,7 @@ const Button = styled.button`
   font-size: ${small};
 
   &:hover {
-    background: ${navy};
+    background: ${yellow};
     color: ${white};
   }
 `;

@@ -69,7 +69,7 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
         <div className="commenter">
           {userInfo?.userName
             ? userInfo.userName
-            : '댓글 작성은 로그인 후 가능합니다'}
+            : t('로그인_후_댓글_작성이_가능합니다')}
         </div>
         {/*로그인한 회원명 나와야 하는데 안나옴*/}
         <div className="input-area">

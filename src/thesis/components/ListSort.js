@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import fontSize from '@/theme/fontSize';
 import { color } from '@/theme/color';
 
-const { gray, midgray, white } = color;
+const { gray, midgray, white, navy } = color;
 const { small } = fontSize;
 
 const ListSort = ({ search, onChange }) => {
@@ -50,17 +50,18 @@ const Wrapper = styled.div`
 
   .sort-item {
     margin: 0 10px 0 0;
-    padding: 10px ;
+    padding: 5px 10px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: ${small};
-    background: ${gray};
+    // background: ${navy};
+    color: ${navy};
     transition: background 0.3s, color 0.3s;
   }
 
   .sort-item:hover {
-    background: ${midgray};
-    color: ${white};
+    // background: ${midgray};
+    color: ${midgray};
   }
 
   .sort-item.active {

@@ -13,7 +13,7 @@ import { ko } from 'date-fns/locale/ko';
 import FieldFilter from './FieldFilter';
 registerLocale('ko', ko);
 
-const { gray, white, navy, black, midgray } = color;
+const { gray, white, navy, darkgray, midgray, lightgray } = color;
 const { small, normal } = fontSize;
 
 const fieldList = [
@@ -219,6 +219,7 @@ const FormBox = styled.form`
     }
     > p {
       margin: 0 20px 0 0;
+      font-size: ${small};
     }
   }
 
@@ -230,6 +231,7 @@ const FormBox = styled.form`
     > p {
       margin: 0 20px 0 0;
       text-align: left; /* 왼쪽 정렬 */
+      font-size: ${small};
     }
   }
 
@@ -255,6 +257,7 @@ const FormBox = styled.form`
     align-items: center;
     > p {
       margin: 0 10px 0 0;
+      font-size: ${small};
     }
 
     .pick_sdate,
@@ -295,7 +298,7 @@ const FormBox = styled.form`
     }
 
     .react-datepicker__header {
-      background: #e2f7dd;
+      background: ${lightgray};
       width: 100%;
       padding: 10px;
       border-radius: 10px 10px 0 0;
@@ -323,7 +326,7 @@ const FormBox = styled.form`
         height: 30px;
         justify-content: center;
         align-items: center;
-        color: ${black};
+        color: ${darkgray};
         text-align: center;
         font-size: ${small};
         line-height: 1;
@@ -338,12 +341,8 @@ const FormBox = styled.form`
     }
 
     .react-datepicker__day {
-      color: ${gray};
+      color: ${darkgray};
       margin: 0;
-    }
-
-    react-datepicker__day--weekend {
-      color: #red;
     }
 
     .react-datepicker__current-month {
@@ -354,7 +353,7 @@ const FormBox = styled.form`
     .react-datepicker__day--today {
       // 오늘 날짜 하이라이트 커스텀
       color: ${navy};
-      border: 1px solid ${gray};
+      border: 1px solid ${navy};
       border-radius: 50%;
     }
     .react-datepicker__day--selected {
@@ -363,8 +362,8 @@ const FormBox = styled.form`
       border-radius: 50%;
     }
     .react-datepicker__day:hover {
-      background-color: ${navy}; /* 마우스 오버 시 배경색 변경 */
-      color: ${gray}; /* 마우스 오버 시 텍스트 색상 변경 */
+      background: ${midgray}; /* 마우스 오버 시 배경색 변경 */
+      color: ${white}; /* 마우스 오버 시 텍스트 색상 변경 */
       border-radius: 50%; /* 원형 테두리 적용 */
     }
 
@@ -374,7 +373,8 @@ const FormBox = styled.form`
 
     .react-datepicker__day--keyboard-selected {
       border-radius: 50%;
-      background-color: ${navy};
+      background: ${navy};
+      color: ${white};
     }
   }
 
@@ -397,6 +397,9 @@ const Button = styled.button`
   height: 50px;
   width: 140px;
   font-size: ${normal};
+  background: ${navy};
+  color: ${white};
+  border-radius: 5px;
 `;
 
 export default SearchBox;
