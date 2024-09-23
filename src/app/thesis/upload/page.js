@@ -1,8 +1,11 @@
-import ThesisUploadContainer from "@/thesis/containers/ThesisUploadContainer";
+import MemberOnlyContainer from '@/member/containers/MemberOnlyContainer';
+import ThesisUploadContainer from '@/thesis/containers/ThesisUploadContainer';
 
 const UploadPage = () => {
-    return(
-        <ThesisUploadContainer/>
-    );
+  return (
+    <MemberOnlyContainer>
+      <ThesisUploadContainer />
+    </MemberOnlyContainer>
+  );
 };
-export default UploadPage
+export default UploadPage;
