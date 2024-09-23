@@ -12,7 +12,6 @@ const Wrapper = styled.div`
     .title {
       font-size: 1.4rem;
     }
-
     .field {
       display: inline-block;
       padding-right: 3px;
