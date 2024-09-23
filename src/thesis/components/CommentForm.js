@@ -42,7 +42,7 @@ const FormBox = styled.form`
         height: 100px;
         padding: 12px 16px;
         border: 1px solid ${gray};
-        color: ${gray};
+        color: ${navy};
         box-sizing: border-box;
         resize: none;
         border-radius: 5px;
@@ -82,12 +82,7 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
           {errors?.content && (
             <MessageBox color="danger" messages={errors.content} />
           )}
-          <button
-            type="submit"
-            onClick={() => alert(t('로그인_후_댓글_작성이_가능합니다'))}
-          >
-            {t('작성하기')}
-          </button>
+          <button type="submit">{t('작성하기')}</button>
         </div>
       </div>
     </FormBox>
