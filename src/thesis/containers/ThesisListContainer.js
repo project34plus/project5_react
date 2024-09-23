@@ -9,11 +9,11 @@ import { apiList } from '../apis/apiInfo.js';
 import Pagination from '@/commons/components/Pagination';
 import ItemsBox from '../components/ItemsBox';
 import SearchBox from '../components/SearchBox';
-import Loading from '@/commons/components/Loading.js';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import Container from '@/commons/components/Container.js';
 import { List } from 'react-content-loader';
+import { produce } from 'immer';
 
 function getQueryString(searchParams) {
   const qs = { limit: 10 };
@@ -51,14 +51,52 @@ const ThesisListContainer = ({ searchParams }) => {
   }, [search]);
 
   /* 검색 관련 함수 */
-  const onChangeSearch = useCallback((e) => {
-    setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
+  const onChangeSearch = useCallback((e, i) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    if (['sopts', 'skeys', 'operators'].includes(name)) {
+      setForm(form => {
+        const newForm = {...form};
+        newForm[name] = newForm[name] ?? [];
+        newForm[name][i] = value;
+        newForm.operators = newForm.operators ?? [];
+        if (!newForm.operators[i]) newForm.operators[i] = 'AND';
+
+        newForm.sopts = newForm.sopts ?? []
+        if (!newForm.sopts[i]) newForm.sopts[i] = 'ALL';
+
+        return newForm;
+      });
+    } else {
+      setForm((form) => ({ ...form, [name]: value }));
+    }
   }, []);
 
   const onSubmitSearch = useCallback(
     (e) => {
       e.preventDefault();
-      setSearch({ ...form, page: 1 });
+      
+      const newForm = { ...form, page: 1 };
+      if (form.sopts || form.skeys) {
+        const searchRowsLast = form.searchRowsLast ?? 0;
+        const searchOpts = [...new Array(searchRowsLast + 1).keys()].filter(i => form?.sopts?.length > i && form?.sopts[i] && form?.skeys?.length > i && form?.skeys[i])
+        .map(i => ({sopts: form.sopts[i], skeys: form.skeys[i], operators: form.operators[i]}));
+        if (searchOpts.length > 0) {
+          newForm.sopts = [], newForm.skeys = [], newForm.operators = [];
+          for (const { sopts, skeys, operators } of searchOpts ) {
+            newForm.sopts.push(sopts);
+            newForm.skeys.push(skeys);
+            newForm.operators.push(operators);
+          }
+        } else {
+          delete newForm.sopts;
+          delete newForm.skeys;
+          delete newForm.operators;
+        }
+      }
+      
+      console.log('newForm', newForm);
+      setSearch(newForm);
     },
     [form],
   );
@@ -87,18 +125,18 @@ const ThesisListContainer = ({ searchParams }) => {
   }
 
   return (
-    <Container>
+    <>
       <SearchBox
         form={form}
         onChange={onChangeSearch}
         onSubmit={onSubmitSearch}
         selectChange={selectChange}
       />
-      <ItemsBox items={items} />
+      <ItemsBox items={items} pagination={pagination}/>
       {items.length > 0 && (
-        <Pagination onClick={onChangePage} pagination={pagination} />
+     <Pagination onClick={onChangePage} pagination={pagination} />
       )}
-    </Container>
+      </>
   );
 };
 
