@@ -3,11 +3,22 @@ import styled from 'styled-components';
 import SubMenus from '@/mypage/components/SubMenus';
 import Header from './Header';
 
+const Mypage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1400px;
+  margin-left: 180px;
+`;
+
 const Wrapper = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
+
   aside {
-    width: 180px;
     margin-right: 20px;
+    position: relative;
   }
 
   .content {
@@ -17,11 +28,15 @@ const Wrapper = styled.div`
 
 const MypageLayout = ({ children }) => {
   return (
-    <Wrapper className="layout-width">
+    <>
+      <Header />
+      <Mypage>
       <SubMenus />
-      <Header/>
-      <section className="content">{children}</section>
-    </Wrapper>
+      <Wrapper className="layout-width">
+        <section className="content">{children}</section>
+      </Wrapper>
+    </Mypage>
+    </>
   );
 };
 
