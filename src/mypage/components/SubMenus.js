@@ -4,33 +4,39 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 const SubMenuBox = styled.aside`
-  min-height: 650px;
-  min-width: 180px;
+  height: 600px;
+  min-width: 200px;
+  width: 200px;
   background: ${({ theme }) => theme.color.white};
-  border-radius: 10px;
-  padding: 10px; 
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.2) 1px,
+    transparent 1px
+  );
+  background-size: 100% 40px;
+  border-radius: 5px;
+  padding: 20px 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 
   a {
     display: block;
-    background: ${({ theme }) => theme.color.white}; 
+    background: ${({ theme }) => theme.color.white};
     color: ${({ theme }) => theme.color.navy};
-    font-size: ${({ theme }) => theme.fontSize.small};
-    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    font-size: ${({ theme }) => theme.fontSize.normal};
+    font-weight: ${({ theme }) => theme.fontWeight.semiBold};
     padding: 15px 20px;
     border-radius: 5px;
     transition: background 0.3s, color 0.3s, transform 0.2s;
-    margin-bottom: 10px;
-    
-    &:hover {
-      background: ${({ theme }) => theme.color.navy};
-      color: ${({ theme }) => theme.color.white};
-      transform: translateY(-2px);
-    }
-  }
+    margin-bottom: 15px;
+    border: 1px solid ${({ theme }) => theme.color.navy};
+    border-left: 6px solid ${({ theme }) => theme.color.navy};
 
-  a + a {
-    border-top: 1px solid ${({ theme }) => theme.color.gray};
+    &:hover {
+      color: ${({ theme }) => theme.color.black};
+      border: 1px solid ${({ theme }) => theme.color.yellow};
+      border-left: 6px solid ${({ theme }) => theme.color.yellow};
+      transform: translateY(-1px);
+    }
   }
 `;
 
