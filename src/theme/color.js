@@ -10,6 +10,7 @@ export const color = {
   gray: '#C9D7DD',
   midgray: '#758694',
   darkgray: '#31363F',
+  lightgray: '#d0dde9',
   black: '#000',
   white: '#fff',
   danger: '#FF0000',

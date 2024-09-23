@@ -592,6 +592,7 @@ const JoinForm = ({
           )}
         </select>
         </div>
+
         <Subtitle>
           <Icon2>
             <IoPersonSharp />
