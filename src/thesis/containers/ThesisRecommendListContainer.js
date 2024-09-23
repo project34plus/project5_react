@@ -15,6 +15,7 @@ import ItemsBox from '@/thesis/components/ItemsBox';
 import SubMenus from '@/thesis/components/SubMenus';
 import RecommendList from '../components/RecommendList';
 import { load } from 'react-cookies';
+import MemberOnlyContainer from '@/member/containers/MemberOnlyContainer';
 
 function getQueryString(searchParams) {
   const qs = {};
@@ -50,8 +51,11 @@ const ThesisRecommendListContainer = ({ searchParams }) => {
     });
   }, [search]);
   const onClick = (field) => {
+    if(field==null){
+      window.location.reload();
+    }
     console.log('Selected field:', field);
-    setSearch((prevSearch) => ({ ...prevSearch, fieldFilter : field })); // 검색 조건에 필드 값 추가
+    setSearch((prevSearch) => ({ ...prevSearch, fieldFilter: field })); // 검색 조건에 필드 값 추가
     console.log(search);
   };
   /* 페이지 변경 함수 */
@@ -66,11 +70,13 @@ const ThesisRecommendListContainer = ({ searchParams }) => {
   }
   return (
     <Container>
-      <SubMenus onClick={onClick} />
-      <RecommendList items={items} loading={loading} />
-      {items.length > 0 && (
-        <Pagination onClick={onChangePage} pagination={pagination} />
-      )}
+      <MemberOnlyContainer>
+        <SubMenus onClick={onClick} />
+        <ItemsBox items={items} pagination={pagination} />
+        {items.length > 0 && (
+          <Pagination onClick={onChangePage} pagination={pagination} />
+        )}
+      </MemberOnlyContainer>
     </Container>
   );
 };
