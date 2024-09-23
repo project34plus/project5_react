@@ -6,21 +6,19 @@ const ThesisListItem = ({ item, className }) => {
   const { tid, title, gid, poster, approvalStatus } = item;
 
   return (
-    <div className="thesis-list">
-      <Link href={`/thesis/view/${tid}`} passHref>
-        <li className={className}>
-          <div className="tid">{tid}</div>
-          <div className="title">{title}</div>
-          <div className="poster">{poster}</div>
-          <div className="approvalStatus">{approvalStatus}</div>
-          <div className="actions">
-            <a href={`/thesis/update/${tid}/edit`} className="edit-button">
-              수정하기
-            </a>
-          </div>
-        </li>
-      </Link>
-    </div>
+    <li className={className}>
+      <div className="tid">{tid}</div>
+      <div className="title">
+        <Link href={`/thesis/view/${tid}`}>{title}</Link>
+      </div>
+      <div className="poster">{poster}</div>
+      <div className="approvalStatus">{approvalStatus}</div>
+      <div className="actions">
+        <Link href={`/thesis/update/${tid}`} className="edit-button">
+          수정하기
+        </Link>
+      </div>
+    </li>
   );
 };
 
@@ -92,7 +90,9 @@ const StyledThesisListItem = styled(ThesisListItem)`
 
 const MyThesisList = ({ items }) => {
   return items.length > 0 ? (
-    items.map((item) => <StyledThesisListItem key={item.tid} item={item} />)
+    items.map((item) => (
+      <StyledThesisListItem key={item.tid} item={item} />
+    ))
   ) : (
     <div>등록한 논문이 없습니다.</div>
   );

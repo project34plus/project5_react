@@ -9,8 +9,8 @@ export const uploadThesis = (thesisData) => {
   return saveProcess('/thesis/upload', 'POST', thesisData);
 };
 
-export const updateThesis = (tid, thesisData, action = 'submit') => {
-  return saveProcess(`/thesis/update/${tid}/${action}`, 'PATCH', thesisData);
+export const updateThesis = (tid, thesisData) => {
+  return saveProcess(`/thesis/update/${tid}/submit`, 'PATCH', thesisData);
 };
 
 // import saveProcess from ".";
