@@ -6,7 +6,7 @@ import fontSize from '@/theme/fontSize';
 import WishButton from '@/commons/components/WishButton';
 
 const { gray, midgray } = color;
-const { small, normal } = fontSize;
+const { small, normal, center } = fontSize;
 
 const ItemsBox = ({ items, pagination }) => {
   const { t } = useTranslation();
@@ -43,20 +43,20 @@ const Wrapper = styled.div`
   margin-top: 50px;
   li {
     border: 1px solid ${gray};
-    padding: 10px 15px;
+    padding: 15px 30px;
     margin-top: 5px;
     position: relative;
   }
 
   .wishButton {
     position: absolute;
-    right: 15px;
-    top: calc(100% - 75px);
+    right: 25px;
+    top: calc(100% - 95px);
     z-index: 1000;
   }
   .title {
-    font-size: ${normal};
-    margin: 5px 0;
+    font-size: ${center};
+    margin: 5px 0 10px;
   }
   .total {
     font-size: ${normal};
@@ -68,14 +68,16 @@ const Wrapper = styled.div`
   .poster,
   .publisher {
     margin: 5px 0;
+    font-size: ${small};
   }
 
   .fields {
     background: ${gray};
-    width: 80px;
+    width: 90px;
     text-align: center;
     border-radius: 50px;
-    padding: 4px 0;
+    padding: 5px 10px;
+    font-size: ${small};
     margin-top: 10px;
   }
 `;

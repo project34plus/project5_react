@@ -13,7 +13,7 @@ import { ko } from 'date-fns/locale/ko';
 import FieldFilter from './FieldFilter';
 registerLocale('ko', ko);
 
-const { gray, white, navy, black } = color;
+const { gray, white, navy, black, midgray } = color;
 const { small, normal } = fontSize;
 
 const fieldList = [
@@ -388,39 +388,10 @@ const FormBox = styled.form`
     width: 100px;
     border: ${gray} 1px solid;
     font-size: ${small};
+    padding-left: 5px;
+    color: ${midgray};
   }
 `;
-
-// 셀렉트
-// const StyledSelect = {
-//   control: (provided) => ({
-//     ...provided,
-//     border: `1px solid ${gray}`,
-//     height: '60px', // 컨트롤 높이
-//     marginRight: '10px',
-//     width: '170px',
-//     fontSize: `${small}`,
-//   }),
-//   option: (provided, state) => ({
-//     ...provided,
-//     padding: '15px 10px',
-//     backgroundColor: state.isSelected ? `${navy}` : `${white}`,
-//     color: state.isSelected ? `${white}` : `${navy}`,
-//     '&:hover': {
-//       backgroundColor: `${navy}`,
-//       color: `${white}`,
-//     },
-//   }),
-//   menu: (provided) => ({
-//     ...provided,
-//     zIndex: 100, // 드롭다운 메뉴 z-index
-//     fontSize: `${small}`,
-//   }),
-//   singleValue: (provided) => ({
-//     ...provided,
-//     color: `${navy}`, // 선택된 값 색상
-//   }),
-// };
 
 const Button = styled.button`
   height: 50px;

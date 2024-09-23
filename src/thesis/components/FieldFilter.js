@@ -36,7 +36,7 @@ const Button = styled.button`
   background: ${white};
   color: ${navy};
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 15px;
   font-size: ${small};
 
   &:hover {
