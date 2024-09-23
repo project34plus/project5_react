@@ -1,16 +1,13 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { color } from '../../../../styles/color';
-
-const { white, midGreen } = color;
 
 const ListMain = (props) => {
   const navigate = useNavigate();
-  const { bid } = useParams();
+  const { nid } = useParams();
 
   const handleButtonClick = () => {
-    navigate(`/board/write/${bid}`);
+    navigate(`/note/write/${nid}`);
   };
 
   const Wrapper = styled.div`
@@ -24,7 +21,6 @@ const ListMain = (props) => {
     width: 110px;
     height: 35px;
     background-color: ${midGreen};
-    color: ${white};
     border-radius: 5px;
     border: none;
     cursor: pointer;

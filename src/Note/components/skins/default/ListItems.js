@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
-import BoardListTitle from '../../../../commons/components/BoardListTitle';
 import { FcInspection } from 'react-icons/fc';
 
 const Wrapper = styled.ul``;
@@ -11,9 +10,7 @@ const Wrapper = styled.ul``;
 const ListItem = ({ item, className }) => {
   const {
     seq,
-    notice,
     subject,
-    poster,
     member,
     viewCount,
     commentCount,
@@ -109,7 +106,6 @@ const ListItems = ({ items }) => {
 
   return (
     <Wrapper>
-      <BoardListTitle />
       {items && items.length > 0 ? (
         items.map((item) => <StyledListItem key={item.seq} item={item} />)
       ) : (

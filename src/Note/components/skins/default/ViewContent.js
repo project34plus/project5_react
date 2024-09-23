@@ -101,24 +101,6 @@ const ViewContent = ({ data, onDelete }) => {
 
   return (
     <Wrapper>
-      <div className="subject">
-        {data.subject}
-        <div className="button">
-          {t('찜하기')}
-          <WishButton seq={data.seq} type={'BOARD'}></WishButton>
-        </div>
-      </div>
-      <div className="post-info">
-        <div className="items left">
-          작성자 | {data.poster}
-          {data.member && '(' + data.member.email + ')'}
-        </div>
-        <div className="items right">
-          IP | {data.ip} &nbsp;&nbsp;&nbsp; {t('조회수')} |{' '}
-          {data.viewCount.toLocaleString()} &nbsp;&nbsp;&nbsp; {t('작성일자')} |{' '}
-          {data.createdAt}
-        </div>
-      </div>
       <StyledContents>
         <div
           className="contents"
@@ -139,17 +121,17 @@ const ViewContent = ({ data, onDelete }) => {
       <Buttons>
         <BoardButton>
           {data.showList && (
-            <Link to={'/board/list/' + board.bid}>{t('글목록')}</Link>
+            <Link to={'/note/list/' + note.nid}>{t('글목록')}</Link>
           )}
         </BoardButton>
 
         {data.showEdit && (
           <>
             <BoardButton>
-              <Link to={'/board/write/' + board.bid}>{t('글쓰기')}</Link>
+              <Link to={'/note/write/' + note.nid}>{t('글쓰기')}</Link>
             </BoardButton>
             <BoardButton>
-              <Link to={'/board/update/' + data.seq}>{t('글수정')}</Link>
+              <Link to={'/note/update/' + note.seq}>{t('글수정')}</Link>
             </BoardButton>
           </>
         )}
