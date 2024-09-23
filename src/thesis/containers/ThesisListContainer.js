@@ -13,9 +13,10 @@ import Loading from '@/commons/components/Loading.js';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import Container from '@/commons/components/Container.js';
+import { List } from 'react-content-loader';
 
 function getQueryString(searchParams) {
-  const qs = {};
+  const qs = { limit: 10 };
   if (searchParams?.size > 0) {
     for (const [k, v] of searchParams) {
       qs[k] = v;
@@ -23,6 +24,8 @@ function getQueryString(searchParams) {
   }
   return qs;
 }
+
+const MyListLoader = () => <List />;
 
 const ThesisListContainer = ({ searchParams }) => {
   const { t } = useTranslation();
@@ -65,7 +68,7 @@ const ThesisListContainer = ({ searchParams }) => {
     (selectedOption) => {
       setForm(
         produce((draft) => {
-          draft.persons = selectedOption ? selectedOption.value : null;
+          draft.options = selectedOption ? selectedOption.value : null;
         }),
       );
     },
@@ -80,7 +83,7 @@ const ThesisListContainer = ({ searchParams }) => {
 
   /* 로딩 처리 */
   if (loading) {
-    return <Loading />;
+    return <MyListLoader />;
   }
 
   return (

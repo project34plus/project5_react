@@ -24,6 +24,27 @@ const FormBox = styled.form`
   padding: 40px 50px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+
+  select {
+  padding: 10px;
+  border: 2px solid ${({ theme }) => theme.color.whiteGrayNavy};
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: ${({ theme }) => theme.color.black};
+  font-size: ${({ theme }) => theme.fontSize.small};
+  transition: border-color 0.3s;
+}
+
+  select:focus {
+  border-color: ${({ theme }) => theme.color.grayNavy};
+  outline: none;
+}
+  .selectBox {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 30px;
+  margin-left: 25px;
+  }
 `;
 
 const Title = styled.h1`
@@ -39,7 +60,7 @@ const Subtitle = styled.h2`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   text-align: left;
   margin-bottom: 30px;
-  color: ${({ theme }) => theme.color.darkgray};
+  color: ${({ theme }) => theme.color.navy};
   display: flex;
   align-items: center;
 `;
@@ -79,7 +100,7 @@ const OptionContainer = styled.div`
   gap: 80px;
   font-size: ${({ theme }) => theme.fontSize.center};
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   margin-left: 25px;
 
   .options {
@@ -105,8 +126,49 @@ const OptionContainer = styled.div`
   }
 `;
 
-const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
+const OptionContainer2 = styled.div`
+  font-size: ${({ theme }) => theme.fontSize.center};
+
+  textarea {
+    display: block;
+    aligin-items: center;
+    width: 100%;
+    height: 150px;
+    overflow-y: 10px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    border: 3px solid ${({ theme }) => theme.color.whiteGrayNavy};
+    border-radius: 5px;
+    padding: 13px;
+    background-color: #f9f9f9;
+    font-size: ${({ theme }) => theme.fontSize.small};
+  }
+
+  .agree {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+`;
+
+const StyledButtons = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const JoinForm = ({
+  form,
+  errors,
+  onSubmit,
+  onChange,
+  onToggle,
+  onReset,
+  fields,
+  interests,
+}) => {
   const { t } = useTranslation();
+  console.log(form);
   return (
     <>
       <Title>{t('회원가입')}</Title>
@@ -230,7 +292,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
           </Subtitle>
           <dd>
             <OptionContainer>
-              <span onClick={() => onToggle('gender', 'FEMALE')}>
+              <span
+                onClick={() => {
+                  if (form?.gender === 'FEMALE') {
+                    onToggle('gender', null); // 체크 해제
+                  } else {
+                    onToggle('gender', 'FEMALE'); // 체크
+                  }
+                }}
+              >
                 {form?.gender === 'FEMALE' ? (
                   <Icon3>
                     <IoCheckmarkCircleSharp />
@@ -242,7 +312,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                 )}
                 {t('여성')}
               </span>
-              <span onClick={() => onToggle('gender', 'MALE')}>
+              <span
+                onClick={() => {
+                  if (form?.gender === 'MALE') {
+                    onToggle('gender', null); // 체크 해제
+                  } else {
+                    onToggle('gender', 'MALE'); // 체크
+                  }
+                }}
+              >
                 {form?.gender === 'MALE' ? (
                   <Icon3>
                     <IoCheckmarkCircleSharp />
@@ -258,7 +336,6 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
             <StyledMessage variant="danger">{errors?.gender}</StyledMessage>
           </dd>
         </dl>
-
         <Subtitle>
           <Icon2>
             <IoPersonSharp />
@@ -269,7 +346,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
           <dd>
             <OptionContainer>
               <div className="options">
-                <span onClick={() => onToggle('job', 'PROFESSOR')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'PROFESSOR') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'PROFESSOR'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'PROFESSOR' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -281,7 +366,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                   )}
                   {t('교수')}
                 </span>
-                <span onClick={() => onToggle('job', 'DOCTOR')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'DOCTOR') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'DOCTOR'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'DOCTOR' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -295,7 +388,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                 </span>
               </div>
               <div className="options">
-                <span onClick={() => onToggle('job', 'MASTER')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'MASTER') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'MASTER'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'MASTER' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -307,7 +408,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                   )}
                   {t('석사')}
                 </span>
-                <span onClick={() => onToggle('job', 'ACADEMIC')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'ACADEMIC') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'ACADEMIC'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'ACADEMIC' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -321,7 +430,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                 </span>
               </div>
               <div className="options">
-                <span onClick={() => onToggle('job', 'RESEARCHER')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'RESEARCHER') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'RESEARCHER'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'RESEARCHER' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -333,7 +450,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                   )}
                   {t('연구원')}
                 </span>
-                <span onClick={() => onToggle('job', 'LIBRARIAN')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'LIBRARIAN') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'LIBRARIAN'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'LIBRARIAN' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -347,27 +472,41 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                 </span>
               </div>
               <div className="options">
-                <span onClick={() => onToggle('job', 'UNIVERSITY_STAFF')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'UNIVERSITY_STAFF') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'UNIVERSITY_STAFF'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'UNIVERSITY_STAFF' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
                     </Icon3>
                   ) : (
                     <Icon3>
-                      {' '}
                       <IoCheckmarkCircleOutline />
                     </Icon3>
                   )}
                   {t('대학직원')}
                 </span>
-                <span onClick={() => onToggle('job', 'TEACHER')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'TEACHER') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'TEACHER'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'TEACHER' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
                     </Icon3>
                   ) : (
                     <Icon3>
-                      {' '}
                       <IoCheckmarkCircleOutline />
                     </Icon3>
                   )}
@@ -375,7 +514,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                 </span>
               </div>
               <div className="options">
-                <span onClick={() => onToggle('job', 'PUBLIC_OFFICIAL')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'PUBLIC_OFFICIAL') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'PUBLIC_OFFICIAL'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'PUBLIC_OFFICIAL' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -387,7 +534,15 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
                   )}
                   {t('공무원')}
                 </span>
-                <span onClick={() => onToggle('job', 'GENERAL_MEMBER')}>
+                <span
+                  onClick={() => {
+                    if (form?.job === 'GENERAL_MEMBER') {
+                      onToggle('job', null); // 체크 해제
+                    } else {
+                      onToggle('job', 'GENERAL_MEMBER'); // 체크
+                    }
+                  }}
+                >
                   {form?.job === 'GENERAL_MEMBER' ? (
                     <Icon3>
                       <IoCheckmarkCircleSharp />
@@ -404,7 +559,111 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
             <StyledMessage variant="danger">{errors?.job}</StyledMessage>
           </dd>
         </dl>
-        <OptionContainer>
+        <Subtitle>
+          <Icon2>
+            <IoPersonSharp />
+          </Icon2>
+          {t('전공')}
+        </Subtitle>
+        <div className='selectBox'>
+        <select name="memMajor" value={form.memMajor} onChange={onChange}>
+          <option value="">{t('전공_선택')}</option>
+          {fields.length > 0 ? (
+            fields.map((field, index) => (
+              <option key={index} value={field}>
+                {field}
+              </option>
+            ))
+          ) : (
+            <option disabled>{t('필드가 없습니다.')}</option>
+          )}
+        </select>
+
+        <select name="memMinor" value={form.memMinor} onChange={onChange}>
+          <option value="">{t('부전공_선택')}</option>
+          {fields.length > 0 ? (
+            fields.map((field, index) => (
+              <option key={index} value={field}>
+                {field}
+              </option>
+            ))
+          ) : (
+            <option disabled>{t('필드가 없습니다.')}</option>
+          )}
+        </select>
+        </div>
+        <Subtitle>
+          <Icon2>
+            <IoPersonSharp />
+          </Icon2>
+          {t('관심분야')}
+        </Subtitle>
+        <div className='selectBox'>
+        <select
+          name="interest1"
+          value={form.interests[0] || ''}
+          onChange={onChange}
+        >
+          <option value="">{t('관심분야_선택')}</option>
+          {interests.length > 0 ? (
+            interests.map((interest) => (
+              <option key={interest.id} value={interest.id}>
+                {interest.subfield}
+              </option>
+            ))
+          ) : (
+            <option disabled>{t('필드가 없습니다.')}</option>
+          )}
+        </select>
+
+        <select
+          name="interest2"
+          value={form.interests[1] || ''}
+          onChange={onChange}
+        >
+          <option value="">{t('관심분야_선택')}</option>
+          {interests.length > 0 ? (
+            interests.map((interest) => (
+              <option key={interest.id} value={interest.id}>
+                {interest.subfield}
+              </option>
+            ))
+          ) : (
+            <option disabled>{t('필드가 없습니다.')}</option>
+          )}
+        </select>
+        </div>
+
+        <OptionContainer2>
+          <textarea
+            value="01.고객의 개인정보 보호 ㈜NonNull (이하 회사라고 함)는 고객의
+            개인정보를 중요시하며, 개인정보보호법, 정보통신망 이용촉진 및
+            정보보호 등에 관한 법률 등 개인정보와 관련된 법령을 준수하고
+            있습니다. 02. 개인정보의 수집·이용목적, 수집하는 개인정보의 항목 및
+            수집방법 가. 개인정보의 수집·이용목적과 수집하는 개인정보의 항목 ①
+            회사는 회원서비스 등을 통하여 고객들에게 보다 더 향상된 양질의
+            서비스를 제공하기 위하여 고객 개인의 정보를 수집·이용하고 있습니다.
+            수집·이용정보항목과 수집·이용 목적은 아래와 같습니다. [수집·이용정보
+            항목] - 성명, 성별, 생년월일, ID, 비밀번호, 주소, 이메일, 쿠키 - 만
+            14세 미만인 경우 추가 수집·이용정보 항목 : 법정대리인(부모 등)의
+            성명, 생년월일, 휴대전화인증 정보, 쿠키 [수집·이용목적] (1) 회원관리
+            서비스 이용에 따른 본인식별, 법정대리인 동의 유무 확인, 법정대리인
+            본인의 확인, 연령별 서비스의 제공, 불량회원의 부정이용 방지와 비인가
+            사용방지, 분쟁 해결, 불만처리 등 민원처리, 문의사항처리 등 (2)
+            이벤트 운영 및 고객 연락 추첨행사, 이벤트 운영, 이벤트 결과 공지,
+            경품 증정, 사은품 증정, 경품·사은품·기타 물품의 배송, 청구서 전달,
+            본인의사 확인, 컨텐츠 제공 및 이와 관련한 고객 연락, 각종 세금
+            신고·납부 및 공제, 회사에 부과되는 법적·행정적 의무의 이행 등 (3)
+            마케팅 및 광고에 활용 고객 만족도 조사, 여론조사 등의 통계학적 분석,
+            이벤트나 상품 등의 광고성 정보 전달 고객의 기본적 인권 침해의 우려가
+            있는 민감한 개인정보(인종 및 민족, 사상 및 신조, 출신지 및 본적지,
+            정치적 성향 및 범죄기록, 건강상태 등)는 수집하지 않으며 부득이하게
+            수집해야 할 경우 고객들의 사전동의를 반드시 구합니다. 그리고, 어떤
+            경우에도 수집한 개인정보를 고객들에게 위 수집·이용목적 이외에 다른
+            목적으로는 사용하지 않으며, 고객의 동의를 받은 제3자 이외에는 다른
+            제3자에게는 제공하지 않습니다."
+            readOnly
+          />
           <div
             className="agree"
             suppressHydrationWarning
@@ -421,11 +680,17 @@ const JoinForm = ({ form, errors, onSubmit, onChange, onToggle }) => {
             )}
             {t('약관에_동의')}
           </div>
-        </OptionContainer>
+        </OptionContainer2>
         <StyledMessage variant="danger">{errors?.agree}</StyledMessage>
-        <MidButton type="submit" width="700px">
-          {t('회원가입')}
-        </MidButton>
+
+        <StyledButtons>
+          <MidButton type="button" width="300px" onClick={onReset}>
+            {t('다시입력')}
+          </MidButton>
+          <MidButton type="submit" width="300px">
+            {t('가입하기')}
+          </MidButton>
+        </StyledButtons>
         <StyledMessage variant="danger">{errors?.global}</StyledMessage>
       </FormBox>
     </>

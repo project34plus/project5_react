@@ -40,10 +40,6 @@ const SearchButton = styled.button`
   transition: background-color 0.3s;
   height: 60px;
   width: 80px;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.midNavy};
-  }
 `;
 
 const SearchBox = () => {
