@@ -15,7 +15,7 @@ import MessageBox from '../../../../commons/components/MessageBox';
 import InputBox2 from '../../../../commons/components/InputBox2';
 import UserInfoContext from '../../../../member/modules/UserInfoContext';
 import { FaCheckSquare, FaSquare } from 'react-icons/fa';
-import { MidButton } from '../../../../commons/components/Buttons';
+import BlueButtons from '../../../../commons/components/buttons/BlueButtons';
 import FileUpload from '../../../../commons/components/FileUpload';
 import FileItems from '../../../../commons/components/FileItems';
 
@@ -282,9 +282,9 @@ const Form = ({
           </dd>
         </dl>
       )}
-      <MidButton type="submit" color="darkGreen" className="submitButton">
+      <BlueButtons type="submit" color="darkGreen" className="submitButton">
         {t(form.mode === 'update' ? '수정하기' : '작성하기')}
-      </MidButton>
+      </BlueButtons>
     </Wrapper>
   );
 };

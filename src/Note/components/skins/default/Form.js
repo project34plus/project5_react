@@ -16,8 +16,11 @@ import UserInfoContext from '../../../../member/modules/UserInfoContext';
 import { FaCheckSquare, FaSquare } from 'react-icons/fa';
 import FileUpload from '../../../../commons/components/FileUpload';
 import FileItems from '../../../../commons/components/FileItems';
-import { color } from '../../../../styles/color';
 import 'ckeditor5/ckeditor5.css';
+import InputBox2 from '../../../../commons/components/InputBox2';
+import BlueButtons from '../../../../commons/components/buttons/BlueButtons';
+
+
 import { IoPerson } from 'react-icons/io5';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import { PiChatTeardropTextFill } from 'react-icons/pi';
@@ -319,9 +322,9 @@ const Form = ({
         </div>
       </FileUploadContainer>
 
-      <MidButton type="submit" className="submitButton">
+      <BlueButtons type="submit" className="submitButton">
         {t(form.mode === 'update' ? '수정하기' : '작성하기')}
-      </MidButton>
+      </BlueButtons>
     </Wrapper>
   );
 };

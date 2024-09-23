@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react';
-import { useParams, useNavigate} from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import loadable from '@loadable/component';
 import { produce } from 'immer';
@@ -7,11 +6,12 @@ import apiConfig from '../apis/apiConfig';
 import Loading from '../../commons/components/Loading';
 import { apiFileDelete } from '../../commons/libs/file/apiFile';
 import UserInfoContext from '../../member/modules/UserInfoContext';
-import { write, update, getInfo } from '../apis/apiBoard';
-import WriteHeader from '../../commons/components/WriteHeader';
+import { write, update, getInfo } from '../apis/apiNote';
+import { useRouter } from 'next/navigation'; // Next.js router import
 
 const DefaultForm = loadable(() => import('../components/skins/default/Form'));
 const GalleryForm = loadable(() => import('../components/skins/gallery/Form'));
+
 function skinRoute(skin) {
   switch (skin) {
     case 'gallery':
@@ -21,9 +21,7 @@ function skinRoute(skin) {
   }
 }
 
-const FormContainer = ({ setPageTitle }) => {
-  const { nid, seq } = useParams();
-
+const FormContainer = ({ setPageTitle, nid, seq }) => {
   const {
     states: { isLogin, isAdmin, userInfo },
   } = useContext(UserInfoContext);
@@ -38,15 +36,9 @@ const FormContainer = ({ setPageTitle }) => {
   });
 
   const [errors, setErrors] = useState({});
-
   const { t } = useTranslation();
+  const router = useRouter(); // useRouter 훅 사용
 
-  const navigate = useNavigate();
-
-  /**
-   * 게시글 번호 seq로 유입되면 수정
-   *
-   */
   useEffect(() => {
     if (!seq) {
       return;
@@ -55,13 +47,13 @@ const FormContainer = ({ setPageTitle }) => {
     (async () => {
       try {
         setLoading(true);
-
         const res = await getInfo(seq);
+        console.log('Fetched note data:', res); // 여기에 추가
         res.mode = 'update';
-        delete res.guestPw;
+        
 
         if (!res.editable) {
-          navigate(-1);
+          router.push('/note/list'); // useRouter로 이동
           return;
         }
         setForm(res);
@@ -72,7 +64,7 @@ const FormContainer = ({ setPageTitle }) => {
         console.error(err);
       }
     })();
-  }, [seq, setPageTitle, navigate]);
+  }, [seq, setPageTitle, router]);
 
   useEffect(() => {
     if (note || !nid) {
@@ -82,10 +74,7 @@ const FormContainer = ({ setPageTitle }) => {
     (async () => {
       try {
         setLoading(true);
-
-        const data = await apiConfig(bid);
-        setBoard(data); // 게시판 설정 조회
-
+        const data = await apiConfig(nid);
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -108,7 +97,6 @@ const FormContainer = ({ setPageTitle }) => {
     );
   }, []);
 
-  /* 파일 업로드 후속 처리 */
   const fileUploadCallback = useCallback((files, editor) => {
     if (!files || files.length === 0) return;
 
@@ -127,7 +115,6 @@ const FormContainer = ({ setPageTitle }) => {
       }
     }
 
-    // 에디터에 이미지 추가
     if (imageUrls.length > 0) {
       editor.execute('insertImage', { source: imageUrls });
     }
@@ -140,7 +127,6 @@ const FormContainer = ({ setPageTitle }) => {
     );
   }, []);
 
-  /* 파일 삭제 처리 */
   const fileDeleteCallback = useCallback((seq) => {
     if (!window.confirm('정말 삭제하겠습니까?')) {
       return;
@@ -152,13 +138,8 @@ const FormContainer = ({ setPageTitle }) => {
 
         setForm(
           produce((draft) => {
-            draft.attachFiles = draft.attachFiles.filter(
-              (file) => file.seq !== seq,
-            );
-
-            draft.editorImages = draft.editorImages.filter(
-              (file) => file.seq !== seq,
-            );
+            draft.attachFiles = draft.attachFiles.filter((file) => file.seq !== seq);
+            draft.editorImages = draft.editorImages.filter((file) => file.seq !== seq);
           }),
         );
       } catch (err) {
@@ -171,7 +152,6 @@ const FormContainer = ({ setPageTitle }) => {
     (e) => {
       e.preventDefault();
 
-      /* 유효성 검사 - 필수 항목 검증 S */
       const requiredFields = {
         subject: t('제목을_입력하세요'),
         content: t('내용을_입력하세요'),
@@ -186,36 +166,29 @@ const FormContainer = ({ setPageTitle }) => {
           hasErrors = true;
         }
       }
-      /* 유효성 검사 - 필수 항목 검증 E */
 
-      // 검증 실패시에는 처리 X
       setErrors(_errors);
       if (hasErrors) {
         return;
       }
 
-      /* 데이터 저장 처리 S */
       (async () => {
         try {
-          const { locationAfterWriting, nid } = note;
+          const { locationAfterWriting } = note;
           const res =
-            form.mode === 'update'
-              ? await update(seq, form)
-              : await write(nid, form);
+            form.mode === 'update' ? await update(seq, form) : await write(nid, form);
 
           const url =
             locationAfterWriting === 'list'
               ? `/note/list/${nid}`
               : `/note/view/${res.seq}`;
-          navigate(url, { replace: true });
+          router.push(url); // useRouter로 이동
         } catch (err) {
           setErrors(err.message);
         }
       })();
-
-      /* 데이터 저장 처리 E */
     },
-    [t, form, isAdmin, isLogin, note, navigate, seq],
+    [t, form, note, router, seq, nid],
   );
 
   if (loading || !note) {
@@ -225,8 +198,6 @@ const FormContainer = ({ setPageTitle }) => {
   const { skin } = note;
   const Form = skinRoute(skin);
   return (
-    <>
-    < WriteHeader></ WriteHeader>
     <Form
       note={note}
       form={form}
@@ -237,20 +208,7 @@ const FormContainer = ({ setPageTitle }) => {
       fileUploadCallback={fileUploadCallback}
       fileDeleteCallback={fileDeleteCallback}
     />
-    </>
   );
-  /*
-  return skinRoute(skin, {
-    board,
-    form,
-    onSubmit,
-    onChange,
-    onToggleNotice,
-    errors,
-    fileUploadCallback,
-    fileDeleteCallback,
-  });
-  */
 };
 
 export default React.memo(FormContainer);
