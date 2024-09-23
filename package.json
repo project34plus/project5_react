@@ -18,6 +18,7 @@
     "i18next": "^23.15.1",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.6.1",
+    "immer": "^10.1.1",
     "next": "14.2.9",
     "next-i18next": "^15.3.1",
     "pm2": "^5.4.2",
