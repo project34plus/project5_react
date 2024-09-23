@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useCallback, useState } from 'react';
+import React, { useContext, useCallback, useState, useEffect } from 'react';
 import ProfileForm from '../components/ProfileForm';
 import Container2 from '@/commons/components/Container2';
 import UserInfoContext from '@/commons/contexts/UserInfoContext';
@@ -7,27 +7,78 @@ import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { apiUpdate } from '../apis/apiMyPage';
 import { apiPatch } from '../apis/apiMyPage';
+import { apiList } from '@/member/apis/apiFields';
+import { apiFieldList } from '@/member/apis/apiFields';
 
-const InfoContainer = () => {
+function getQueryString(searchParams) {
+  const qs = {};
+  if (searchParams?.size > 0) {
+    for (const [k, v] of searchParams) {
+      qs[k] = v;
+    }
+  }
+  return qs;
+}
+
+const InfoContainer = ({ searchParams }) => {
   const {
     states: { isLogin, userInfo, isAdmin },
     actions: { setIsLogin, setIsAdmin, setUserInfo },
   } = useContext(UserInfoContext);
 
-  const initialForm = userInfo;
+  const initialForm = {
+    ...userInfo,
+    interests: userInfo.interests || ['', ''], // 관심 분야 초기값 설정
+    birth: userInfo.birth || '', // 생일 초기값 설정
+  };
   delete initialForm.password;
   delete initialForm.confirmPassword;
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
+  const [fields, setfields] = useState([]);
+  const [interests, setinterests] = useState([]);
+  const [search, setSearch] = useState(() => getQueryString(searchParams));
+
+  useEffect(() => {
+    apiList(search)
+      .then((res) => {
+        setfields(res || []);
+      })
+      .catch((error) => {
+        console.error('실패사유:', error);
+      });
+  }, [search]);
+
+  useEffect(() => {
+    apiFieldList(search)
+      .then((res) => {
+        setinterests(res || []);
+      })
+      .catch((error) => {
+        console.error('실패사유:', error);
+      });
+  }, [search]);
 
   const { t } = useTranslation();
   const router = useRouter();
 
   const _onChange = useCallback((e) => {
-    setForm((form) => ({
-      ...form,
-      [e.target.name]: e.target.value,
-    }));
+    const name = e.target.name;
+    const value = e.target.value;
+
+    if (name.startsWith('interest')) {
+      const index = parseInt(name.replace('interest', '')) - 1;
+      setForm((prevForm) => {
+        const interests = [...(prevForm.interests || [])];
+        interests[index] = value;
+        return { ...prevForm, interests };
+      });
+    } else {
+      setForm((prevForm) => ({
+        ...prevForm,
+        [name]: value,
+      }));
+    }
   }, []);
 
   const onLogout = useCallback(() => {
@@ -127,6 +178,8 @@ const InfoContainer = () => {
         onSubmit={onSubmit}
         onClick={deleteUserInfo}
         errors={errors}
+        fields={fields}
+        interests={interests}
       />
     </Container2>
   );

@@ -23,6 +23,27 @@ const FormBox = styled.form`
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
   margin-left: 20px;
+
+  select {
+    padding: 10px;
+    border: 2px solid ${({ theme }) => theme.color.whiteGrayNavy};
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: ${({ theme }) => theme.color.black};
+    font-size: ${({ theme }) => theme.fontSize.small};
+    transition: border-color 0.3s;
+  }
+
+  select:focus {
+    border-color: ${({ theme }) => theme.color.grayNavy};
+    outline: none;
+  }
+  .selectBox {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 30px;
+    margin-left: 25px;
+  }
 `;
 
 const Title = styled.h1`
@@ -267,7 +288,7 @@ const ProfileForm = ({
                 <StyledInput2
                   type="date"
                   name="birth"
-                  value={form?.birth}
+                  value={form?.birth || ''}
                   onChange={_onChange}
                 />
               </InputWrapper>
@@ -334,7 +355,7 @@ const ProfileForm = ({
             </Icon2>
             {t('직업')}
           </Subtitle>
-          {/* <dl>
+          <dl>
             <dd>
               <OptionContainer>
                 <div className="options">
@@ -550,78 +571,84 @@ const ProfileForm = ({
               </OptionContainer>
               <StyledMessage variant="danger">{errors?.job}</StyledMessage>
             </dd>
-          </dl> */}
+          </dl>
           <Subtitle>
             <Icon2>
               <IoPersonSharp />
             </Icon2>
             {t('전공')}
           </Subtitle>
-          {/* <select name="memMajor" value={form.memMajor} onChange={_onChange}>
-            <option value="">{t('전공_선택')}</option>
-            {fields.length > 0 ? (
-              fields.map((field, index) => (
-                <option key={index} value={field}>
-                  {field}
-                </option>
-              ))
-            ) : (
-              <option disabled>{t('필드가 없습니다.')}</option>
-            )}
-          </select>
+          <div className="selectBox">
+            <select name="memMajor" value={form.memMajor} onChange={_onChange}>
+              <option value="">{t('전공_선택')}</option>
+              {fields.length > 0 ? (
+                fields.map((field, index) => (
+                  <option key={index} value={field}>
+                    {field}
+                  </option>
+                ))
+              ) : (
+                <option disabled>{t('필드가 없습니다.')}</option>
+              )}
+            </select>
 
-          <select name="memMinor" value={form.memMinor} onChange={_onChange}>
-            <option value="">{t('부전공_선택')}</option>
-            {fields.length > 0 ? (
-              fields.map((field, index) => (
-                <option key={index} value={field}>
-                  {field}
-                </option>
-              ))
-            ) : (
-              <option disabled>{t('필드가 없습니다.')}</option>
-            )}
-          </select> */}
+            <select name="memMinor" value={form.memMinor} onChange={_onChange}>
+              <option value="">{t('부전공_선택')}</option>
+              {fields.length > 0 ? (
+                fields.map((field, index) => (
+                  <option key={index} value={field}>
+                    {field}
+                  </option>
+                ))
+              ) : (
+                <option disabled>{t('필드가 없습니다.')}</option>
+              )}
+            </select>
+          </div>
+
           <Subtitle>
             <Icon2>
               <IoPersonSharp />
             </Icon2>
             {t('관심분야')}
           </Subtitle>
-          {/* <select
-            name="interest1"
-            value={form.interests[0] || ''}
-            onChange={_onChange}
-          >
-            <option value="">{t('관심분야_선택')}</option>
-            {interests.length > 0 ? (
-              interests.map((interest) => (
-                <option key={interest.id} value={interest.id}>
-                  {interest.subfield}
-                </option>
-              ))
-            ) : (
-              <option disabled>{t('필드가 없습니다.')}</option>
-            )}
-          </select>
+          <div className="selectBox">
+            <select
+              name="interest1"
+              value={(form.interests && form.interests[0]) || ''}
+              onChange={_onChange}
+            >
+              <option value="">{t('관심분야_선택')}</option>
+              {interests.length > 0 ? (
+                interests.map((interest) => (
+                  <option key={interest.id} value={interest.id}>
+                    {interest.subfield}
+                  </option>
+                ))
+              ) : (
+                <option disabled>{t('필드가 없습니다.')}</option>
+              )}
+            </select>
 
-          <select
-            name="interest2"
-            value={form.interests[1] || ''}
-            onChange={_onChange}
-          >
-            <option value="">{t('관심분야_선택')}</option>
-            {interests.length > 0 ? (
-              interests.map((interest) => (
-                <option key={interest.id} value={interest.id}>
-                  {interest.subfield}
-                </option>
-              ))
-            ) : (
-              <option disabled>{t('필드가 없습니다.')}</option>
-            )}
-          </select> */}
+            <select
+              name="interest2"
+              value={(form.interests && form.interests[1]) || ''}
+              onChange={_onChange}
+            >
+              <option value="">{t('관심분야_선택')}</option>
+              {interests.length > 0 ? (
+                interests.map((interest) => (
+                  <option key={interest.id} value={interest.id}>
+                    {interest.subfield}
+                  </option>
+                ))
+              ) : (
+                <option disabled>{t('필드가 없습니다.')}</option>
+              )}
+            </select>
+          </div>
         </div>
+
         {errors?.global && (
           <StyledMessage variant="danger">{errors?.global}</StyledMessage>
         )}
