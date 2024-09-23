@@ -11,7 +11,7 @@ import ItemsBox from '../components/ItemsBox';
 import SearchBox from '../components/SearchBox';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
-import Container from '@/commons/components/Container.js';
+import ListSort from '../components/ListSort.js';
 import { List } from 'react-content-loader';
 import { produce } from 'immer';
 
@@ -55,14 +55,15 @@ const ThesisListContainer = ({ searchParams }) => {
     const name = e.target.name;
     const value = e.target.value;
     if (['sopts', 'skeys', 'operators'].includes(name)) {
-      setForm(form => {
-        const newForm = {...form};
+      setForm((form) => {
+        const newForm = { ...form };
         newForm[name] = newForm[name] ?? [];
         newForm[name][i] = value;
+
         newForm.operators = newForm.operators ?? [];
         if (!newForm.operators[i]) newForm.operators[i] = 'AND';
 
-        newForm.sopts = newForm.sopts ?? []
+        newForm.sopts = newForm.sopts ?? [];
         if (!newForm.sopts[i]) newForm.sopts[i] = 'ALL';
 
         return newForm;
@@ -75,15 +76,27 @@ const ThesisListContainer = ({ searchParams }) => {
   const onSubmitSearch = useCallback(
     (e) => {
       e.preventDefault();
-      
+
       const newForm = { ...form, page: 1 };
+
       if (form.sopts || form.skeys) {
         const searchRowsLast = form.searchRowsLast ?? 0;
-        const searchOpts = [...new Array(searchRowsLast + 1).keys()].filter(i => form?.sopts?.length > i && form?.sopts[i] && form?.skeys?.length > i && form?.skeys[i])
-        .map(i => ({sopts: form.sopts[i], skeys: form.skeys[i], operators: form.operators[i]}));
+        const searchOpts = [...new Array(searchRowsLast + 1).keys()]
+          .filter(
+            (i) =>
+              form?.sopts?.length > i &&
+              form?.sopts[i] &&
+              form?.skeys?.length > i &&
+              form?.skeys[i],
+          )
+          .map((i) => ({
+            sopts: form.sopts[i],
+            skeys: form.skeys[i],
+            operators: form.operators[i],
+          }));
         if (searchOpts.length > 0) {
-          newForm.sopts = [], newForm.skeys = [], newForm.operators = [];
-          for (const { sopts, skeys, operators } of searchOpts ) {
+          (newForm.sopts = []), (newForm.skeys = []), (newForm.operators = []);
+          for (const { sopts, skeys, operators } of searchOpts) {
             newForm.sopts.push(sopts);
             newForm.skeys.push(skeys);
             newForm.operators.push(operators);
@@ -94,7 +107,7 @@ const ThesisListContainer = ({ searchParams }) => {
           delete newForm.operators;
         }
       }
-      
+
       console.log('newForm', newForm);
       setSearch(newForm);
     },
@@ -112,6 +125,11 @@ const ThesisListContainer = ({ searchParams }) => {
     },
     [setForm],
   );
+
+  /* 정렬 */
+  const onChangeSort = useCallback((e) => {
+    setSearch((search) => ({ ...search, sort: e.target.value }));
+  }, []);
 
   /* 페이지 변경 함수 */
   const onChangePage = useCallback((p) => {
@@ -132,11 +150,12 @@ const ThesisListContainer = ({ searchParams }) => {
         onSubmit={onSubmitSearch}
         selectChange={selectChange}
       />
-      <ItemsBox items={items} pagination={pagination}/>
+      <ListSort search={search} onChange={onChangeSort} />
+      <ItemsBox items={items} pagination={pagination} />
       {items.length > 0 && (
-     <Pagination onClick={onChangePage} pagination={pagination} />
+        <Pagination onClick={onChangePage} pagination={pagination} />
       )}
-      </>
+    </>
   );
 };
 
