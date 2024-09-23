@@ -21,7 +21,7 @@ const MypageModePage = ({ params }) => {
       break;
     case 'MyWishList':
       Container = MyWishListContainer;
-      break;ㅓㅓㅏ
+      break;
     default:
       Container = InfoContainer;
   }
