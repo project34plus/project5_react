@@ -7,7 +7,13 @@ export const apiList = (search) => {
   const qs = [];
 
   for (const [k, v] of Object.entries(search)) {
-    qs.push(`${k}=${v}`);
+    if (Array.isArray(v)) {
+      for(const _v of v) {
+        qs.push(`${k}=${_v}`);
+      }
+    } else {
+      qs.push(`${k}=${v}`);
+    }
   }
 
   let url = '/thesis/list'; //실서버 DB
