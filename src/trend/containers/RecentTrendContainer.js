@@ -1,7 +1,14 @@
 'use client';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useLayoutEffect,
+} from 'react';
+import { useTranslation } from 'react-i18next';
 import { apiList } from '../apis/apiInfo';
 import RecentTrend from '../components/RecentTrend';
+import { getCommonActions } from '@/commons/contexts/CommonContext';
 import Container from '@/commons/components/Container';
 import Pagination from '@/commons/components/Pagination';
 import { useSearchParams } from 'next/navigation';
@@ -26,7 +33,13 @@ lastMonth.setMonth(lastMonth.getMonth() - 1);
 lastMonth = format(lastMonth, 'yyyy-MM-dd');
 
 const RecentTrendContainer = () => {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
+  const { setMainTitle } = getCommonActions();
+
+  useLayoutEffect(() => {
+    setMainTitle(t('최신인기논문'));
+  }, [setMainTitle, t]);
 
   const [form, setForm] = useState(() => getQueryString(searchParams));
   const [search, setSearch] = useState({
