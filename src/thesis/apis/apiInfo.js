@@ -21,6 +21,23 @@ export const apiList = (search) => {
 export const apiGet = (tid) => requestData(`/thesis/info/${tid}`);
 // export const apiGet = (tid) => requestData(`http://localhost:4003/info/${tid}`); //로컬 DB
 
+// 내가 등록한 논문 조회
+export const apiMyList = (search = {}) => {
+  const qs = [];
+
+  // search 객체를 쿼리 스트링으로 변환
+  for (const [key, value] of Object.entries(search)) {
+    qs.push(`${key}=${value}`);
+  }
+
+  let url = '/thesis/mylist';
+  if (qs.length > 0) {
+    url += `?${qs.join('&')}`; // 검색 조건이 있으면 쿼리 스트링 추가
+  }
+
+  return requestData(url); // requestData로 API 호출
+};
+
 // 찜한 목록 조회
 export const apiWishlist = (page = 1, limit = 8) => {
   return requestData(`/thesis/wish?page=${page}&limit=${limit}`);

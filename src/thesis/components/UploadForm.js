@@ -96,6 +96,18 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
           />
         </div>
 
+         {/* 키워드 입력 필드 */}
+        <div style={styles.formGroup}>
+          <label style={styles.label}>키워드</label>
+          <textarea
+            name="keywords"
+            placeholder="키워드를 입력하세요"
+            value={formData.keywords}
+            onChange={(e) => handleInputChange('keywords', e.target.value)}
+            style={styles.textarea}
+          />
+        </div>
+
         {/* 공개 여부 라디오 버튼 */}
         <div style={styles.formGroup}>
           <label style={styles.label}>공개 여부</label>
