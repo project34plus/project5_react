@@ -9,13 +9,13 @@ import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
 const { gray, navy } = color;
 
-const { small, normal } = fontSize;
+const { small, normal, big } = fontSize;
 
 const Wrapper = styled.div`
   word-break: break-all;
 
   dl {
-    padding: 5px 15px;
+    padding: 10px 15px;
     line-height: 170%;
   }
 
@@ -43,6 +43,10 @@ const Wrapper = styled.div`
     display: flex;
     gap: 10px;
     margin-top: 15px;
+  }
+  .title {
+    font-size: ${big};
+    padding: 0 0 15px 15px;
   }
 
   .info2_wrap {
@@ -96,14 +100,14 @@ const ItemDescription = ({ item }) => {
       <div className="button">
         <WishButton tid={tid}></WishButton>
       </div>
-      <dl>
+
+      {/**넣을지 말지 고민중 */}
+      <div className="title">{title}</div>
+      {/* <dl>
         <dt>{t('조회수')}</dt>
         <dd>{viewCount}</dd>
-      </dl>
-      <dl>
-        <dt>{t('논문명')}</dt>
-        <dd>{title}</dd>
-      </dl>
+      </dl> */}
+
       <div className="info_wrap">
         <dl>
           <dt>{t('저자')}</dt>
@@ -154,7 +158,7 @@ const ItemDescription = ({ item }) => {
               {isOpen['abstract'] ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
           </dt>
-          {isOpen['abstract'] && <dd>{thAbstract}</dd>}
+          {isOpen['abstract'] && <dd>{thAbstract ? thAbstract : t('내용이_없습니다')}</dd>}
         </dl>
         <dl>
           <dt onClick={() => toggleInfo('toc')} className="toggle">
@@ -163,7 +167,7 @@ const ItemDescription = ({ item }) => {
               {isOpen['toc'] ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
           </dt>
-          {isOpen['toc'] && <dd>{toc ? toc : 'no data'}</dd>}
+          {isOpen['toc'] && <dd>{toc ? toc : t('내용이_없습니다')}</dd>}
         </dl>
         <dl>
           <dt onClick={() => toggleInfo('reference')} className="toggle">
@@ -173,7 +177,7 @@ const ItemDescription = ({ item }) => {
             </span>
           </dt>
           {isOpen['reference'] && (
-            <dd>{reference ? reference : '내용이 없습니다'}</dd>
+            <dd>{reference ? reference : t('내용이_없습니다')}</dd>
           )}
         </dl>
       </div>

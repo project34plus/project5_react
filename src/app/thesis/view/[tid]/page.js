@@ -14,7 +14,6 @@ const ViewPage = ({ params }) => {
       {/* <Head>
         <title>논문 상세 정보</title>
       </Head> */}
-      <h1>상세보기 페이지</h1>
       <ThesisViewContainer params={params} />
     </Container>
   );

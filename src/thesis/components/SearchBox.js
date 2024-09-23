@@ -110,34 +110,41 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
-      <div className="word-search">
+      <div className="word-search-form">
         <p>검색어</p>
-        <SearchItemRows
-          options={options}
-          form={form}
-          onChange={onChange}
-          i={0}
-        />
-        {itemsRows.map((ItemRow, i) => (
-          <ItemRow
-            key={`item-row-${i}`}
+        <div className="word-search">
+          <SearchItemRows
             options={options}
             form={form}
             onChange={onChange}
-            i={i + 1}
+            i={0}
           />
-        ))}
-
-        <button type="button" className="plus" onClick={() => onClick('plus')}>
-          <FaPlus />
-        </button>
-        <button
-          type="button"
-          className="minus"
-          onClick={() => onClick('minus')}
-        >
-          <FaMinus />
-        </button>
+          {itemsRows.map((ItemRow, i) => (
+            <ItemRow
+              key={`item-row-${i}`}
+              options={options}
+              form={form}
+              onChange={onChange}
+              i={i + 1}
+            />
+          ))}
+        </div>
+        <div className="btn-group">
+          <button
+            type="button"
+            className="plus"
+            onClick={() => onClick('plus')}
+          >
+            <FaPlus />
+          </button>
+          <button
+            type="button"
+            className="minus"
+            onClick={() => onClick('minus')}
+          >
+            <FaMinus />
+          </button>
+        </div>
       </div>
       <div className="field-subject">
         <p>주제분류</p>
@@ -186,7 +193,7 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
 const FormBox = styled.form`
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
+  margin: 40px 0 20px;
   justify-content: center;
   align-items: center;
 
@@ -200,11 +207,16 @@ const FormBox = styled.form`
     font-size: ${small};
     padding-left: 10px;
   }
-  .word-search {
+  .word-search-form {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 
+    .word-search {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
     > p {
       margin: 0 20px 0 0;
     }
@@ -217,14 +229,18 @@ const FormBox = styled.form`
 
     > p {
       margin: 0 20px 0 0;
-            text-align: left; /* 왼쪽 정렬 */
+      text-align: left; /* 왼쪽 정렬 */
     }
   }
+
+  .btn-group {
+    margin-left: 10px;
+  }
+
   .plus,
   .minus {
     width: 50px;
     height: 50px;
-    margin-left: 10px;
 
     svg {
       width: 25px;

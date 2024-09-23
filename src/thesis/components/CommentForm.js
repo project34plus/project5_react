@@ -7,7 +7,7 @@ import fontSize from '@/theme/fontSize';
 import { color } from '@/theme/color';
 import fontWeight from '@/theme/fontWeight';
 
-const { small, normal } = fontSize;
+const { small, normal, center } = fontSize;
 const { gray, white, navy } = color;
 const { semiBold } = fontWeight;
 
@@ -16,7 +16,7 @@ const FormBox = styled.form`
   display: block;
 
   p {
-    font-size: ${normal};
+    font-size: ${center};
     font-weight: ${semiBold};
     padding-left: 10px;
     margin: 0 0 10px 0;
@@ -64,7 +64,7 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
-      <p>댓글</p>
+      <p>{t('댓글')}</p>
       <div className="comment-form">
         <div className="commenter">
           {userInfo?.userName
@@ -82,7 +82,12 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
           {errors?.content && (
             <MessageBox color="danger" messages={errors.content} />
           )}
-          <button type="submit">{t('작성하기')}</button>
+          <button
+            type="submit"
+            onClick={() => alert(t('로그인_후_댓글_작성이_가능합니다'))}
+          >
+            {t('작성하기')}
+          </button>
         </div>
       </div>
     </FormBox>
