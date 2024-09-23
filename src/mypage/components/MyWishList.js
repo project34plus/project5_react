@@ -3,38 +3,6 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 
-const Wrapper = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-`;
-
-// 상단 바 스타일 (번호, 고유번호, 제목, 작성자)
-const Header = styled.div`
-  display: flex;
-  border-bottom: 2px solid #ccc;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px 0;
-
-  .header-tid {
-    width: 10%;
-  }
-
-  .header-gid {
-    width: 20%;
-  }
-
-  .header-title {
-    width: 50%;
-  }
-
-  .header-poster {
-    width: 20%;
-  }
-`;
-
 const WishListItems = ({ item, className }) => {
   const { tid, title, gid, poster } = item;
 
@@ -78,15 +46,6 @@ const StyledThesisListItem = styled(WishListItems)`
   .poster {
     width: 20%;
   }
-`;
-
-// 데이터가 없을 때의 스타일 정의
-const NoData = styled.li`
-  font-size: 1.3em;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const MyWishList = ({ items }) => {
