@@ -7,7 +7,7 @@ import fontSize from '@/theme/fontSize';
 import { color } from '@/theme/color';
 import fontWeight from '@/theme/fontWeight';
 
-const { small, normal, center } = fontSize;
+const { small, normal, center, medium } = fontSize;
 const { gray, white, navy } = color;
 const { semiBold } = fontWeight;
 
@@ -16,20 +16,20 @@ const FormBox = styled.form`
   display: block;
 
   p {
-    font-size: ${center};
+    font-size: ${medium};
     font-weight: ${semiBold};
     padding-left: 10px;
     margin: 0 0 10px 0;
   }
 
   .comment-form {
-    font-size: ${small};
     margin-bottom: 20px;
     border-top: 2px solid black;
-    padding-top: 20px;
+    padding: 20px 10px 0 10px;
 
     .commenter {
-      margin: 0 0 5px 5px;
+      margin: 0 0 10px 5px;
+      font-size: ${small};
     }
 
     .input-area {

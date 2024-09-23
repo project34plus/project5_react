@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { color } from '@/theme/color';
 import { useTranslation } from 'react-i18next';
 import fontSize from '@/theme/fontSize';
+import WishButton from '@/commons/components/WishButton';
 
-const { gray } = color;
+const { gray, midgray } = color;
 const { small, normal } = fontSize;
 
 const ItemsBox = ({ items, pagination }) => {
@@ -26,6 +27,9 @@ const ItemsBox = ({ items, pagination }) => {
                 {Object.values(_fields)?.[0][0]} {/* 대분류만 렌더링 */}
               </div>
             </a>
+            <div className="wishButton">
+              <WishButton tid={tid}></WishButton>
+            </div>
           </li>
         ))
       ) : (
@@ -41,6 +45,14 @@ const Wrapper = styled.div`
     border: 1px solid ${gray};
     padding: 10px 15px;
     margin-top: 5px;
+    position: relative;
+  }
+
+  .wishButton {
+    position: absolute;
+    right: 15px;
+    top: calc(100% - 75px);
+    z-index: 1000;
   }
   .title {
     font-size: ${normal};
@@ -48,9 +60,10 @@ const Wrapper = styled.div`
   }
   .total {
     font-size: ${normal};
-    border-top: 1px solid ${gray};
-    border-bottom: 1px solid ${gray};
+    border-top: 1px solid ${midgray};
+    border-bottom: 1px solid ${midgray};
     padding: 15px 10px;
+    background: ${gray};
   }
   .poster,
   .publisher {
@@ -62,8 +75,8 @@ const Wrapper = styled.div`
     width: 80px;
     text-align: center;
     border-radius: 50px;
-    padding: 3px 0;
-    margin-top: 5px;
+    padding: 4px 0;
+    margin-top: 10px;
   }
 `;
 

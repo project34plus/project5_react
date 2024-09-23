@@ -13,6 +13,7 @@ const { small, normal, big } = fontSize;
 
 const Wrapper = styled.div`
   word-break: break-all;
+  position: relative;
 
   dl {
     padding: 10px 15px;
@@ -41,16 +42,18 @@ const Wrapper = styled.div`
 
   .btn-group {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 30px;
+    margin-top: 20px;
+    // justify-content: center;
   }
   .title {
     font-size: ${big};
     padding: 0 0 15px 15px;
+    width: 95%;
   }
 
   .info2_wrap {
-    margin: 40px 0 30px 0;
+    margin: 40px 0;
     border-top: 2px solid black;
   }
 
@@ -65,6 +68,11 @@ const Wrapper = styled.div`
       position: absolute;
       right: 10px;
     }
+  }
+  .wishButton {
+    position: absolute;
+    right: 10px;
+    top: 10px;
   }
 `;
 
@@ -97,7 +105,7 @@ const ItemDescription = ({ item }) => {
 
   return (
     <Wrapper>
-      <div className="button">
+      <div className="wishButton">
         <WishButton tid={tid}></WishButton>
       </div>
 
@@ -158,7 +166,9 @@ const ItemDescription = ({ item }) => {
               {isOpen['abstract'] ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
           </dt>
-          {isOpen['abstract'] && <dd>{thAbstract ? thAbstract : t('내용이_없습니다')}</dd>}
+          {isOpen['abstract'] && (
+            <dd>{thAbstract ? thAbstract : t('내용이_없습니다')}</dd>
+          )}
         </dl>
         <dl>
           <dt onClick={() => toggleInfo('toc')} className="toggle">

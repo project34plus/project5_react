@@ -55,14 +55,15 @@ const ThesisListContainer = ({ searchParams }) => {
     const name = e.target.name;
     const value = e.target.value;
     if (['sopts', 'skeys', 'operators'].includes(name)) {
-      setForm(form => {
-        const newForm = {...form};
+      setForm((form) => {
+        const newForm = { ...form };
         newForm[name] = newForm[name] ?? [];
         newForm[name][i] = value;
+
         newForm.operators = newForm.operators ?? [];
         if (!newForm.operators[i]) newForm.operators[i] = 'AND';
 
-        newForm.sopts = newForm.sopts ?? []
+        newForm.sopts = newForm.sopts ?? [];
         if (!newForm.sopts[i]) newForm.sopts[i] = 'ALL';
 
         return newForm;
@@ -75,15 +76,27 @@ const ThesisListContainer = ({ searchParams }) => {
   const onSubmitSearch = useCallback(
     (e) => {
       e.preventDefault();
-      
+
       const newForm = { ...form, page: 1 };
+
       if (form.sopts || form.skeys) {
         const searchRowsLast = form.searchRowsLast ?? 0;
-        const searchOpts = [...new Array(searchRowsLast + 1).keys()].filter(i => form?.sopts?.length > i && form?.sopts[i] && form?.skeys?.length > i && form?.skeys[i])
-        .map(i => ({sopts: form.sopts[i], skeys: form.skeys[i], operators: form.operators[i]}));
+        const searchOpts = [...new Array(searchRowsLast + 1).keys()]
+          .filter(
+            (i) =>
+              form?.sopts?.length > i &&
+              form?.sopts[i] &&
+              form?.skeys?.length > i &&
+              form?.skeys[i],
+          )
+          .map((i) => ({
+            sopts: form.sopts[i],
+            skeys: form.skeys[i],
+            operators: form.operators[i],
+          }));
         if (searchOpts.length > 0) {
-          newForm.sopts = [], newForm.skeys = [], newForm.operators = [];
-          for (const { sopts, skeys, operators } of searchOpts ) {
+          (newForm.sopts = []), (newForm.skeys = []), (newForm.operators = []);
+          for (const { sopts, skeys, operators } of searchOpts) {
             newForm.sopts.push(sopts);
             newForm.skeys.push(skeys);
             newForm.operators.push(operators);
@@ -94,7 +107,7 @@ const ThesisListContainer = ({ searchParams }) => {
           delete newForm.operators;
         }
       }
-      
+
       console.log('newForm', newForm);
       setSearch(newForm);
     },
@@ -132,11 +145,11 @@ const ThesisListContainer = ({ searchParams }) => {
         onSubmit={onSubmitSearch}
         selectChange={selectChange}
       />
-      <ItemsBox items={items} pagination={pagination}/>
+      <ItemsBox items={items} pagination={pagination} />
       {items.length > 0 && (
-     <Pagination onClick={onChangePage} pagination={pagination} />
+        <Pagination onClick={onChangePage} pagination={pagination} />
       )}
-      </>
+    </>
   );
 };
 
