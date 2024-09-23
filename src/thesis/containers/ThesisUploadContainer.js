@@ -16,6 +16,8 @@ const initialFormData = {
     title: "",
     gid: "12",
     fields: [],
+    // userName: "테스트 사용자",
+    // email: "test1@test.org",
   };
   
   const ThesisUploadContainer = () => {
