@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   }
 
   .info2_wrap {
-    margin: 40px 0;
+    margin: 40px 0 30px 0;
     border-top: 2px solid black;
   }
 

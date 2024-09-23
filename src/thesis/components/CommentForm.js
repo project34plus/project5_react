@@ -5,17 +5,28 @@ import MessageBox from '@/commons/components/MessageBox';
 import styled from 'styled-components';
 import fontSize from '@/theme/fontSize';
 import { color } from '@/theme/color';
+import fontWeight from '@/theme/fontWeight';
 
 const { small, normal } = fontSize;
 const { gray, white, navy } = color;
+const { semiBold } = fontWeight;
 
 //댓글 작성
 const FormBox = styled.form`
   display: block;
 
+  p {
+    font-size: ${normal};
+    font-weight: ${semiBold};
+    padding-left: 10px;
+    margin: 0 0 10px 0;
+  }
+
   .comment-form {
     font-size: ${small};
-    margin-top: 20px;
+    margin-bottom: 20px;
+    border-top: 2px solid black;
+    padding-top: 20px;
 
     .commenter {
       margin: 0 0 5px 5px;
@@ -53,6 +64,7 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
+      <p>댓글</p>
       <div className="comment-form">
         <div className="commenter">
           {userInfo?.userName
