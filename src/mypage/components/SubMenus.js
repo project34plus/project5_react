@@ -17,6 +17,8 @@ const SubMenuBox = styled.aside`
   border-radius: 5px;
   padding: 20px 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  position: relative;
+  top: 70px;
 
   a {
     display: block;
@@ -45,7 +47,7 @@ const Submenus = () => {
   return (
     <SubMenuBox>
       <a href="/mypage/info">{t('내_프로필')}</a>
-      <a href="/mypage/MyThesisList">{t('내가_등록한_논문')}</a>
+      <a href="/mypage/MyThesisList">{t('등록한_논문')}</a>
       <a href="/mypage/MyRecentlyView">{t('최근_본_논문')}</a>
       <a href="/mypage/MyWishList">{t('즐겨찾는_논문')}</a>
     </SubMenuBox>
