@@ -40,7 +40,7 @@ const ItemsBox = ({ items, pagination }) => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 50px;
+  margin-top: 20px;
   li {
     border: 1px solid ${gray};
     padding: 15px 30px;
@@ -73,7 +73,7 @@ const Wrapper = styled.div`
 
   .fields {
     background: ${gray};
-    width: 90px;
+    width: 110px;
     text-align: center;
     border-radius: 50px;
     padding: 5px 10px;

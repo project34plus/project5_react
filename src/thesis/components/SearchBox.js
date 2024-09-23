@@ -193,7 +193,7 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
 const FormBox = styled.form`
   display: flex;
   flex-direction: column;
-  margin: 40px 0 20px;
+  margin: 40px 0 30px;
   justify-content: center;
   align-items: center;
 

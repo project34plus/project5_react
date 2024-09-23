@@ -11,7 +11,7 @@ import ItemsBox from '../components/ItemsBox';
 import SearchBox from '../components/SearchBox';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
-import Container from '@/commons/components/Container.js';
+import ListSort from '../components/ListSort.js';
 import { List } from 'react-content-loader';
 import { produce } from 'immer';
 
@@ -126,6 +126,11 @@ const ThesisListContainer = ({ searchParams }) => {
     [setForm],
   );
 
+  /* 정렬 */
+  const onChangeSort = useCallback((e) => {
+    setSearch((search) => ({ ...search, sort: e.target.value }));
+  }, []);
+
   /* 페이지 변경 함수 */
   const onChangePage = useCallback((p) => {
     setSearch((search) => ({ ...search, page: p }));
@@ -145,6 +150,7 @@ const ThesisListContainer = ({ searchParams }) => {
         onSubmit={onSubmitSearch}
         selectChange={selectChange}
       />
+      <ListSort search={search} onChange={onChangeSort} />
       <ItemsBox items={items} pagination={pagination} />
       {items.length > 0 && (
         <Pagination onClick={onChangePage} pagination={pagination} />

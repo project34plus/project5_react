@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   position: relative;
 
   dl {
-    padding: 10px 15px;
+    padding: 15px;
     line-height: 170%;
   }
 
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
     width: 140px;
     font-weight: bold;
     font-size: ${normal};
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   dd {
@@ -43,7 +43,7 @@ const Wrapper = styled.div`
   .btn-group {
     display: flex;
     gap: 30px;
-    margin-top: 20px;
+    margin: 20px 0 0 10px;
     // justify-content: center;
   }
   .title {
@@ -127,16 +127,12 @@ const ItemDescription = ({ item }) => {
             <dd>{contributor}</dd>
           </dl>
         )}
-        {/*분류명이 필수 입력값이 되면 다시 수정할 것*/}
-        {_fields && (
-          <dl>
-            <dt>{t('학문_분류')}</dt>
-            <dd>
-              {Object.values(_fields)?.[0][0]} |{' '}
-              {Object.values(_fields)?.[0][1]}
-            </dd>
-          </dl>
-        )}
+        <dl>
+          <dt>{t('학문_분류')}</dt>
+          <dd>
+            {Object.values(_fields)?.[0][0]} | {Object.values(_fields)?.[0][1]}
+          </dd>
+        </dl>
         <dl>
           <dt>{t('발행기관')}</dt>
           <dd>{publisher}</dd>
