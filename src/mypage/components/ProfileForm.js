@@ -18,10 +18,11 @@ import {
 import JoinInput from '@/member/components/JoinInput';
 
 const FormBox = styled.form`
-  width: 100%;
+  width: 1000px;
   padding: 40px 50px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+  margin-left: 20px;
 `;
 
 const Title = styled.h1`
@@ -37,7 +38,7 @@ const Subtitle = styled.h2`
   font-weight: ${({ theme }) => theme.fontWeight.bold};
   text-align: left;
   margin-bottom: 30px;
-  color: ${({ theme }) => theme.color.darkgray};
+  color: ${({ theme }) => theme.color.navy};
   display: flex;
   align-items: center;
 `;
@@ -66,11 +67,11 @@ const Icon3 = styled.span`
   color: ${({ theme }) => theme.color.navy};
 `;
 
-// const StyledInput = styled(JoinInput)`
-//   padding-left: 40px;
-//   height: 40px;
-//   font-size: ${({ theme }) => theme.fontSize.center};
-// `;
+const StyledInput2 = styled(JoinInput)`
+  padding-left: 40px;
+  height: 40px;
+  font-size: ${({ theme }) => theme.fontSize.center};
+`;
 
 const OptionContainer = styled.div`
   display: flex;
@@ -150,8 +151,8 @@ const ProfileForm = ({
 
   return (
     <>
-      <Title>{t('회원_정보_수정')}</Title>
       <FormBox onSubmit={onSubmit}>
+        <Title>{t('회원정보_수정')}</Title>
         <div className="mypage">
           <Subtitle>
             <Icon2>
@@ -165,7 +166,7 @@ const ProfileForm = ({
                 <Icon>
                   <IoAtSharp />
                 </Icon>
-                <StyledInput
+                <StyledInput2
                   type="text"
                   name="email"
                   value={form?.email}
@@ -181,7 +182,7 @@ const ProfileForm = ({
                 <Icon>
                   <IoLockClosedOutline />
                 </Icon>
-                <StyledInput
+                <StyledInput2
                   type="password"
                   name="password"
                   value={form?.password}
@@ -202,7 +203,7 @@ const ProfileForm = ({
                 <Icon>
                   <IoLockClosed />
                 </Icon>
-                <StyledInput
+                <StyledInput2
                   type="password"
                   name="confirmPassword"
                   value={form?.confirmPassword}
@@ -223,7 +224,7 @@ const ProfileForm = ({
                 <Icon>
                   <IoPersonCircleSharp />
                 </Icon>
-                <StyledInput
+                <StyledInput2
                   type="text"
                   name="userName"
                   value={form?.userName}
@@ -244,7 +245,7 @@ const ProfileForm = ({
                 <Icon>
                   <IoPhonePortraitOutline />
                 </Icon>
-                <StyledInput
+                <StyledInput2
                   type="text"
                   name="mobile"
                   value={form?.mobile}
@@ -263,7 +264,7 @@ const ProfileForm = ({
                 <Icon>
                   <IoCalendarNumberOutline />
                 </Icon>
-                <StyledInput
+                <StyledInput2
                   type="date"
                   name="birth"
                   value={form?.birth}
@@ -333,7 +334,7 @@ const ProfileForm = ({
             </Icon2>
             {t('직업')}
           </Subtitle>
-          <dl>
+          {/* <dl>
             <dd>
               <OptionContainer>
                 <div className="options">
@@ -549,7 +550,7 @@ const ProfileForm = ({
               </OptionContainer>
               <StyledMessage variant="danger">{errors?.job}</StyledMessage>
             </dd>
-          </dl>
+          </dl> */}
           <Subtitle>
             <Icon2>
               <IoPersonSharp />
@@ -580,14 +581,14 @@ const ProfileForm = ({
             ) : (
               <option disabled>{t('필드가 없습니다.')}</option>
             )}
-          </select>
+          </select> */}
           <Subtitle>
             <Icon2>
               <IoPersonSharp />
             </Icon2>
             {t('관심분야')}
           </Subtitle>
-          <select
+          {/* <select
             name="interest1"
             value={form.interests[0] || ''}
             onChange={_onChange}
@@ -624,10 +625,12 @@ const ProfileForm = ({
         {errors?.global && (
           <StyledMessage variant="danger">{errors?.global}</StyledMessage>
         )}
-        <MidButton type="submit">{t('회원정보_수정하기')}</MidButton>
-        <MidButton type="button" onClick={onClick}>
-          {t('회원탈퇴하기')}
-        </MidButton>
+        <StyledButtons>
+          <MidButton type="submit">{t('회원정보_수정하기')}</MidButton>
+          <MidButton type="button" onClick={onClick}>
+            {t('회원탈퇴하기')}
+          </MidButton>
+        </StyledButtons>
       </FormBox>
     </>
   );

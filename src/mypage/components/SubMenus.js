@@ -17,6 +17,8 @@ const SubMenuBox = styled.aside`
   border-radius: 5px;
   padding: 20px 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  position: relative;
+  top: 70px;
 
   a {
     display: block;
