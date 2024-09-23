@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 const SubMenuBox = styled.aside`
   min-height: 650px;
-  min-width: 180px;
+  min-width: 200px;
   background: ${({ theme }) => theme.color.white};
   border-radius: 10px;
   padding: 10px;
@@ -40,7 +40,7 @@ const Submenus = () => {
     <SubMenuBox>
       <a href="/trend/recent">{t('최신_인기_논문')}</a>
       <a href="/trend/fields">{t('학문별_인기논문')}</a>
-      <a href="/trend/group">{t('그룹별_인기논문')}</a>
+      <a href="/trend/group">{t('그룹별_인기검색어')}</a>
     </SubMenuBox>
   );
 };
