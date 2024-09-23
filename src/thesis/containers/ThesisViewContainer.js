@@ -27,7 +27,6 @@ const ThesisViewContainer = ({ params }) => {
   const router = useRouter();
 
   const { tid } = params;
-  console.log(tid);
   const { setMainTitle } = getCommonActions();
 
   const {
@@ -68,7 +67,6 @@ const ThesisViewContainer = ({ params }) => {
   //댓글 작성 처리
   const onSubmit = useCallback(
     (e) => {
-      console.log(e);
       e.preventDefault();
 
       const _errors = {};

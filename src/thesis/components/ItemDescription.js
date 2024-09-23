@@ -79,7 +79,6 @@ const Wrapper = styled.div`
 const ItemDescription = ({ item }) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState({});
-  console.log(item);
 
   const {
     tid,
