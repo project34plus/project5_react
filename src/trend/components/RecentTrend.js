@@ -3,22 +3,40 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 800px;
-
   li {
-    padding: 10px 0;
-    border-bottom: 1px solid ${({ theme }) => theme.color.midgray};
+    padding: 10px 0 10px 8px;
+    margin-bottom: 5px;
+    border: 1px solid ${({ theme }) => theme.color.gray};
+    border-radius: 3px;
+
+    .title {
+      font-size: 1.4rem;
+    }
+
+    .field {
+      display: inline-block;
+      padding-right: 3px;
+    }
+    .subfield {
+      display: inline-block;
+    }
   }
 `;
 
 const RecentList = ({ item, className }) => {
-  const { title, poster, tid } = item;
+  const { title, poster, tid, _fields } = item;
   const url = `/thesis/view/${tid}`;
   return (
     <li key={tid} className={className}>
       <a href={url}>
-      <div className="title">{title}</div>
-      <div className="poster">{poster}</div>
+        <div className="field">
+          {Object.values(_fields)?.[0][0]} &gt; {/* 대분류 */}
+        </div>
+        <div className="subfield">
+          {Object.values(_fields)?.[0][1]} {/* 중분류 */}
+        </div>
+        <div className="title">{title}</div>
+        <div className="poster">{poster}</div>
       </a>
     </li>
   );

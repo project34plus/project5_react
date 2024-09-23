@@ -6,23 +6,23 @@ import TrendMain from '@/trend/containers/TrendMain';
 const MypageModePage = ({ params, searchParams }) => {
   const { mode } = params;
 
-  let Container = null;
+  let Containers = null;
   switch (mode) {
     case 'recent':
-      Container = RecentTrendContainer;
+      Containers = RecentTrendContainer;
       break;
     case 'fields':
-      Container = FieldTrendContainer;
+      Containers = FieldTrendContainer;
       break;
     case 'group':
-      Container = GroupTrendContainer;
+      Containers = GroupTrendContainer;
       break;
     default:
-      Container = TrendMain;
+      Containers = TrendMain;
   }
   return (
     <>
-      <Container searchParams={searchParams}/>
+      <Containers searchParams={searchParams}/>
     </>
   );
 };
