@@ -4,7 +4,6 @@ import CommentItems from './CommentItems';
 import ItemDescription from './ItemDescription';
 
 const View = ({ item, form, onChange, onSubmit, errors }) => {
-  console.log(item);
   return (
     <>
       <ItemDescription item={item} />
