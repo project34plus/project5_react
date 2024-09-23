@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 const SubMenuBox = styled.aside`
-min-height: 650px;
+  min-height: 650px;
+  min-width: 180px;
   background: ${({ theme }) => theme.color.white};
   border-radius: 10px;
   padding: 10px;

@@ -3,7 +3,7 @@ import React from 'react';
 const Container = ({ children }) => {
   const containerStyle = {
     width: '1400px',
-    minHeight: '699px',
+    minHeight: '600px',
     margin: '50px auto',
     padding: '20px',
     boxSizing: 'border-box',
