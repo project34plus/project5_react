@@ -7,6 +7,8 @@ export default function apiRequest(url, method = 'GET', data, headers) {
    */
   if (!/^http[s]?/i.test(url)) {
     url = process.env.NEXT_PUBLIC_API_URL + url; //url = `/api${url}`;
+    console.log('url', url);
+    console.log(process.env.NEXT_PUBLIC_API_URL);
   }
 
   /**

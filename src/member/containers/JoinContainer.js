@@ -1,5 +1,10 @@
 'use client';
-import React, { useLayoutEffect, useCallback, useState } from 'react';
+import React, {
+  useLayoutEffect,
+  useCallback,
+  useState,
+  useEffect,
+} from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
@@ -7,21 +12,59 @@ import JoinForm from '../components/JoinForm';
 import { apiJoin } from '../apis/apiJoin';
 import Container from '@/commons/components/Container';
 import JoinBox from '../components/JoinBox';
+import { apiList } from '../apis/apiFields';
+import { apiFieldList } from '../apis/apiFields';
 
-const JoinContainer = () => {
+function getQueryString(searchParams) {
+  const qs = {};
+  if (searchParams?.size > 0) {
+    for (const [k, v] of searchParams) {
+      qs[k] = v;
+    }
+  }
+  return qs;
+}
+
+const JoinContainer = ({ searchParams }) => {
   const { t } = useTranslation();
   const { setMainTitle } = getCommonActions();
   const router = useRouter();
-  const [form, setForm] = useState();
+  const [form, setForm] = useState({
+    interests: [],
+  });
   const [errors, setErrors] = useState({});
+  const [fields, setfields] = useState([]);
+  const [interests, setinterests] = useState([]);
+  const [search, setSearch] = useState(() => getQueryString(searchParams));
+
   useLayoutEffect(() => {
     setMainTitle(t('회원가입'));
   }, [t, setMainTitle]);
 
+  useEffect(() => {
+    apiList(search)
+      .then((res) => {
+        setfields(res || []);
+      })
+      .catch((error) => {
+        console.error('실패사유:', error);
+      });
+  }, [search]);
+
+  useEffect(() => {
+    apiFieldList(search)
+      .then((res) => {
+        setinterests(res || []);
+      })
+      .catch((error) => {
+        console.error('실패사유:', error);
+      });
+  }, [search]);
+
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-
+      console.log('form:', form);
       const _errors = {};
       let hasErrors = false;
 
@@ -89,7 +132,18 @@ const JoinContainer = () => {
   );
 
   const onChange = useCallback((e) => {
-    setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
+    const name = e.target.name;
+    const value = e.target.value;
+    if (name.startsWith('interest')) {
+      const index = parseInt(name.replace('interest', '')) - 1; // interest1, interest2에 따라 인덱스 추출
+      setForm((prevForm) => {
+        const interests = [...prevForm.interests];
+        interests[index] = value; // 해당 인덱스에 값 설정
+        return { ...prevForm, interests }; // 관심 분야 업데이트
+      });
+    } else {
+      setForm((form) => ({ ...form, [name]: value }));
+    }
   }, []);
 
   const onToggle = useCallback((name, value) => {
@@ -105,6 +159,8 @@ const JoinContainer = () => {
           onChange={onChange}
           onToggle={onToggle}
           errors={errors}
+          fields={fields}
+          interests={interests}
         />
       </JoinBox>
     </Container>

@@ -11,6 +11,7 @@ import Container from '@/commons/components/Container';
 // };
 
 const SearchPage = () => {
+  
   return (
     <Container>
       {/* <Head>

@@ -8,6 +8,7 @@ import SiteTitle from '@/commons/components/SiteTitle';
 import Header from '@/outlines/Header';
 import Footer from '@/outlines/Footer';
 import MainMenu from '@/outlines/MainMenu';
+import ScrollToTop from '@/mainpage/components/ScrollTopButton';
 import { theme } from '../theme';
 import '../i18n';
 
@@ -31,7 +32,9 @@ export default function RootLayout({ children }) {
               <body>
                 <Header />
                 <MainMenu />
-                <main>{children}</main>
+                <main>{children}
+                <ScrollToTop />
+                </main>
                 <Footer />
               </body>
             </html>
