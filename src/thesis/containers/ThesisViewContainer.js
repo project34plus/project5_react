@@ -8,10 +8,10 @@ import React, {
 } from 'react';
 import { List } from 'react-content-loader';
 import { apiGet } from '../apis/apiInfo.js';
-import { getInfo } from '../apis/apiComment.js';
+import { getInfo, getList, write } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
-import UserInfoContext from '@/commons/contexts/UserInfoContext.js';
+import UserInfoContext, { getUserContext, getUserStates } from '@/commons/contexts/UserInfoContext.js';
 import { useRouter } from 'next/navigation'; //CSR ->router는 SSR
 import View from '../components/View.js';
 
@@ -20,9 +20,6 @@ const MyListLoader = () => <List />;
 const ThesisViewContainer = ({ params }) => {
   const { t } = useTranslation();
   const [item, setItem] = useState(null);
-  const [commentForm, setCommentForm] = useState(null);
-  const [comments, setComments] = useState(null);
-
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
   const router = useRouter();
@@ -30,47 +27,60 @@ const ThesisViewContainer = ({ params }) => {
   const { tid } = params;
   const { setMainTitle } = getCommonActions();
 
-  const {
-    states: { userInfo, isLogin },
-  } = useContext(UserInfoContext);
+  const { userInfo, isLogin } = getUserStates();
 
+  const [commentForm, setCommentForm] = useState({
+    tid: tid,
+    mode: 'write',
+    userName: '',
+    content: '',
+  });
+  const [comments, setComments] = useState([]);
   useLayoutEffect(() => {
     setMainTitle(t('논문_상세정보'));
   }, [setMainTitle, t]);
+  useEffect(() => {
+    if (userInfo) {  // userInfo가 존재할 때만 업데이트
+      setCommentForm((prevForm) => ({
+        ...prevForm,
+        userName: userInfo.userName, // userInfo가 로딩되면 userName을 설정
+      }));
+    }
+  }, [userInfo]);
 
   useEffect(() => {
-    (async () => {
+
+    const fetchData = async () => {
       try {
         const item = await apiGet(tid);
         setMainTitle(item.title);
         setItem(item);
       } catch (err) {
-        console.error(err);
-        router.back();
+        console.error('논문 정보 불러오기 실패:', err);
+        // 필요에 따라 적절한 에러 처리 로직 추가
+        return; // 실패 시 함수 종료
       }
 
       try {
-        const res = await getInfo(tid);
+        const res = await getList(tid);
         setComments(res); // 댓글 목록
 
-        /* 댓글 기본 양식 */
-        setCommentForm({
-          tid: tid,
-          mode: 'write',
-          username: userInfo?.userName,
-        });
-        window.scrollTo(0, 0);
       } catch (err) {
-        console.error(err);
+        console.error('댓글 목록 불러오기 실패:', err);
+        // 필요에 따라 적절한 에러 처리 로직 추가
+      } finally {
+        window.scrollTo(0, 0); // 페이지 상단으로 스크롤
       }
-    })();
-  }, [tid, router, userInfo, setMainTitle]);
+    };
+    fetchData();
+  }, [tid, router, setMainTitle]);
+
 
   //댓글 작성 처리
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-
+      console.log(commentForm);
       const _errors = {};
       let hasErrors = false;
 
@@ -88,6 +98,7 @@ const ThesisViewContainer = ({ params }) => {
 
       for (const [field, message] of Object.entries(requiredFields)) {
         if (!commentForm[field]?.trim()) {
+          console.log('commentForm : ', commentForm);
           _errors[field] = _errors[field] ?? [];
           _errors[field].push(message);
           hasErrors = true;
@@ -98,23 +109,21 @@ const ThesisViewContainer = ({ params }) => {
       setErrors(_errors);
 
       if (hasErrors) {
+        console.log(_errors);
         return;
       }
 
       // 댓글 등록 처리
       (async () => {
         try {
-          const comments = await write(commentForm);
-          setData(
-            produce((draft) => {
-              draft.comments = comments;
-            }),
-          );
-          setCommentForm({
-            tid: item.tid,
-            mode: 'write',
-            username: userInfo?.userName,
+          await write(commentForm).then((res) => {
+            console.log(res);
           });
+          setCommentForm({
+            ...commentForm,
+            content: '',
+          });
+          router.refresh();
         } catch (err) {
           setErrors(err.message);
         }
@@ -122,7 +131,9 @@ const ThesisViewContainer = ({ params }) => {
     },
     [t, router, isLogin, item, commentForm, userInfo],
   );
-
+  const onChange = useCallback((e) => {
+    setCommentForm((form) => ({ ...form, [e.target.name]: e.target.value }));
+  }, []);
   if (!item) {
     return <MyListLoader />;
   }
@@ -132,10 +143,11 @@ const ThesisViewContainer = ({ params }) => {
       <div>
         <View
           item={item}
+          comments={comments}
           form={commentForm}
           onSubmit={onSubmit}
           errors={errors}
-          data={comments}
+          onChange={onChange}
         />
       </div>
     </>
