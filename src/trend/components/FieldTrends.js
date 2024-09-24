@@ -34,19 +34,23 @@ const FieldBarStat = ({ stat, field }) => {
   if (field) {
     indexBy = '중분류';
     for (const { name, subfield, count, wishCount } of stat[field].sub) {
-      data.push({
-        중분류: `${name}/${subfield}`,
-        조회수: count,
-        찜하기: wishCount,
-      });
+      if (count > 0 || wishCount > 0) {
+        data.push({
+          중분류: `${name}/${subfield}`,
+          조회수: count,
+          찜하기: wishCount,
+        });
+      }
     }
   } else {
     for (const [name, item] of Object.entries(stat)) {
-      data.push({
-        대분류: name,
-        조회수: item.count,
-        찜하기: item.wishCount,
-      });
+      if (item.count > 0 || item.wishCount > 0) {
+        data.push({
+          대분류: name,
+          조회수: item.count,
+          찜하기: item.wishCount,
+        });
+      }
     }
   }
 
