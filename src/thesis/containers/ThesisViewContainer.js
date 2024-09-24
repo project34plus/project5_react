@@ -8,10 +8,9 @@ import React, {
 } from 'react';
 import { List } from 'react-content-loader';
 import { apiGet } from '../apis/apiInfo.js';
-import { getInfo, write } from '../apis/apiComment.js';
+import { getInfo } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
-import Container from '@/commons/components/Container.js';
 import UserInfoContext from '@/commons/contexts/UserInfoContext.js';
 import { useRouter } from 'next/navigation'; //CSR ->router는 SSR
 import View from '../components/View.js';
@@ -22,6 +21,7 @@ const ThesisViewContainer = ({ params }) => {
   const { t } = useTranslation();
   const [item, setItem] = useState(null);
   const [commentForm, setCommentForm] = useState(null);
+  const [comments, setComments] = useState(null);
 
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
@@ -51,6 +51,7 @@ const ThesisViewContainer = ({ params }) => {
 
       try {
         const res = await getInfo(tid);
+        setComments(res); // 댓글 목록
 
         /* 댓글 기본 양식 */
         setCommentForm({
@@ -79,7 +80,8 @@ const ThesisViewContainer = ({ params }) => {
       };
 
       if (!isLogin) {
-        // 로그인 상태가 아닌 경우 로그인 페이지로 리다이렉트
+        // 로그인 페이지로 리다이렉트
+        alert(t('로그인_후_댓글_작성이_가능합니다'));
         router.push(`/member/login?redirectUrl=${location.pathname}`);
         return;
       }
@@ -133,6 +135,7 @@ const ThesisViewContainer = ({ params }) => {
           form={commentForm}
           onSubmit={onSubmit}
           errors={errors}
+          data={comments}
         />
       </div>
     </>

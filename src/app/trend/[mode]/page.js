@@ -1,29 +1,28 @@
-import FieldTrendContainer from "@/trend/containers/FieldTrendContainer";
-import GroupTrendsContainer from "@/trend/containers/GroupTrendsContainer";
-import RecentTrendContainer from "@/trend/containers/RecentTrendContainer";
-import TrendMain from "@/trend/containers/TrendMain";
+import FieldTrendContainer from '@/trend/containers/FieldTrendContainer';
+import GroupTrendContainer from '@/trend/containers/GroupTrendContainer';
+import RecentTrendContainer from '@/trend/containers/RecentTrendContainer';
+import TrendMain from '@/trend/containers/TrendMain';
 
-
-const MypageModePage = ({ params }) => {
+const MypageModePage = ({ params, searchParams }) => {
   const { mode } = params;
 
-  let Container = null;
+  let Containers = null;
   switch (mode) {
     case 'recent':
-      Container = RecentTrendContainer;
+      Containers = RecentTrendContainer;
       break;
     case 'fields':
-      Container = FieldTrendContainer;
+      Containers = FieldTrendContainer;
       break;
     case 'group':
-      Container = GroupTrendsContainer;
+      Containers = GroupTrendContainer;
       break;
     default:
-      Container = TrendMain;
+      Containers = TrendMain;
   }
   return (
     <>
-      <Container />
+      <Containers searchParams={searchParams}/>
     </>
   );
 };

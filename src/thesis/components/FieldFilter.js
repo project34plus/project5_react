@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 
-const { navy, white } = color;
+const { navy, white, yellow } = color;
 const { small } = fontSize;
 
 const FieldFilter = ({ fieldList, onFieldChange }) => {
   const [selectedField, setSelectedField] = useState(null);
 
-  const handleFieldClick = (value) => {
+  const handleFieldCheck = (value) => {
     setSelectedField(value);
     onFieldChange(value); // 부모 컴포넌트에 선택된 필드 전달
   };
@@ -17,7 +17,7 @@ const FieldFilter = ({ fieldList, onFieldChange }) => {
   return (
     <Wrapper>
       {fieldList.map(({ value, name }) => (
-        <Button key={value} onClick={() => handleFieldClick(value)}>
+        <Button key={value} onClick={() => handleFieldCheck(value)}>
           {name}
         </Button>
       ))}
@@ -36,11 +36,11 @@ const Button = styled.button`
   background: ${white};
   color: ${navy};
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 15px;
   font-size: ${small};
 
   &:hover {
-    background: ${navy};
+    background: ${yellow};
     color: ${white};
   }
 `;

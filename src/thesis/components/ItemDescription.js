@@ -9,13 +9,14 @@ import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
 const { gray, navy } = color;
 
-const { small, normal } = fontSize;
+const { small, normal, big } = fontSize;
 
 const Wrapper = styled.div`
   word-break: break-all;
+  position: relative;
 
   dl {
-    padding: 5px 15px;
+    padding: 15px;
     line-height: 170%;
   }
 
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
     width: 140px;
     font-weight: bold;
     font-size: ${normal};
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   dd {
@@ -41,12 +42,18 @@ const Wrapper = styled.div`
 
   .btn-group {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 30px;
+    margin: 20px 0 0 10px;
+    // justify-content: center;
+  }
+  .title {
+    font-size: ${big};
+    padding: 0 0 15px 15px;
+    width: 95%;
   }
 
   .info2_wrap {
-    margin: 40px 0 30px 0;
+    margin: 40px 0;
     border-top: 2px solid black;
   }
 
@@ -61,6 +68,11 @@ const Wrapper = styled.div`
       position: absolute;
       right: 10px;
     }
+  }
+  .wishButton {
+    position: absolute;
+    right: 10px;
+    top: 10px;
   }
 `;
 
@@ -92,17 +104,17 @@ const ItemDescription = ({ item }) => {
 
   return (
     <Wrapper>
-      <div className="button">
+      <div className="wishButton">
         <WishButton tid={tid}></WishButton>
       </div>
-      <dl>
+
+      {/**넣을지 말지 고민중 */}
+      <div className="title">{title}</div>
+      {/* <dl>
         <dt>{t('조회수')}</dt>
         <dd>{viewCount}</dd>
-      </dl>
-      <dl>
-        <dt>{t('논문명')}</dt>
-        <dd>{title}</dd>
-      </dl>
+      </dl> */}
+
       <div className="info_wrap">
         <dl>
           <dt>{t('저자')}</dt>
@@ -114,16 +126,12 @@ const ItemDescription = ({ item }) => {
             <dd>{contributor}</dd>
           </dl>
         )}
-        {/*분류명이 필수 입력값이 되면 다시 수정할 것*/}
-        {_fields && (
-          <dl>
-            <dt>{t('학문_분류')}</dt>
-            <dd>
-              {Object.values(_fields)?.[0][0]} |{' '}
-              {Object.values(_fields)?.[0][1]}
-            </dd>
-          </dl>
-        )}
+        <dl>
+          <dt>{t('학문_분류')}</dt>
+          <dd>
+            {Object.values(_fields)?.[0][0]} | {Object.values(_fields)?.[0][1]}
+          </dd>
+        </dl>
         <dl>
           <dt>{t('발행기관')}</dt>
           <dd>{publisher}</dd>
@@ -153,7 +161,9 @@ const ItemDescription = ({ item }) => {
               {isOpen['abstract'] ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
           </dt>
-          {isOpen['abstract'] && <dd>{thAbstract}</dd>}
+          {isOpen['abstract'] && (
+            <dd>{thAbstract ? thAbstract : t('내용이_없습니다')}</dd>
+          )}
         </dl>
         <dl>
           <dt onClick={() => toggleInfo('toc')} className="toggle">
@@ -162,7 +172,7 @@ const ItemDescription = ({ item }) => {
               {isOpen['toc'] ? <IoIosArrowUp /> : <IoIosArrowDown />}
             </span>
           </dt>
-          {isOpen['toc'] && <dd>{toc ? toc : 'no data'}</dd>}
+          {isOpen['toc'] && <dd>{toc ? toc : t('내용이_없습니다')}</dd>}
         </dl>
         <dl>
           <dt onClick={() => toggleInfo('reference')} className="toggle">
@@ -172,7 +182,7 @@ const ItemDescription = ({ item }) => {
             </span>
           </dt>
           {isOpen['reference'] && (
-            <dd>{reference ? reference : '내용이 없습니다'}</dd>
+            <dd>{reference ? reference : t('내용이_없습니다')}</dd>
           )}
         </dl>
       </div>
