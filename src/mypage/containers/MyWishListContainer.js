@@ -1,16 +1,26 @@
 'use client';
-import React, { useCallback, useState, useEffect, useContext } from 'react';
+import React, {
+  useLayoutEffect,
+  useCallback,
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
 import MyWishList from '../components/MyWishList';
-import Container from '@/commons/components/Container';
 import { apiWishlist as getThesis } from '@/thesis/apis/apiInfo';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import { getCommonActions } from '@/commons/contexts/CommonContext';
 import Pagination from '@/commons/components/Pagination';
 import CommonContext from '@/commons/contexts/CommonContext';
+import Container2 from '@/commons/components/Container2';
 
 const MyWishListContainer = () => {
+  const { t } = useTranslation();
   const [items, setItems] = useState([]); // 위시리스트 아이템
   const [pagination, setPagination] = useState({}); // 페이지네이션 정보
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+  const { setMainTitle } = getCommonActions();
 
   const itemsPerPage = 10; // 페이지당 아이템 수
 
@@ -22,6 +32,10 @@ const MyWishListContainer = () => {
   const {
     actions: { setLinkText, setLinkHref },
   } = useContext(CommonContext);
+
+  useLayoutEffect(() => {
+    setMainTitle(t('즐겨찾기 한 논문'));
+  }, [setMainTitle, t]);
 
   // API 호출 및 데이터 설정
   useEffect(() => {
@@ -40,7 +54,7 @@ const MyWishListContainer = () => {
   }, [currentPage, setLinkHref, setLinkText]); // currentPage가 변경될 때마다 호출
 
   return (
-    <Container>
+    <Container2>
       {/* 상단 헤더는 항상 표시 */}
       <Header>
         <div className="header-tid">번호</div>
@@ -57,7 +71,7 @@ const MyWishListContainer = () => {
       ) : (
         <NoData>즐겨찾기 한 논문이 없습니다.</NoData>
       )}
-    </Container>
+    </Container2>
   );
 };
 

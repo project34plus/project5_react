@@ -1,33 +1,70 @@
 'use client';
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import MyThesisList from '../components/MyThesisList';
-import Container from '@/commons/components/Container';
-import CommonContext from '@/commons/contexts/CommonContext';
+import { apiMyList } from '@/thesis/apis/apiInfo';
+import styled from 'styled-components';
+import Container2 from '@/commons/components/Container2';
 
-const MyThesisContainer = () => {
-
-  const {
-    actions: { setLinkText, setLinkHref },
-  } = useContext(CommonContext);
+const MyThesisListContainer = () => {
+  const [thesisList, setThesisList] = useState([]); // 논문 목록 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 에러 상태
 
   useEffect(() => {
-    (async () => {
+    const fetchTheses = async () => {
       try {
+        const data = await apiMyList(); // API에서 데이터 가져오기
 
-        setLinkText('내가 등록한 논문')
-        setLinkHref('/mypage/MyThesisList')
-        
+        setThesisList(data.items || []); // 가져온 데이터를 상태에 저장 (items가 있는 경우에만)
       } catch (err) {
-        console.error('Failed to fetch items:', err);
+        setError(err); // 에러가 발생하면 에러 상태 저장
+      } finally {
+        setLoading(false); // 로딩 완료
       }
-    })();
-  }, [setLinkHref, setLinkText]);
+    };
+    fetchTheses();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <Container>
-        <MyThesisList />
-    </Container>
-  )
+    <Container2>
+      <Header>
+        <div className="header-tid">논문 ID</div>
+        <div className="header-title">제목</div>
+        <div className="header-poster">저자</div>
+        <div className="header-status">승인상태</div>
+      </Header>
+      <MyThesisList items={thesisList} />
+    </Container2>
+  );
 };
 
-export default React.memo(MyThesisContainer);
+// 상단 헤더 스타일 정의
+const Header = styled.div`
+  display: flex;
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px 0;
+
+  .header-tid {
+    width: 10%;
+  }
+
+
+  .header-title {
+    width: 40%;
+  }
+
+  .header-poster {
+    width: 25%;
+  }
+
+  .header-status {
+    width: 10%;
+  }
+`;
+
+export default MyThesisListContainer;

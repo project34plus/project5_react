@@ -1,8 +1,8 @@
 'use client';
 import React, { useContext, useEffect } from 'react';
 import MyRecentlyView from '../components/MyRecentlyView';
-import Container from '@/commons/components/Container';
 import CommonContext from '@/commons/contexts/CommonContext';
+import Container2 from '@/commons/components/Container2';
 
 const MyRecentlyViewContainer = () => {
 
@@ -23,9 +23,9 @@ const MyRecentlyViewContainer = () => {
     })();
   }, [setLinkHref, setLinkText]);
   return (
-    <Container>
+    <Container2>
         <MyRecentlyView />
-    </Container>
+    </Container2>
   )
 };
 
