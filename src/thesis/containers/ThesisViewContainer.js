@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { List } from 'react-content-loader';
 import { apiGet } from '../apis/apiInfo.js';
-import { getInfo } from '../apis/apiComment.js';
+import { getList } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
 import UserInfoContext from '@/commons/contexts/UserInfoContext.js';
@@ -19,7 +19,8 @@ const MyListLoader = () => <List />;
 
 const ThesisViewContainer = ({ params }) => {
   const { t } = useTranslation();
-  const [item, setItem] = useState(null);
+  const [item, setItem] = useState(null); //논문 데이터
+  const [data, setData] = useState(null);
   const [commentForm, setCommentForm] = useState(null);
   const [comments, setComments] = useState(null);
 
@@ -50,8 +51,10 @@ const ThesisViewContainer = ({ params }) => {
       }
 
       try {
-        const res = await getInfo(tid);
-        setComments(res); // 댓글 목록
+        const res = await getList(tid);
+        setData(res);
+        setComments(res.comments); // 댓글 목록
+        console.log(res);
 
         /* 댓글 기본 양식 */
         setCommentForm({
@@ -62,9 +65,32 @@ const ThesisViewContainer = ({ params }) => {
         window.scrollTo(0, 0);
       } catch (err) {
         console.error(err);
+        setMessage(err.message);
       }
     })();
   }, [tid, router, userInfo, setMainTitle]);
+
+  const onDelete = useCallback(
+    (seq) => {
+      if (!window.confirm(t('정말_삭제_하시겠습니까'))) {
+        return;
+      }
+
+      (async () => {
+        try {
+          await deleteData(seq);
+          router.push(`/thesis/comment/list/${seq}`);
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    },
+    [t, router],
+  );
+
+  const onChange = useCallback((e) => {
+    setCommentForm((form) => ({ ...form, [e.target.name]: e.target.value }));
+  }, []);
 
   //댓글 작성 처리
   const onSubmit = useCallback(
@@ -105,13 +131,14 @@ const ThesisViewContainer = ({ params }) => {
       (async () => {
         try {
           const comments = await write(commentForm);
+          console.log(comments);
           setData(
             produce((draft) => {
               draft.comments = comments;
             }),
           );
           setCommentForm({
-            tid: item.tid,
+            tid: data.tid,
             mode: 'write',
             username: userInfo?.userName,
           });
@@ -120,12 +147,14 @@ const ThesisViewContainer = ({ params }) => {
         }
       })();
     },
-    [t, router, isLogin, item, commentForm, userInfo],
+    [t, router, isLogin, data, commentForm, userInfo],
   );
 
   if (!item) {
     return <MyListLoader />;
   }
+
+
 
   return (
     <>
@@ -134,6 +163,8 @@ const ThesisViewContainer = ({ params }) => {
           item={item}
           form={commentForm}
           onSubmit={onSubmit}
+          onChange={onChange}
+          onDelete={onDelete}
           errors={errors}
           data={comments}
         />

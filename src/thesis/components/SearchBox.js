@@ -13,8 +13,9 @@ import { ko } from 'date-fns/locale/ko';
 import FieldFilter from './FieldFilter';
 registerLocale('ko', ko);
 
-const { gray, white, navy, darkgray, midgray, lightgray } = color;
-const { small, normal } = fontSize;
+const { gray, white, navy, darkgray, midgray, whiteGrayNavy, midNavy, lemon } =
+  color;
+const { small, normal, extraSmall } = fontSize;
 
 const fieldList = [
   { name: '공학', value: '공학' },
@@ -289,7 +290,7 @@ const FormBox = styled.form`
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      border: 1px solid ${gray};
+      border: 1px solid ${midNavy};
     }
 
     .react-datepicker__triangle {
@@ -298,9 +299,9 @@ const FormBox = styled.form`
     }
 
     .react-datepicker__header {
-      background: ${lightgray};
+      background: ${whiteGrayNavy};
       width: 100%;
-      padding: 10px;
+      padding: 10px 5px;
       border-radius: 10px 10px 0 0;
       text-align: center;
     }
@@ -318,7 +319,7 @@ const FormBox = styled.form`
     .react-datepicker__week {
       justify-content: space-between;
       display: flex;
-      padding: 5px;
+      padding: 2px;
 
       > * {
         display: flex;
@@ -328,7 +329,7 @@ const FormBox = styled.form`
         align-items: center;
         color: ${darkgray};
         text-align: center;
-        font-size: ${small};
+        font-size: ${extraSmall};
         line-height: 1;
       }
     }
@@ -353,7 +354,7 @@ const FormBox = styled.form`
     .react-datepicker__day--today {
       // 오늘 날짜 하이라이트 커스텀
       color: ${navy};
-      border: 1px solid ${navy};
+      border: 1px solid ${midNavy};
       border-radius: 50%;
     }
     .react-datepicker__day--selected {
@@ -362,7 +363,7 @@ const FormBox = styled.form`
       border-radius: 50%;
     }
     .react-datepicker__day:hover {
-      background: ${midgray}; /* 마우스 오버 시 배경색 변경 */
+      background: ${midNavy}; /* 마우스 오버 시 배경색 변경 */
       color: ${white}; /* 마우스 오버 시 텍스트 색상 변경 */
       border-radius: 50%; /* 원형 테두리 적용 */
     }
@@ -390,6 +391,10 @@ const FormBox = styled.form`
     font-size: ${small};
     padding-left: 5px;
     color: ${midgray};
+
+    option {
+      color: ${darkgray};
+    }
   }
 `;
 

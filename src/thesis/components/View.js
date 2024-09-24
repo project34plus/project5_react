@@ -3,7 +3,7 @@ import CommentForm from './CommentForm';
 import CommentItems from './CommentItems';
 import ItemDescription from './ItemDescription';
 
-const View = ({ item, form, onChange, onSubmit, errors }) => {
+const View = ({ item, form, onChange, onSubmit, errors, data }) => {
   return (
     <>
       <ItemDescription item={item} />
@@ -15,7 +15,7 @@ const View = ({ item, form, onChange, onSubmit, errors }) => {
         errors={errors}
       />
 
-      {item?.comments?.length > 0 && <CommentItems items={item.comments} />}
+      {data?.comments?.length > 0 && <CommentItems datas={data.comments} />}
     </>
   );
 };

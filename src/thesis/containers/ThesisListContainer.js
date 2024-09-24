@@ -36,6 +36,8 @@ const ThesisListContainer = ({ searchParams }) => {
   const [loading, setLoading] = useState(false);
   const { setMainTitle } = getCommonActions();
 
+  const [filteredField, setFilteredField] = useState(null);
+
   useLayoutEffect(() => {
     setMainTitle(t('논문학술자료'));
   }, [setMainTitle, t]);
@@ -137,6 +139,11 @@ const ThesisListContainer = ({ searchParams }) => {
     window.location.hash = '#root';
   }, []);
 
+  //분류명 필터 처리
+  const handleFieldChange = (selectedField) => {
+    setFilteredField(selectedField);
+  };
+
   /* 로딩 처리 */
   if (loading) {
     return <MyListLoader />;
@@ -149,6 +156,7 @@ const ThesisListContainer = ({ searchParams }) => {
         onChange={onChangeSearch}
         onSubmit={onSubmitSearch}
         selectChange={selectChange}
+        onFieldChange={handleFieldChange}
       />
       <ListSort search={search} onChange={onChangeSort} />
       <ItemsBox items={items} pagination={pagination} />
