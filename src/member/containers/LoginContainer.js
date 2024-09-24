@@ -70,7 +70,6 @@ const LoginContainer = ({ searchParams }) => {
 
               setIsLogin(true); // 로그인 상태
               setUserInfo(user);
-
               setIsAdmin(user.userType === 'ADMIN'); // 관리자 여부
 
               /**

@@ -19,9 +19,10 @@ function getQueryString(searchParams) {
   return qs;
 }
 
+// 한 달간의 인기 키워드 조회 (기간)
 let today = format(new Date(), 'yyyy-MM-dd');
 let lastMonth = new Date();
-lastMonth.setMonth(lastMonth.getMonth() - 12);
+lastMonth.setMonth(lastMonth.getMonth() - 1);
 lastMonth = format(lastMonth, 'yyyy-MM-dd');
 
 const GroupTrendContainer = ({ searchParams }) => {
@@ -45,6 +46,9 @@ const GroupTrendContainer = ({ searchParams }) => {
 
   return (
     <Container>
+      <h1>
+        {lastMonth} ~ {today} 직업군별 인기검색어
+      </h1>
       <GroupTrend items={items} />
     </Container>
   );
