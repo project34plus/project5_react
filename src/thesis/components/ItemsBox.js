@@ -24,8 +24,10 @@ const ItemsBox = ({ items, pagination }) => {
               <div className="poster">{poster}</div>
               <div className="publisher">{publisher}</div>
               <div className="fields">
-              {_fields && Object.keys(_fields).length > 0 ? Object.values(_fields)[0][0] : '대분류 없음'}
-              {/* _fields가 있을 경우 대분류 렌더링, 없으면 '대분류 없음' 출력 */}
+                {_fields && Object.keys(_fields).length > 0
+                  ? Object.values(_fields)[0][0]
+                  : '미분류'}
+                {/* _fields가 있을 경우 대분류 렌더링, 없으면 '대분류 없음' 출력, 사실 필드값은 필수 입력값임.. */}
                 {/* {Object?.values(_fields)?.[0][0]}  */}
                 {/* 대분류만 렌더링 */}
               </div>
