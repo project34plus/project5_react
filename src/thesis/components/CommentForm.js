@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import UserInfoContext from '@/commons/contexts/UserInfoContext';
+import UserInfoContext, { getUserContext, getUserStates } from '@/commons/contexts/UserInfoContext';
 import MessageBox from '@/commons/components/MessageBox';
 import styled from 'styled-components';
 import fontSize from '@/theme/fontSize';
@@ -13,54 +13,54 @@ const { semiBold } = fontWeight;
 
 //댓글 작성
 const FormBox = styled.form`
-  display: block;
+    display: block;
 
-  p {
-    font-size: ${medium};
-    font-weight: ${semiBold};
-    padding-left: 10px;
-    margin: 0 0 10px 0;
-  }
-
-  .comment-form {
-    margin-bottom: 20px;
-    border-top: 2px solid black;
-    padding: 20px 10px 0 10px;
-
-    .commenter {
-      margin: 0 0 10px 5px;
-      font-size: ${small};
+    p {
+        font-size: ${medium};
+        font-weight: ${semiBold};
+        padding-left: 10px;
+        margin: 0 0 10px 0;
     }
 
-    .input-area {
-      display: flex;
-      align-items: center;
+    .comment-form {
+        margin-bottom: 20px;
+        border-top: 2px solid black;
+        padding: 20px 10px 0 10px;
 
-      textarea {
-        display: block;
-        width: 100%;
-        height: 100px;
-        padding: 12px 16px;
-        border: 1px solid ${gray};
-        color: ${navy};
-        box-sizing: border-box;
-        resize: none;
-        border-radius: 5px;
-        font-size: ${small};
-      }
+        .commenter {
+            margin: 0 0 10px 5px;
+            font-size: ${small};
+        }
 
-      button {
-        width: 100px;
-        height: 40px;
-        margin: 0 5px 0 15px;
-      }
+        .input-area {
+            display: flex;
+            align-items: center;
+
+            textarea {
+                display: block;
+                width: 100%;
+                height: 100px;
+                padding: 12px 16px;
+                border: 1px solid ${gray};
+                color: ${navy};
+                box-sizing: border-box;
+                resize: none;
+                border-radius: 5px;
+                font-size: ${small};
+            }
+
+            button {
+                width: 100px;
+                height: 40px;
+                margin: 0 5px 0 15px;
+            }
+        }
     }
-  }
 `;
 
 const CommentForm = ({ form, onChange, onSubmit, errors }) => {
   const { t } = useTranslation();
-  const { userInfo } = useContext(UserInfoContext); // 사용자 정보 가져오기
+  const {userInfo} = getUserStates();
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
@@ -71,7 +71,6 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
             ? userInfo.userName
             : t('로그인_후_댓글_작성이_가능합니다')}
         </div>
-        {/*로그인한 회원명 나와야 하는데 안나옴*/}
         <div className="input-area">
           <textarea
             name="content"

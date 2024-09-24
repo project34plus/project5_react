@@ -16,6 +16,7 @@ function saveProcess(url, method, form) {
         const res = await apiRequest(url, method, form);
         if (res.status === 200) {
           resolve(res.data.data);
+          console.log(res.data.data);
           return;
         }
 

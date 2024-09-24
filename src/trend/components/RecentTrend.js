@@ -22,6 +22,9 @@ const Wrapper = styled.div`
   }
 `;
 
+/*{_fields && Object.keys(_fields).length > 0 ? Object.values(_fields)[0][0] : '대분류 없음'}
+              {/* _fields가 있을 경우 대분류 렌더링, 없으면 '대분류 없음' 출력 */
+
 const RecentList = ({ item, className }) => {
   const { title, poster, tid, _fields } = item;
   const url = `/thesis/view/${tid}`;
@@ -29,10 +32,16 @@ const RecentList = ({ item, className }) => {
     <li key={tid} className={className}>
       <a href={url}>
         <div className="field">
-          {Object.values(_fields)?.[0][0]} &gt; {/* 대분류 */}
+          {_fields && Object.keys(_fields).length > 0
+            ? Object.values(_fields)[0][0]
+            : '대분류 없음'}
+          &gt; {/* 대분류 */}
         </div>
         <div className="subfield">
-          {Object.values(_fields)?.[0][1]} {/* 중분류 */}
+          {_fields && Object.keys(_fields).length > 0
+            ? Object.values(_fields)[0][1]
+            : '중분류 없음'}
+          {/* 중분류 */}
         </div>
         <div className="title">{title}</div>
         <div className="poster">{poster}</div>
