@@ -27,9 +27,6 @@ const WishButton = ({ IconOn, IconOff, tid }) => {
   const { states, actions } = useContext(WishListContext);
   const wishList = states.thesisWish; // thesisWish 리스트 사용
   useEffect(() => {
-    console.log('wishList: ', wishList);
-    console.log('tid', tid);
-    console.log(wishList.includes(tid.toString()));
     setToggle(Boolean(wishList.includes(tid.toString())));
   }, [wishList, tid, isLogin]);
 
