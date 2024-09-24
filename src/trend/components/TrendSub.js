@@ -2,35 +2,44 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import fontSize from '@/theme/fontSize';
+import { color } from '@/theme/color';
+import fontWeight from '@/theme/fontWeight';
+
+const { white, navy, gray } = color;
+const { normal, big } = fontSize;
+const { bold } = fontWeight;
 
 const SubMenuBox = styled.aside`
-  min-height: 650px;
-  min-width: 200px;
-  background: ${({ theme }) => theme.color.white};
+  height: 220px;
+  min-width: 210px;
+  background: ${white};
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-left: -100px;
+  margin-top: 30px;
+  items-align: center;
 
   a {
     display: inline-block;
-    background: ${({ theme }) => theme.color.white};
-    color: ${({ theme }) => theme.color.navy};
-    font-size: ${({ theme }) => theme.fontSize.small};
-    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    background: ${white};
+    color: ${navy};
+    font-size: ${normal};
+    font-weight: ${bold};
     padding: 15px 20px;
-    border-radius: 5px;
+    border-radius: 3px;
     transition: background 0.3s, color 0.3s, transform 0.2s;
-    margin-bottom: 10px;
 
     &:hover {
-      background: ${({ theme }) => theme.color.navy};
-      color: ${({ theme }) => theme.color.white};
+      background: ${navy};
+      color: ${white};
       transform: translateY(-2px);
     }
   }
 
   a + a {
-    border-top: 1px solid ${({ theme }) => theme.color.gray};
+    border-top: 1px solid ${gray};
   }
 `;
 

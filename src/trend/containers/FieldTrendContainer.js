@@ -54,7 +54,7 @@ const Wrapper = styled.div`
     margin: 0 auto;
     .names {
       display: inline-block;
-      margin: 10px 20px 0 10px;
+      margin: 10px 10px 0 10px;
       padding: 3px 0;
       text-align: center;
       vertical-align: middle;
