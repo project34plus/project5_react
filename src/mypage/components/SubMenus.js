@@ -1,7 +1,9 @@
 'use client';
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import Image from 'next/image';
+import UserInfoContext from '@/commons/contexts/UserInfoContext';
 
 const SubMenuBox = styled.aside`
   height: 600px;
@@ -44,8 +46,24 @@ const SubMenuBox = styled.aside`
 
 const Submenus = () => {
   const { t } = useTranslation();
+  const {
+    states: { userInfo },
+  } = useContext(UserInfoContext);
   return (
     <SubMenuBox>
+      <Image
+        src={userInfo?.profileImage?.fileUrl || '/images/noImage.jpg'} // 기본 이미지 URL 설정
+        alt="profile"
+        width={130}
+        height={130}
+        style={{
+          marginTop: '20px',
+          marginBottom: '20px',
+          marginLeft: '20px',
+          borderRadius: '5%',
+          border: '3px solid #7FA1C3',
+        }}
+      />
       <a href="/mypage/info">{t('내_프로필')}</a>
       <a href="/mypage/MyThesisList">{t('등록한_논문')}</a>
       <a href="/mypage/MyRecentlyView">{t('최근_본_논문')}</a>

@@ -9,6 +9,18 @@ import { apiUpdate } from '../apis/apiMyPage';
 import { apiPatch } from '../apis/apiMyPage';
 import { apiList } from '@/member/apis/apiFields';
 import { apiFieldList } from '@/member/apis/apiFields';
+import styled from 'styled-components';
+import ProfileImage from '../components/ProfileImage';
+
+const StyledProfileImage = styled.div`
+  width: 250px;
+  height: 250px;
+  border: 3px solid ${({ theme }) => theme.color.whiteGrayNavy};
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-bottom: 30px;
+`;
 
 function getQueryString(searchParams) {
   const qs = {};
@@ -76,7 +88,7 @@ const InfoContainer = ({ searchParams }) => {
     } else {
       setForm((prevForm) => ({
         ...prevForm,
-        [name]: value,
+        [e.target.name]: e.target.value,
       }));
     }
   }, []);
@@ -170,18 +182,31 @@ const InfoContainer = ({ searchParams }) => {
     [setUserInfo],
   );
 
+  const profileImage = form?.profileImage?.fileUrl;
+
   return (
-    <Container2>
-      <ProfileForm
-        form={form}
-        _onChange={_onChange}
-        onSubmit={onSubmit}
-        onClick={deleteUserInfo}
-        errors={errors}
-        fields={fields}
-        interests={interests}
-      />
-    </Container2>
+    <>
+      <Container2>
+        <ProfileForm
+          form={form}
+          _onChange={_onChange}
+          onSubmit={onSubmit}
+          onClick={deleteUserInfo}
+          errors={errors}
+          fields={fields}
+          interests={interests}
+          profileImage={
+            <StyledProfileImage>
+              <ProfileImage
+                gid={form?.gid}
+                fileUploadCallback={fileUploadCallback}
+                profileImage={profileImage}
+              />
+            </StyledProfileImage>
+          }
+        />
+      </Container2>
+    </>
   );
 };
 

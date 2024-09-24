@@ -62,6 +62,12 @@ const LoginContainer = ({ searchParams }) => {
               // 로그인 처리
               const user = await apiUser();
               console.log('user', user);
+
+              if (user.deletedAt) {
+                setErrors({ global: ['탈퇴한 회원입니다.'] });
+                return;
+              }
+
               setIsLogin(true); // 로그인 상태
               setUserInfo(user);
 

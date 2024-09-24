@@ -166,6 +166,7 @@ const ProfileForm = ({
   onReset,
   fields,
   interests,
+  profileImage,
 }) => {
   const { t } = useTranslation();
   console.log(form);
@@ -648,6 +649,13 @@ const ProfileForm = ({
             </select>
           </div>
         </div>
+        <Subtitle>
+          <Icon2>
+            <IoPersonSharp />
+          </Icon2>
+          {t('프로필_이미지')}
+        </Subtitle>
+        <div>{profileImage}</div>
 
         {errors?.global && (
           <StyledMessage variant="danger">{errors?.global}</StyledMessage>
