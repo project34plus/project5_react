@@ -1,9 +1,16 @@
 import React from 'react';
 
-const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, handleSubmit, handleFileChange }) => {
+const ThesisUploadForm = ({
+  formData,
+  handleInputChange,
+  handleFieldsChange,
+  handleSubmit,
+  handleFileChange,
+  isEditMode
+}) => {
   return (
     <div style={styles.formWrapper}>
-      <h1 style={styles.heading}>논문 제출</h1>
+      <h1 style={styles.heading}>{isEditMode ? '논문 수정' : '논문 등록'}</h1>
       <form onSubmit={handleSubmit} style={styles.formContainer}>
         
         {/* 제목 입력 필드 */}
@@ -13,9 +20,10 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
             type="text"
             name="title"
             placeholder="제목을 입력하세요"
-            value={formData.title}
+            value={formData.title || ''}
             onChange={(e) => handleInputChange('title', e.target.value)}
             style={styles.input}
+            required
           />
         </div>
 
@@ -24,9 +32,10 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
           <label style={styles.label}>카테고리</label>
           <select
             name="category"
-            value={formData.category}
+            value={formData.category || 'DOMESTIC'}
             onChange={(e) => handleInputChange('category', e.target.value)}
             style={styles.select}
+            required
           >
             <option value="DOMESTIC">국내 논문</option>
             <option value="FOREIGN">해외 논문</option>
@@ -40,9 +49,10 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
             type="text"
             name="poster"
             placeholder="편집자를 입력하세요"
-            value={formData.poster}
+            value={formData.poster || ''}
             onChange={(e) => handleInputChange('poster', e.target.value)}
             style={styles.input}
+            required
           />
         </div>
 
@@ -53,7 +63,7 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
             type="text"
             name="contributor"
             placeholder="기여자를 입력하세요"
-            value={formData.contributor}
+            value={formData.contributor || ''}
             onChange={(e) => handleInputChange('contributor', e.target.value)}
             style={styles.input}
           />
@@ -65,7 +75,7 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
           <textarea
             name="thAbstract"
             placeholder="초록을 입력하세요"
-            value={formData.thAbstract}
+            value={formData.thAbstract || ''}
             onChange={(e) => handleInputChange('thAbstract', e.target.value)}
             style={styles.textarea}
           />
@@ -77,7 +87,7 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
           <textarea
             name="reference"
             placeholder="참고 문헌을 입력하세요"
-            value={formData.reference}
+            value={formData.reference || ''}
             onChange={(e) => handleInputChange('reference', e.target.value)}
             style={styles.textarea}
           />
@@ -90,19 +100,19 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
             type="text"
             name="publisher"
             placeholder="발행기관을 입력하세요"
-            value={formData.publisher}
+            value={formData.publisher || ''}
             onChange={(e) => handleInputChange('publisher', e.target.value)}
             style={styles.input}
           />
         </div>
 
-         {/* 키워드 입력 필드 */}
+        {/* 키워드 입력 필드 */}
         <div style={styles.formGroup}>
           <label style={styles.label}>키워드</label>
           <textarea
             name="keywords"
             placeholder="키워드를 입력하세요"
-            value={formData.keywords}
+            value={formData.keywords || ''}
             onChange={(e) => handleInputChange('keywords', e.target.value)}
             style={styles.textarea}
           />
@@ -116,9 +126,9 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
               <input
                 type="radio"
                 name="visible"
-                value="true"
-                checked={formData.visible === 'true'}
-                onChange={(e) => handleInputChange('visible', e.target.value)}
+                value={true}
+                checked={formData.visible === true}
+                onChange={(e) => handleInputChange('visible', true)}
               />
               공개
             </label>
@@ -126,37 +136,48 @@ const ThesisUploadForm = ({ formData, handleInputChange, handleFieldsChange, han
               <input
                 type="radio"
                 name="visible"
-                value="false"
-                checked={formData.visible === 'false'}
-                onChange={(e) => handleInputChange('visible', e.target.value)}
+                value={false}
+                checked={formData.visible === false}
+                onChange={(e) => handleInputChange('visible', false)}
               />
               비공개
             </label>
           </div>
         </div>
 
-        {/* 학문 분류 코드 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>학문 분류 코드</label>
-          <input
-            type="text"
-            name="fields"
-            placeholder="분류 코드를 입력하세요"
-            value={formData.fields[0] || ''}
-            onChange={(e) => handleFieldsChange(0, e.target.value)}
-            style={styles.input}
-          />
-        </div>
+        {!isEditMode && (
+  <div style={styles.formGroup}>
+    <label style={styles.label}>학문 분류 코드</label>
+    {(formData.fields || []).map((field, index) => (
+      <input
+        key={index}
+        type="text"
+        name={`field${index}`}
+        placeholder={`분류 코드 ${index + 1}`}
+        value={field}
+        onChange={(e) => handleFieldsChange(index, e.target.value)}
+        style={styles.input}
+      />
+    ))}
+  </div>
+)}
 
-        {/* 파일 선택 버튼 - 여러 파일 선택 가능 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>파일 선택</label>
-          <input type="file" multiple onChange={handleFileChange} style={styles.input} />
-        </div>
-
+        {!isEditMode && (
+  <div style={styles.formGroup}>
+    <label style={styles.label}>파일 선택</label>
+    <input
+      type="file"
+      multiple
+      onChange={handleFileChange}
+      style={styles.input}
+    />
+  </div>
+)}
         {/* 제출 버튼 */}
         <div style={styles.formGroup}>
-          <button type="submit" style={styles.submitButton}>논문 제출</button>
+          <button type="submit" style={styles.submitButton}>
+            {isEditMode ? '논문 수정' : '논문 제출'}
+          </button>
         </div>
       </form>
     </div>

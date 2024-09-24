@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import ThesisUploadForm from '../components/UploadForm'; // form.js에서 가져옴
+import ThesisUploadForm from '../components/UploadForm';
 import { uploadFile, uploadThesis } from '../apis/apiUpload';
 import Container from '@/commons/components/Container';
 
@@ -8,16 +8,15 @@ const initialFormData = {
   category: 'DOMESTIC',
   poster: '',
   contributor: '',
-  mode: '',
   thAbstract: '',
   reference: '',
   visible: 'false',
   publisher: '',
   title: '',
-  fields: [],
+  fields: [''],
   language: '한국어',
   country: '한국',
-  keywords:''
+  keywords: '',
 };
 
 const ThesisUploadContainer = () => {
@@ -45,12 +44,13 @@ const ThesisUploadContainer = () => {
       if (file) {
         await uploadFile(file);
       }
-      await uploadThesis(formData);
-      alert('논문 정보가 성공적으로 업로드되었습니다.');
 
-      window.location.href = 'http://localhost:6006/mypage/MyThesisList';
+      await uploaxdThesis(formData); // 새 논문 업로드
+      alert('논문이 성공적으로 등록되었습니다.');
+
+      window.location.href = '/mypage/MyThesisList'; // 리다이렉트
     } catch (error) {
-      alert('업로드 실패:', error.message);
+      console.error('Error during form submission:', error);
     }
   };
 
@@ -62,6 +62,7 @@ const ThesisUploadContainer = () => {
         handleFieldsChange={handleFieldsChange}
         handleFileChange={handleFileChange}
         handleSubmit={handleSubmit}
+        isEditMode={false} // 업로드 모드
       />
     </Container>
   );

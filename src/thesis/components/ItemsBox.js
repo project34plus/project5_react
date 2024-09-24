@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { color } from '@/theme/color';
 import { useTranslation } from 'react-i18next';
 import fontSize from '@/theme/fontSize';
+import WishButton from '@/commons/components/WishButton';
 
-const { gray } = color;
-const { small, normal } = fontSize;
+const { gray, midgray, lemon, lightgray } = color;
+const { small, normal, center } = fontSize;
 
 const ItemsBox = ({ items, pagination }) => {
   const { t } = useTranslation();
@@ -23,9 +24,13 @@ const ItemsBox = ({ items, pagination }) => {
               <div className="poster">{poster}</div>
               <div className="publisher">{publisher}</div>
               <div className="fields">
-                {Object.values(_fields)?.[0][0]} {/* 대분류만 렌더링 */}
+              {_fields && Object.keys(_fields).length > 0 ? Object.values(_fields)[0][0] : '대분류 없음'}
+              {/* _fields가 있을 경우 대분류 렌더링, 없으면 '대분류 없음' 출력 */}
               </div>
             </a>
+            <div className="wishButton">
+              <WishButton tid={tid}></WishButton>
+            </div>
           </li>
         ))
       ) : (
@@ -36,34 +41,45 @@ const ItemsBox = ({ items, pagination }) => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 50px;
+  margin-top: 10px;
   li {
     border: 1px solid ${gray};
-    padding: 10px 15px;
+    padding: 15px 30px;
     margin-top: 5px;
+    position: relative;
+  }
+
+  .wishButton {
+    position: absolute;
+    right: 25px;
+    top: calc(100% - 95px);
+    z-index: 1000;
   }
   .title {
-    font-size: ${normal};
-    margin: 5px 0;
+    font-size: ${center};
+    margin: 5px 0 10px;
   }
   .total {
     font-size: ${normal};
-    border-top: 1px solid ${gray};
-    border-bottom: 1px solid ${gray};
+    border-top: 1px solid ${midgray};
+    border-bottom: 1px solid ${midgray};
     padding: 15px 10px;
+    background: ${lightgray};
   }
   .poster,
   .publisher {
     margin: 5px 0;
+    font-size: ${small};
   }
 
   .fields {
-    background: ${gray};
-    width: 80px;
+    background: ${lemon};
+    width: 110px;
     text-align: center;
     border-radius: 50px;
-    padding: 3px 0;
-    margin-top: 5px;
+    padding: 5px 10px;
+    font-size: ${small};
+    margin-top: 10px;
   }
 `;
 

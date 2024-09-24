@@ -7,7 +7,7 @@ import fontSize from '@/theme/fontSize';
 import { color } from '@/theme/color';
 import fontWeight from '@/theme/fontWeight';
 
-const { small, normal } = fontSize;
+const { small, normal, center, medium } = fontSize;
 const { gray, white, navy } = color;
 const { semiBold } = fontWeight;
 
@@ -16,20 +16,20 @@ const FormBox = styled.form`
   display: block;
 
   p {
-    font-size: ${normal};
+    font-size: ${medium};
     font-weight: ${semiBold};
     padding-left: 10px;
     margin: 0 0 10px 0;
   }
 
   .comment-form {
-    font-size: ${small};
     margin-bottom: 20px;
     border-top: 2px solid black;
-    padding-top: 20px;
+    padding: 20px 10px 0 10px;
 
     .commenter {
-      margin: 0 0 5px 5px;
+      margin: 0 0 10px 5px;
+      font-size: ${small};
     }
 
     .input-area {
@@ -42,7 +42,7 @@ const FormBox = styled.form`
         height: 100px;
         padding: 12px 16px;
         border: 1px solid ${gray};
-        color: ${gray};
+        color: ${navy};
         box-sizing: border-box;
         resize: none;
         border-radius: 5px;
@@ -64,12 +64,12 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
-      <p>댓글</p>
+      <p>{t('댓글')}</p>
       <div className="comment-form">
         <div className="commenter">
           {userInfo?.userName
             ? userInfo.userName
-            : '댓글 작성은 로그인 후 가능합니다'}
+            : t('로그인_후_댓글_작성이_가능합니다')}
         </div>
         {/*로그인한 회원명 나와야 하는데 안나옴*/}
         <div className="input-area">

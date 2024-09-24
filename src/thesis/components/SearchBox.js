@@ -13,7 +13,7 @@ import { ko } from 'date-fns/locale/ko';
 import FieldFilter from './FieldFilter';
 registerLocale('ko', ko);
 
-const { gray, white, navy, black } = color;
+const { gray, white, navy, darkgray, midgray, lightgray } = color;
 const { small, normal } = fontSize;
 
 const fieldList = [
@@ -110,34 +110,41 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
-      <div className="word-search">
+      <div className="word-search-form">
         <p>검색어</p>
-        <SearchItemRows
-          options={options}
-          form={form}
-          onChange={onChange}
-          i={0}
-        />
-        {itemsRows.map((ItemRow, i) => (
-          <ItemRow
-            key={`item-row-${i}`}
+        <div className="word-search">
+          <SearchItemRows
             options={options}
             form={form}
             onChange={onChange}
-            i={i + 1}
+            i={0}
           />
-        ))}
-
-        <button type="button" className="plus" onClick={() => onClick('plus')}>
-          <FaPlus />
-        </button>
-        <button
-          type="button"
-          className="minus"
-          onClick={() => onClick('minus')}
-        >
-          <FaMinus />
-        </button>
+          {itemsRows.map((ItemRow, i) => (
+            <ItemRow
+              key={`item-row-${i}`}
+              options={options}
+              form={form}
+              onChange={onChange}
+              i={i + 1}
+            />
+          ))}
+        </div>
+        <div className="btn-group">
+          <button
+            type="button"
+            className="plus"
+            onClick={() => onClick('plus')}
+          >
+            <FaPlus />
+          </button>
+          <button
+            type="button"
+            className="minus"
+            onClick={() => onClick('minus')}
+          >
+            <FaMinus />
+          </button>
+        </div>
       </div>
       <div className="field-subject">
         <p>주제분류</p>
@@ -186,7 +193,7 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
 const FormBox = styled.form`
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
+  margin: 40px 0 30px;
   justify-content: center;
   align-items: center;
 
@@ -200,13 +207,19 @@ const FormBox = styled.form`
     font-size: ${small};
     padding-left: 10px;
   }
-  .word-search {
+  .word-search-form {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 
+    .word-search {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
     > p {
       margin: 0 20px 0 0;
+      font-size: ${small};
     }
   }
 
@@ -217,14 +230,19 @@ const FormBox = styled.form`
 
     > p {
       margin: 0 20px 0 0;
-            text-align: left; /* 왼쪽 정렬 */
+      text-align: left; /* 왼쪽 정렬 */
+      font-size: ${small};
     }
   }
+
+  .btn-group {
+    margin-left: 10px;
+  }
+
   .plus,
   .minus {
     width: 50px;
     height: 50px;
-    margin-left: 10px;
 
     svg {
       width: 25px;
@@ -239,6 +257,7 @@ const FormBox = styled.form`
     align-items: center;
     > p {
       margin: 0 10px 0 0;
+      font-size: ${small};
     }
 
     .pick_sdate,
@@ -279,7 +298,7 @@ const FormBox = styled.form`
     }
 
     .react-datepicker__header {
-      background: #e2f7dd;
+      background: ${lightgray};
       width: 100%;
       padding: 10px;
       border-radius: 10px 10px 0 0;
@@ -307,7 +326,7 @@ const FormBox = styled.form`
         height: 30px;
         justify-content: center;
         align-items: center;
-        color: ${black};
+        color: ${darkgray};
         text-align: center;
         font-size: ${small};
         line-height: 1;
@@ -322,12 +341,8 @@ const FormBox = styled.form`
     }
 
     .react-datepicker__day {
-      color: ${gray};
+      color: ${darkgray};
       margin: 0;
-    }
-
-    react-datepicker__day--weekend {
-      color: #red;
     }
 
     .react-datepicker__current-month {
@@ -338,7 +353,7 @@ const FormBox = styled.form`
     .react-datepicker__day--today {
       // 오늘 날짜 하이라이트 커스텀
       color: ${navy};
-      border: 1px solid ${gray};
+      border: 1px solid ${navy};
       border-radius: 50%;
     }
     .react-datepicker__day--selected {
@@ -347,8 +362,8 @@ const FormBox = styled.form`
       border-radius: 50%;
     }
     .react-datepicker__day:hover {
-      background-color: ${navy}; /* 마우스 오버 시 배경색 변경 */
-      color: ${gray}; /* 마우스 오버 시 텍스트 색상 변경 */
+      background: ${midgray}; /* 마우스 오버 시 배경색 변경 */
+      color: ${white}; /* 마우스 오버 시 텍스트 색상 변경 */
       border-radius: 50%; /* 원형 테두리 적용 */
     }
 
@@ -358,7 +373,8 @@ const FormBox = styled.form`
 
     .react-datepicker__day--keyboard-selected {
       border-radius: 50%;
-      background-color: ${navy};
+      background: ${navy};
+      color: ${white};
     }
   }
 
@@ -372,44 +388,18 @@ const FormBox = styled.form`
     width: 100px;
     border: ${gray} 1px solid;
     font-size: ${small};
+    padding-left: 5px;
+    color: ${midgray};
   }
 `;
-
-// 셀렉트
-// const StyledSelect = {
-//   control: (provided) => ({
-//     ...provided,
-//     border: `1px solid ${gray}`,
-//     height: '60px', // 컨트롤 높이
-//     marginRight: '10px',
-//     width: '170px',
-//     fontSize: `${small}`,
-//   }),
-//   option: (provided, state) => ({
-//     ...provided,
-//     padding: '15px 10px',
-//     backgroundColor: state.isSelected ? `${navy}` : `${white}`,
-//     color: state.isSelected ? `${white}` : `${navy}`,
-//     '&:hover': {
-//       backgroundColor: `${navy}`,
-//       color: `${white}`,
-//     },
-//   }),
-//   menu: (provided) => ({
-//     ...provided,
-//     zIndex: 100, // 드롭다운 메뉴 z-index
-//     fontSize: `${small}`,
-//   }),
-//   singleValue: (provided) => ({
-//     ...provided,
-//     color: `${navy}`, // 선택된 값 색상
-//   }),
-// };
 
 const Button = styled.button`
   height: 50px;
   width: 140px;
   font-size: ${normal};
+  background: ${navy};
+  color: ${white};
+  border-radius: 5px;
 `;
 
 export default SearchBox;
