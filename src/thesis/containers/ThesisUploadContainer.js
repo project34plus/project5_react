@@ -1,10 +1,11 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ThesisUploadForm from '../components/UploadForm';
 import { uploadFile, uploadThesis } from '../apis/apiUpload';
 import Container from '@/commons/components/Container';
 
 const initialFormData = {
+  gid: Date.now() + '',
   category: 'DOMESTIC',
   poster: '',
   contributor: '',
@@ -21,7 +22,6 @@ const initialFormData = {
 
 const ThesisUploadContainer = () => {
   const [formData, setFormData] = useState(initialFormData);
-  const [file, setFile] = useState(null);
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -33,19 +33,15 @@ const ThesisUploadContainer = () => {
     setFormData({ ...formData, fields: newFields });
   };
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
+  const fileUploadCallback = useCallback((files) => {
+    console.log('files', files);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      if (file) {
-        await uploadFile(file);
-      }
-
-      await uploaxdThesis(formData); // 새 논문 업로드
+      await uploadThesis(formData); // 새 논문 업로드
       alert('논문이 성공적으로 등록되었습니다.');
 
       window.location.href = '/mypage/MyThesisList'; // 리다이렉트
@@ -60,7 +56,7 @@ const ThesisUploadContainer = () => {
         formData={formData}
         handleInputChange={handleInputChange}
         handleFieldsChange={handleFieldsChange}
-        handleFileChange={handleFileChange}
+        fileUploadCallback={fileUploadCallback}
         handleSubmit={handleSubmit}
         isEditMode={false} // 업로드 모드
       />
