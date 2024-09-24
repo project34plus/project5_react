@@ -8,3 +8,5 @@ export const removeWish = (tid) => requestData(`/thesis/wish/${tid}`, 'DELETE');
 
 // 찜한 목록
 export const getWishList = () => requestData(`/thesis/wish`);
+
+export const getMyWishList = () => requestData('/thesis/wish/mylist')

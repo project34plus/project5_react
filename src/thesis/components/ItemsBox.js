@@ -24,7 +24,8 @@ const ItemsBox = ({ items, pagination }) => {
               <div className="poster">{poster}</div>
               <div className="publisher">{publisher}</div>
               <div className="fields">
-                {Object.values(_fields)?.[0][0]} {/* 대분류만 렌더링 */}
+              {_fields && Object.keys(_fields).length > 0 ? Object.values(_fields)[0][0] : '대분류 없음'}
+              {/* _fields가 있을 경우 대분류 렌더링, 없으면 '대분류 없음' 출력 */}
               </div>
             </a>
             <div className="wishButton">

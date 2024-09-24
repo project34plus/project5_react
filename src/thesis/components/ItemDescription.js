@@ -129,7 +129,11 @@ const ItemDescription = ({ item }) => {
         <dl>
           <dt>{t('학문_분류')}</dt>
           <dd>
-            {Object.values(_fields)?.[0][0]} | {Object.values(_fields)?.[0][1]}
+            {_fields && Object.keys(_fields).length > 0
+              ? `${Object.values(_fields)?.[0][0]} | ${
+                  Object.values(_fields)?.[0][1]
+                }`
+              : '학문 분류 없음'}
           </dd>
         </dl>
         <dl>
