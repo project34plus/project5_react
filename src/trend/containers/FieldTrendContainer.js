@@ -119,6 +119,8 @@ const FieldTrendContainer = ({ searchParams }) => {
       // 대분류로 묶어서 처리
       const stats = {};
       for (const item of itemsArray) {
+        if (!item.name) continue;
+
         stats[item.name] = stats[item.name] ?? { sub: [] };
         stats[item.name].sub = stats[item.name].sub ?? [];
         stats[item.name].sub.push(item);
