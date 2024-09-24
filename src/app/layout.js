@@ -3,7 +3,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { CommonProvider } from '@/commons/contexts/CommonContext';
 import { WishListProvider } from '@/commons/contexts/WishListContext';
-import { UserInfoProvider } from '@/commons/contexts/UserInfoContext';
+import { getUserContext, UserInfoProvider } from '@/commons/contexts/UserInfoContext';
 import SiteTitle from '@/commons/components/SiteTitle';
 import Header from '@/outlines/Header';
 import Footer from '@/outlines/Footer';
@@ -26,17 +26,18 @@ export default function RootLayout({ children }) {
         <WishListProvider>
           <CommonProvider>
             <html lang="ko">
-              <head>
-                <SiteTitle />
-              </head>
-              <body>
-                <Header />
-                <MainMenu />
-                <main>{children}
-                <ScrollToTop />
-                </main>
-                <Footer />
-              </body>
+            <head>
+              <SiteTitle />
+            </head>
+            <body>
+            <Header />
+            <MainMenu />
+            <main>
+              {children}
+              <ScrollToTop />
+            </main>
+            <Footer />
+            </body>
             </html>
           </CommonProvider>
         </WishListProvider>

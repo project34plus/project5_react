@@ -47,7 +47,7 @@ export const apiGet = (tid) => requestData(`/thesis/info/${tid}`);
 export const apiMyList = () => {
   const url = '/thesis/mylist';
   console.log('API 요청 보냄:', url); // API 요청 전 로그 출력
-  
+
   return requestData(url, 'GET')
     .then((response) => {
       console.log('API 응답:', response); // API 응답 성공 시 데이터 출력
