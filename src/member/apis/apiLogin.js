@@ -1,5 +1,6 @@
 import apiRequest from '../../commons/libs/apiRequest';
 import cookies from 'react-cookies';
+import { getFiles } from '@/commons/libs/file/apiFile';
 
 // 로그인 처리
 export const apiLogin = (form) =>
@@ -30,7 +31,23 @@ export const apiUser = () =>
           return;
         }
 
-        resolve(res.data.data);
+        const user = res.data.data;
+        delete user.password;
+
+        (async () => {
+          try {
+            const files = await getFiles(user.gid);
+            if (files && files.length > 0) {
+              const file = files[0];
+              const profileImage = `${file.thumbUrl}?seq=${file.seq}&width=200&height=200`;
+              user.profileImage = profileImage;
+            }
+          } catch (err) {
+            console.error(err);
+          }
+
+          resolve(user);
+        })();
       })
       .catch((err) => {
         cookies.remove('token', { path: '/' });

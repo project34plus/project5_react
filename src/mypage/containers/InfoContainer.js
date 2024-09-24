@@ -10,7 +10,6 @@ import { apiPatch } from '../apis/apiMyPage';
 import { apiList } from '@/member/apis/apiFields';
 import { apiFieldList } from '@/member/apis/apiFields';
 import styled from 'styled-components';
-import ProfileImage from '../components/ProfileImage';
 
 const StyledProfileImage = styled.div`
   width: 250px;
@@ -190,7 +189,6 @@ const InfoContainer = ({ searchParams }) => {
       (async () => {
         try {
           const res = await apiUpdate(form); // updateMemberInfo 호출
-          console.log('res', res);
           const newForm = { ...form, ...res };
           delete newForm.password;
 
@@ -216,7 +214,13 @@ const InfoContainer = ({ searchParams }) => {
   );
 
   const fileUploadCallback = useCallback((files) => {
-    console.log('files', files);
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    const file = files[0];
+    const profileImage = `${file.thumbUrl}?seq=${file.seq}&width=200&height=200`;
+    setForm((form) => ({ ...form, profileImage }));
   }, []);
 
   const deleteUserInfo = useCallback(() => {

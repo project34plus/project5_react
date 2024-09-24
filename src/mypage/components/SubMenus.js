@@ -51,17 +51,18 @@ const Submenus = () => {
   } = useContext(UserInfoContext);
   return (
     <SubMenuBox>
-      <Image
-        src={userInfo?.profileImage?.fileUrl || '/images/noImage.jpg'} // 기본 이미지 URL 설정
+      <img
+        src={userInfo?.profileImage || '/images/noImage.jpg'} // 기본 이미지 URL 설정
         alt="profile"
-        width={130}
-        height={130}
+        width={150}
+        height={150}
         style={{
           marginTop: '20px',
-          marginBottom: '20px',
-          marginLeft: '20px',
+          marginBottom: '30px',
+          marginLeft: '10px',
           borderRadius: '5%',
           border: '3px solid #7FA1C3',
+          padding: '10px',
         }}
       />
       <a href="/mypage/info">{t('내_프로필')}</a>
