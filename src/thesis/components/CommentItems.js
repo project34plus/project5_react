@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 const CommentItems = ({ comments }) => {
   const { t } = useTranslation();
+  console.log('comments', comments);
 
   return (
     <Wrapper>
       {comments.length > 0 ? (
-        comments.map(({ seq, createdAt, commenter, content }) => (
+        comments.map(({ seq, createdAt, username, content }) => (
           <li key={seq}>
             <div className="commenter">{username}</div>
             <div className="content">{content}</div>

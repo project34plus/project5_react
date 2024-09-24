@@ -12,7 +12,7 @@ const FieldFilter = ({ fieldList, onFieldChange }) => {
   const handleFieldCheck = (value) => {
     setSelectedField(value);
     onFieldChange(value); // 부모 컴포넌트에 선택된 필드 전달
-    console.log('selected field', value);
+    console.log('selected field:', value);
   };
 
   return (

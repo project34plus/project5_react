@@ -156,7 +156,7 @@ const ThesisViewContainer = ({ params }) => {
         }
       })();
     },
-    [t, router, isLogin, item, commentForm, userInfo],
+    [t, router, isLogin, commentForm],
   );
   
   const onChange = useCallback((e) => {
