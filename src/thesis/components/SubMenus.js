@@ -6,12 +6,13 @@ import { apiField, apiMainField } from '@/thesis/apis/apiField';
 
 const SubMenuBox = styled.aside`
     min-height: 100px;
-    max-width: 800px;
     background: ${({ theme }) => theme.color.white};
     border-radius: 10px;
     padding: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
     a {
         display: inline-block;
         background: ${({ theme }) => theme.color.white};
@@ -23,6 +24,7 @@ const SubMenuBox = styled.aside`
         transition: background 0.3s, color 0.3s, transform 0.2s;
         margin-bottom: 10px;
 
+        border-top: 1px solid ${({ theme }) => theme.color.gray};
         &:hover {
             background: ${({ theme }) => theme.color.navy};
             color: ${({ theme }) => theme.color.white};
@@ -30,9 +32,6 @@ const SubMenuBox = styled.aside`
         }
     }
 
-    a + a {
-        border-top: 1px solid ${({ theme }) => theme.color.gray};
-    }
 `;
 
 async function fetchMainFields() {

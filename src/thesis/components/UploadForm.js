@@ -1,18 +1,29 @@
-import React from 'react';
+'use client';
+import React, {useState} from 'react';
+import FileUpload from '@/commons/components/FileUpload';
+import styled from 'styled-components';
+
+const StyledFileUpload = styled(FileUpload)``;
 
 const ThesisUploadForm = ({
   formData,
   handleInputChange,
   handleFieldsChange,
   handleSubmit,
-  handleFileChange,
-  isEditMode
+  fileUploadCallback,
+  isEditMode,
 }) => {
+  const [selectedFiles, setSelectedFiles] = useState([]); // 선택한 파일 저장
+
+  // 파일 선택 시 호출될 함수
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files);
+    setSelectedFiles(files); // 선택한 파일을 상태로 저장
+  };
   return (
     <div style={styles.formWrapper}>
       <h1 style={styles.heading}>{isEditMode ? '논문 수정' : '논문 등록'}</h1>
       <form onSubmit={handleSubmit} style={styles.formContainer}>
-        
         {/* 제목 입력 필드 */}
         <div style={styles.formGroup}>
           <label style={styles.label}>제목</label>
@@ -145,28 +156,97 @@ const ThesisUploadForm = ({
           </div>
         </div>
 
-        {/* 학문 분류 코드 필드 (다중 필드 처리) */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>학문 분류 코드</label>
-          {(formData.fields || []).map((field, index) => (
+        {!isEditMode && (
+          <div style={styles.formGroup}>
+            <label style={styles.label}>학문 분류 코드</label>
+            {(formData.fields || []).map((field, index) => (
+              <select
+                key={index}
+                name={`field${index}`}
+                value={field}
+                onChange={(e) => handleFieldsChange(index, e.target.value)}
+                style={styles.select}
+                required
+              >
+                <option value="E-001">미분류</option>
+                <option value="E-002">건축공학</option>
+                <option value="E-003">고분자공학</option>
+                <option value="E-005">교통공학</option>
+                <option value="E-007">기계공학</option>
+                <option value="E-017">자동차공학</option>
+              </select>
+            ))}
+          </div>
+        )}
+
+        {!isEditMode && (
+          <div style={styles.formGroup}>
+            <StyledFileUpload
+              gid={formData?.gid}
+              callback={fileUploadCallback}
+              color="navy"
+            >
+              파일 선택
+            </StyledFileUpload>
             <input
-              key={index}
-              type="text"
-              name={`field${index}`}
-              placeholder={`분류 코드 ${index + 1}`}
-              value={field || ''}
-              onChange={(e) => handleFieldsChange(index, e.target.value)}
-              style={styles.input}
-            />
-          ))}
-        </div>
+                type="file"
+                multiple
+                onChange={handleFileChange} // 파일 선택 시 호출
+                style={styles.input}
+              />
+          </div>
+        )}
+         {/* 선택한 파일 목록 표시 */}
+         {selectedFiles.length > 0 && (
+          <div style={styles.formGroup}>
+            <label style={styles.label}>선택한 파일</label>
+            <ul>
+              {selectedFiles.map((file, index) => (
+                <li key={index}>{file.name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      
 
-        {/* 파일 선택 버튼 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>파일 선택</label>
-          <input type="file" multiple onChange={handleFileChange} style={styles.input} />
-        </div>
+        {isEditMode && (
+          <div style={styles.formGroup}>
+            <label style={styles.label}>버전 입력</label>
+            {/* 주 버전 (Major Version) */}
+            <div style={styles.formGroup}>
+              <label style={styles.label}>주 버전 (Major Version)</label>
+              <input
+                type="number"
+                name="majorVersion"
+                placeholder="주 버전을 입력하세요"
+                value={formData.majorVersion || 0}
+                onChange={(e) =>
+                  handleInputChange('majorVersion', e.target.value)
+                }
+                style={styles.input}
+                min="0"
+                required
+              />
+            </div>
 
+            {/* 부 버전 (Minor Version) */}
+            <div style={styles.formGroup}>
+              <label style={styles.label}>부 버전 (Minor Version)</label>
+              <input
+                type="number"
+                name="minorVersion"
+                placeholder="부 버전을 입력하세요"
+                value={formData.minorVersion || 0}
+                onChange={(e) =>
+                  handleInputChange('minorVersion', e.target.value)
+                }
+                style={styles.input}
+                min="0"
+                required
+              />
+            </div>
+          </div>
+        )}
         {/* 제출 버튼 */}
         <div style={styles.formGroup}>
           <button type="submit" style={styles.submitButton}>

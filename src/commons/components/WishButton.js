@@ -7,12 +7,11 @@ import WishListContext from '../contexts/WishListContext';
 import styled from 'styled-components';
 
 
-
 const Icon = styled.div`
-  cursor: pointer;
-  transition: color 0.3s;
-  font-size: 40px;
-  color: ${(props) => (props.active ? '#ff6a39' : '#ccc')};
+    cursor: pointer;
+    transition: color 0.3s;
+    font-size: 40px;
+    color: ${(props) => (props.active ? '#ff6a39' : '#ccc')};
 `;
 
 const WishButton = ({ IconOn, IconOff, tid }) => {
@@ -26,10 +25,12 @@ const WishButton = ({ IconOn, IconOff, tid }) => {
   } = useContext(UserInfoContext);
 
   const { states, actions } = useContext(WishListContext);
-  const wishList = states.thesisWish ; // thesisWish 리스트 사용
-
+  const wishList = states.thesisWish; // thesisWish 리스트 사용
   useEffect(() => {
-    setToggle(Boolean(Array.isArray(wishList) && wishList.includes(tid)));
+    console.log('wishList: ', wishList);
+    console.log('tid', tid);
+    console.log(wishList.includes(tid.toString()));
+    setToggle(Boolean(wishList.includes(tid.toString())));
   }, [wishList, tid, isLogin]);
 
   const onClick = useCallback(
