@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext, useCallback } from 'react';
-import { getWishList } from '../libs/wish/apiWish'; // 논문 위시리스트 API 호출
+import { getMyWishList, getWishList } from '../libs/wish/apiWish'; // 논문 위시리스트 API 호출
 import UserInfoContext from './UserInfoContext';
 
 const WishListContext = createContext({
@@ -18,7 +18,7 @@ export const WishListProvider = ({ children }) => {
   const updateWish = useCallback(() => {
     (async () => {
       try {
-        const thesisWishList = await getWishList(); // 논문 위시리스트 가져오기
+        const thesisWishList = await getMyWishList(); // 논문 위시리스트 가져오기
         setThesisWish(thesisWishList);
       } catch (err) {
         console.error(err);
