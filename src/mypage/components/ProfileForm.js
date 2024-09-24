@@ -1,4 +1,5 @@
-import React, { useTransition } from 'react';
+'use client';
+import React, { useTransition, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { StyledInput } from '@/commons/components/inputs/StyledInput';
@@ -16,6 +17,8 @@ import {
   IoCalendarNumberOutline,
 } from 'react-icons/io5';
 import JoinInput from '@/member/components/JoinInput';
+import FileUpload from '@/commons/components/FileUpload';
+import ProfileImage from './ProfileImage';
 
 const FormBox = styled.form`
   width: 1000px;
@@ -125,6 +128,10 @@ const OptionContainer = styled.div`
   }
 `;
 
+const StyledFileUpload = styled(FileUpload)`
+  width: 100px;
+`;
+
 const OptionContainer2 = styled.div`
   font-size: ${({ theme }) => theme.fontSize.center};
 
@@ -167,6 +174,7 @@ const ProfileForm = ({
   fields,
   interests,
   profileImage,
+  fileUploadCallback,
 }) => {
   const { t } = useTranslation();
   console.log(form);
@@ -655,8 +663,16 @@ const ProfileForm = ({
           </Icon2>
           {t('프로필_이미지')}
         </Subtitle>
-        <div>{profileImage}</div>
-
+        <dd>
+          <StyledFileUpload
+            gid={form?.gid}
+            callback={fileUploadCallback}
+            color="navy"
+          >
+            {t('프로필_업로드')}
+          </StyledFileUpload>
+          <ProfileImage gid={form?.gid} callback={fileUploadCallback} />
+        </dd>
         {errors?.global && (
           <StyledMessage variant="danger">{errors?.global}</StyledMessage>
         )}

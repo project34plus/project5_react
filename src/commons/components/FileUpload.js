@@ -1,10 +1,9 @@
+'use client';
 import React, { useCallback, useState } from 'react';
 import apiRequest from '../libs/apiRequest';
-import MessageBox from './MessageBox';
+import { StyledButton } from './buttons/StyledButton';
+import StyledMessage from './StyledMessage';
 import { useTranslation } from 'react-i18next';
-import { SmallButton } from '@/commons/components/buttons/BlueButtons';
-import Image from 'next/image';
-
 const FileUpload = ({
   children,
   gid,
@@ -15,7 +14,9 @@ const FileUpload = ({
   done,
   callback,
   width,
+  imageWidth,
   imageUrl,
+  className,
 }) => {
   const [message, setMessage] = useState('');
 
@@ -96,26 +97,27 @@ const FileUpload = ({
   }, [single, gid, location, imageOnly, t, callback, done]);
 
   return (
-    <>
+    <div className={className}>
       {imageUrl ? (
-        <Image
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
           src={imageUrl}
-          width={width}
+          width={imageWidth}
           alt="profile"
           onClick={onButtonClick}
         />
       ) : (
-        <SmallButton
+        <StyledButton
           width={width}
           type="button"
-          color={color}
+          variant={color}
           onClick={onButtonClick}
         >
           {children}
-        </SmallButton>
+        </StyledButton>
       )}
-      {message && <MessageBox color="danger">{message}</MessageBox>}
-    </>
+      <StyledMessage variant="danger">{message}</StyledMessage>
+    </div>
   );
 };
 

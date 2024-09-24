@@ -22,6 +22,22 @@ const StyledProfileImage = styled.div`
   margin-bottom: 30px;
 `;
 
+const initialFormData = {
+  gid: Date.now() + '',
+  category: 'DOMESTIC',
+  poster: '',
+  contributor: '',
+  thAbstract: '',
+  reference: '',
+  visible: 'false',
+  publisher: '',
+  title: '',
+  fields: [],
+  language: '한국어',
+  country: '한국',
+  keywords: '',
+};
+
 function getQueryString(searchParams) {
   const qs = {};
   if (searchParams?.size > 0) {
@@ -50,7 +66,18 @@ const InfoContainer = ({ searchParams }) => {
   const [fields, setfields] = useState([]);
   const [interests, setinterests] = useState([]);
   const [search, setSearch] = useState(() => getQueryString(searchParams));
-
+  /*
+  const apiUpdate = useCallback((form) => {
+    (async () => {
+      try {
+        const updatedData = await apiUpdate(form); // updateMemberInfo 호출
+        return updatedData; // 성공적으로 받은 데이터를 반환
+      } catch (err) {
+        throw err; // 에러 발생 시 호출한 곳으로 에러 전달
+      }
+    })();
+  }, []);
+  */
   useEffect(() => {
     apiList(search)
       .then((res) => {
@@ -93,6 +120,33 @@ const InfoContainer = ({ searchParams }) => {
     }
   }, []);
 
+  const validateForm = useCallback(() => {
+    const _errors = {};
+    let hasErrors = false;
+    const requiredFields = {
+      userName: t('회원명을_입력하세요'),
+      password: t('비밀번호를_입력하세요'),
+      confirmPassword: t('비밀번호를_확인하세요'),
+      mobile: t('전화번호를_입력하세요'),
+      birth: t('생년월일을_입력하세요'),
+      gender: t('성별을_선택하세요'),
+      job: t('직업을_선택하세요'),
+    };
+
+    for (const [field, message] of Object.entries(requiredFields)) {
+      const value = form[field];
+
+      // 값이 문자열일 때만 trim()을 호출하고, 그렇지 않으면 빈 값인지 확인 (문자열일때만 trim 가능하다함)
+      if (typeof value !== 'string' || !value.trim()) {
+        _errors[field] = message; // 에러 메시지 저장
+        hasErrors = true;
+      }
+    }
+
+    setErrors(_errors); // 에러 상태 업데이트
+    return !hasErrors; // 에러가 없으면 true 반환
+  }, [form, t]);
+
   const onLogout = useCallback(() => {
     setIsLogin(false);
     setIsAdmin(false);
@@ -101,10 +155,12 @@ const InfoContainer = ({ searchParams }) => {
   }, [setIsLogin, setIsAdmin, setUserInfo]);
 
   const onSubmit = useCallback(
-    async (e) => {
+    (e) => {
       e.preventDefault();
+
       const _errors = {};
       let hasErrors = false;
+      if (!validateForm()) return;
 
       const requiredFields = {
         userName: t('회원명을_입력하세요'),
@@ -131,26 +187,37 @@ const InfoContainer = ({ searchParams }) => {
       if (hasErrors) {
         return;
       }
+      (async () => {
+        try {
+          const res = await apiUpdate(form); // updateMemberInfo 호출
+          console.log('res', res);
+          const newForm = { ...form, ...res };
+          delete newForm.password;
 
-      try {
-        const res = await apiUpdate(form);
-        const newForm = { ...form, ...res };
-        delete newForm.password;
-
-        setForm(newForm);
-        setUserInfo(newForm);
-        alert(t('회원정보가_수정되었습니다'));
-        router.replace('/mypage/info');
-      } catch (err) {
-        console.error(err);
-        const messages = err.message.global
-          ? err.message.global
-          : { global: [err.message] };
-        setErrors(messages);
-      }
+          setForm(newForm);
+          setUserInfo(newForm);
+          alert(t('회원정보가_수정되었습니다'));
+          router.replace('/mypage/info');
+        } catch (err) {
+          console.error(err);
+          const messages =
+            typeof err.message === 'string'
+              ? { global: [err.message] }
+              : err.message;
+          for (const [field, _messages] of Object.entries(messages)) {
+            _errors[field] = _errors[field] ?? [];
+            _errors[field].push(_messages);
+          }
+          setErrors({ ..._errors }); // 에러 상태 업데이트
+        }
+      })();
     },
-    [t, form, router, setUserInfo],
+    [form, validateForm, router, apiUpdate],
   );
+
+  const fileUploadCallback = useCallback((files) => {
+    console.log('files', files);
+  }, []);
 
   const deleteUserInfo = useCallback(() => {
     if (!window.confirm(t('회원탈퇴를_진행하시겠습니까'))) {
@@ -170,20 +237,6 @@ const InfoContainer = ({ searchParams }) => {
     })();
   }, [t, form, router, onLogout]);
 
-  const fileUploadCallback = useCallback(
-    (files) => {
-      if (files.length === 0) {
-        return;
-      }
-
-      setForm((form) => ({ ...form, profileImage: files[0] }));
-      setUserInfo((userInfo) => ({ ...userInfo, profileImage: files[0] }));
-    },
-    [setUserInfo],
-  );
-
-  const profileImage = form?.profileImage?.fileUrl;
-
   return (
     <>
       <Container2>
@@ -195,15 +248,7 @@ const InfoContainer = ({ searchParams }) => {
           errors={errors}
           fields={fields}
           interests={interests}
-          profileImage={
-            <StyledProfileImage>
-              <ProfileImage
-                gid={form?.gid}
-                fileUploadCallback={fileUploadCallback}
-                profileImage={profileImage}
-              />
-            </StyledProfileImage>
-          }
+          fileUploadCallback={fileUploadCallback}
         />
       </Container2>
     </>

@@ -6,6 +6,7 @@ import { apiGet } from '../apis/apiInfo';
 import Container from '@/commons/components/Container';
 
 const initialFormData = {
+  gid: Date.now() + '',
   category: 'DOMESTIC',
   poster: '',
   contributor: '',
