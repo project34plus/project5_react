@@ -108,8 +108,8 @@ const ItemDescription = ({ item }) => {
         <WishButton tid={tid}></WishButton>
       </div>
 
-      {/**넣을지 말지 고민중 */}
       <div className="title">{title}</div>
+      {/**넣을지 말지 고민중 */}
       {/* <dl>
         <dt>{t('조회수')}</dt>
         <dd>{viewCount}</dd>

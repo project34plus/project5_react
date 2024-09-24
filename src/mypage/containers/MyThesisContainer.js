@@ -4,14 +4,18 @@ import MyThesisList from '../components/MyThesisList';
 import { apiMyList } from '@/thesis/apis/apiInfo';
 import styled from 'styled-components';
 import Container2 from '@/commons/components/Container2';
-
+import { getUserStates } from '@/commons/contexts/UserInfoContext';
 const MyThesisListContainer = () => {
   const [thesisList, setThesisList] = useState([]); // 논문 목록 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 상태
+  const { isLogin } = getUserStates();
 
   useEffect(() => {
     const fetchTheses = async () => {
+      if (!isLogin) {
+        return;
+      }
       try {
         const data = await apiMyList(); // API에서 데이터 가져오기
 
@@ -23,7 +27,7 @@ const MyThesisListContainer = () => {
       }
     };
     fetchTheses();
-  }, []);
+  }, [isLogin]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
@@ -52,7 +56,6 @@ const Header = styled.div`
   .header-tid {
     width: 10%;
   }
-
 
   .header-title {
     width: 40%;
