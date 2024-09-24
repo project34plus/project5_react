@@ -24,7 +24,7 @@ const ItemsBox = ({ items, pagination }) => {
               <div className="poster">{poster}</div>
               <div className="publisher">{publisher}</div>
               <div className="fields">
-                {Object.values(_fields)?.[0][0]} {/* 대분류만 렌더링 */}
+                {Object.values(_fields)?.[0]?.[0]} {/* 대분류만 렌더링 */}
               </div>
             </a>
             <div className="wishButton">
