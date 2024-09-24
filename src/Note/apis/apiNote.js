@@ -2,7 +2,10 @@ import saveProcess from '@/commons/libs/saveProcess';
 import apiRequest from '../../commons/libs/apiRequest';
 import requestData from '../../commons/libs/requestData';
 
-export const write = async (nid, form) => {
+export const write = (nid, form) => {
+  return apiRequest(`/note/write/${nid}`, 'POST', form);
+};
+export const write1 = async (nid, form) => {
   const res = await saveProcess2(`/note/write/${nid}`, 'POST', form);
   if (res.status === 201) {
     return res.data; // 성공적으로 작성된 노트 정보

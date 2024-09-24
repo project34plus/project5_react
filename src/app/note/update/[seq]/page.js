@@ -1,14 +1,8 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import FormContainer from '@/Note/containers/FormContainer';
 
-const NoteUpdatePage = () => {
-  const nid = 'note';
-
-  return (
-    <div>
-      <h1>노트 목록</h1>
-    </div>
-  );
+const NoteUpdatePage = ({ params }) => {
+  return <FormContainer params={params} />;
 };
 
 export default NoteUpdatePage;

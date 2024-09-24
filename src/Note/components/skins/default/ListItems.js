@@ -18,8 +18,8 @@ const ListItem = ({ item, className }) => {
   } = item;
 
   return (
-    <div className="board-list">
-      <Link to={'/board/view/' + seq} className="subject">
+    <div className="note-list">
+      <Link to={'/note/view/' + seq} className="subject">
         <li className={className}>
           <div className="seq">{seq}</div>
           <div className="title">
