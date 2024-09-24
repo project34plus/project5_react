@@ -145,28 +145,34 @@ const ThesisUploadForm = ({
           </div>
         </div>
 
-        {/* 학문 분류 코드 필드 (다중 필드 처리) */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>학문 분류 코드</label>
-          {(formData.fields || []).map((field, index) => (
-            <input
-              key={index}
-              type="text"
-              name={`field${index}`}
-              placeholder={`분류 코드 ${index + 1}`}
-              value={field || ''}
-              onChange={(e) => handleFieldsChange(index, e.target.value)}
-              style={styles.input}
-            />
-          ))}
-        </div>
+        {!isEditMode && (
+  <div style={styles.formGroup}>
+    <label style={styles.label}>학문 분류 코드</label>
+    {(formData.fields || []).map((field, index) => (
+      <input
+        key={index}
+        type="text"
+        name={`field${index}`}
+        placeholder={`분류 코드 ${index + 1}`}
+        value={field}
+        onChange={(e) => handleFieldsChange(index, e.target.value)}
+        style={styles.input}
+      />
+    ))}
+  </div>
+)}
 
-        {/* 파일 선택 버튼 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>파일 선택</label>
-          <input type="file" multiple onChange={handleFileChange} style={styles.input} />
-        </div>
-
+        {!isEditMode && (
+  <div style={styles.formGroup}>
+    <label style={styles.label}>파일 선택</label>
+    <input
+      type="file"
+      multiple
+      onChange={handleFileChange}
+      style={styles.input}
+    />
+  </div>
+)}
         {/* 제출 버튼 */}
         <div style={styles.formGroup}>
           <button type="submit" style={styles.submitButton}>
