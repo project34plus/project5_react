@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, {useState} from 'react';
 import FileUpload from '@/commons/components/FileUpload';
 import styled from 'styled-components';
 
@@ -13,6 +13,13 @@ const ThesisUploadForm = ({
   fileUploadCallback,
   isEditMode,
 }) => {
+  const [selectedFiles, setSelectedFiles] = useState([]); // 선택한 파일 저장
+
+  // 파일 선택 시 호출될 함수
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files);
+    setSelectedFiles(files); // 선택한 파일을 상태로 저장
+  };
   return (
     <div style={styles.formWrapper}>
       <h1 style={styles.heading}>{isEditMode ? '논문 수정' : '논문 등록'}</h1>
@@ -181,19 +188,27 @@ const ThesisUploadForm = ({
             >
               파일 선택
             </StyledFileUpload>
-          </div>
-          /*
-          <div style={styles.formGroup}>
-            <label style={styles.label}>파일 선택</label>
             <input
-              type="file"
-              multiple
-              onChange={handleFileChange}
-              style={styles.input}
-            />
+                type="file"
+                multiple
+                onChange={handleFileChange} // 파일 선택 시 호출
+                style={styles.input}
+              />
           </div>
-          */
         )}
+         {/* 선택한 파일 목록 표시 */}
+         {selectedFiles.length > 0 && (
+          <div style={styles.formGroup}>
+            <label style={styles.label}>선택한 파일</label>
+            <ul>
+              {selectedFiles.map((file, index) => (
+                <li key={index}>{file.name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      
+
         {isEditMode && (
           <div style={styles.formGroup}>
             <label style={styles.label}>버전 입력</label>

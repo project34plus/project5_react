@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback  } from 'react';
 import ThesisUploadForm from '../components/UploadForm';
 import { uploadFile, uploadThesis, updateThesis } from '../apis/apiUpload';
 import { apiGet } from '../apis/apiInfo';
@@ -93,7 +93,6 @@ const ThesisUpdateContainer = ({ params }) => {
       <ThesisUploadForm
         formData={formData}
         handleInputChange={handleInputChange}
-        handleFieldsChange={handleFieldsChange}
         fileUploadCallback={fileUploadCallback}
         handleSubmit={handleSubmit}
         isEditMode={true} // 수정 모드
