@@ -1,8 +1,7 @@
 'use client';
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState } from 'react';
 import ThesisUploadForm from '../components/UploadForm';
-import { uploadFile, uploadThesis, updateThesis } from '../apis/apiUpload';
-import { apiGet } from '../apis/apiInfo';
+import { uploadFile, uploadThesis } from '../apis/apiUpload';
 import Container from '@/commons/components/Container';
 
 const initialFormData = {
@@ -20,32 +19,9 @@ const initialFormData = {
   keywords: '',
 };
 
-const ThesisUploadContainer = ({ params }) => {
-  const { tid } = params;
+const ThesisUploadContainer = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [file, setFile] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (tid) {
-      setIsEditMode(true);
-      const fetchThesisData = async () => {
-        try {
-          const thesisData = await apiGet(tid);
-          setFormData(thesisData);
-          console.log('Fetched Thesis Data:', thesisData);
-        } catch (error) {
-          console.error('Error fetching thesis data:', error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchThesisData();
-    } else {
-      setLoading(false);
-    }
-  }, [tid]);
 
   const handleInputChange = (name, value) => {
     setFormData({ ...formData, [name]: value });
@@ -69,23 +45,14 @@ const ThesisUploadContainer = ({ params }) => {
         await uploadFile(file);
       }
 
-      if (isEditMode) {
-        await updateThesis(tid, formData);
-        alert('논문 수정이 완료되었습니다.');
-      } else {
-        await uploadThesis(formData);
-        alert('논문이 성공적으로 등록되었습니다.');
-      }
+      await uploadThesis(formData); // 새 논문 업로드
+      alert('논문이 성공적으로 등록되었습니다.');
 
-      window.location.href = '/mypage/MyThesisList';
+      window.location.href = '/mypage/MyThesisList'; // 리다이렉트
     } catch (error) {
       console.error('Error during form submission:', error);
     }
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <Container>
@@ -95,6 +62,7 @@ const ThesisUploadContainer = ({ params }) => {
         handleFieldsChange={handleFieldsChange}
         handleFileChange={handleFileChange}
         handleSubmit={handleSubmit}
+        isEditMode={false} // 업로드 모드
       />
     </Container>
   );
