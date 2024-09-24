@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback  } from 'react';
 import ThesisUploadForm from '../components/UploadForm';
 import { uploadFile, uploadThesis, updateThesis } from '../apis/apiUpload';
 import { apiGet } from '../apis/apiInfo';
@@ -9,9 +9,11 @@ const initialFormData = {
   category: 'DOMESTIC',
   poster: '',
   contributor: '',
+  majorVersion: '1',
+  minorVersion: '0',
   thAbstract: '',
   reference: '',
-  visible: 'false',
+  visible: 'true',
   publisher: '',
   title: '',
   fields: [''],
@@ -54,15 +56,16 @@ const ThesisUpdateContainer = ({ params }) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  /*
   const handleFieldsChange = (index, value) => {
     const newFields = [...formData.fields];
     newFields[index] = value;
     setFormData({ ...formData, fields: newFields });
   };
-
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
+  */
+  const fileUploadCallback = useCallback((files) => {
+    console.log('files', files);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -90,8 +93,7 @@ const ThesisUpdateContainer = ({ params }) => {
       <ThesisUploadForm
         formData={formData}
         handleInputChange={handleInputChange}
-        handleFieldsChange={handleFieldsChange}
-        handleFileChange={handleFileChange}
+        fileUploadCallback={fileUploadCallback}
         handleSubmit={handleSubmit}
         isEditMode={true} // 수정 모드
       />

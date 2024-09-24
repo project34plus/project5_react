@@ -8,7 +8,7 @@ export const apiList = (search) => {
 
   for (const [k, v] of Object.entries(search)) {
     if (Array.isArray(v)) {
-      for(const _v of v) {
+      for (const _v of v) {
         qs.push(`${k}=${_v}`);
       }
     } else {
@@ -58,8 +58,6 @@ export const apiMyList = () => {
       throw error; // 에러 다시 던지기
     });
 };
-
-
 
 // 찜한 목록 조회
 export const apiWishlist = (page = 1, limit = 8) => {
