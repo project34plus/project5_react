@@ -4,19 +4,20 @@ import apiRequest from '../libs/apiRequest';
 import { StyledButton } from './buttons/StyledButton';
 import StyledMessage from './StyledMessage';
 import { useTranslation } from 'react-i18next';
-import Image from 'next/image';
 const FileUpload = ({
-                      children,
-                      gid,
-                      location,
-                      color,
-                      imageOnly,
-                      single,
-                      done,
-                      callback,
-                      width,
-                      imageUrl,
-                    }) => {
+  children,
+  gid,
+  location,
+  color,
+  imageOnly,
+  single,
+  done,
+  callback,
+  width,
+  imageWidth,
+  imageUrl,
+  className,
+}) => {
   const [message, setMessage] = useState('');
 
   const { t } = useTranslation();
@@ -70,7 +71,6 @@ const FileUpload = ({
         (async () => {
           try {
             const res = await apiRequest('/file/upload', 'POST', formData);
-            console.log('res', res);
             if (res.status === 201 && res.data.success) {
               // 파일 업로드 후속 처리
               if (typeof callback === 'function') {
@@ -97,11 +97,12 @@ const FileUpload = ({
   }, [single, gid, location, imageOnly, t, callback, done]);
 
   return (
-    <>
+    <div className={className}>
       {imageUrl ? (
-        <Image
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
           src={imageUrl}
-          width={width}
+          width={imageWidth}
           alt="profile"
           onClick={onButtonClick}
         />
@@ -116,7 +117,7 @@ const FileUpload = ({
         </StyledButton>
       )}
       <StyledMessage variant="danger">{message}</StyledMessage>
-    </>
+    </div>
   );
 };
 
