@@ -13,7 +13,7 @@ const initialFormData = {
   visible: 'false',
   publisher: '',
   title: '',
-  fields: [],
+  fields: [''],
   language: '한국어',
   country: '한국',
   keywords: '',

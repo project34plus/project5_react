@@ -154,7 +154,7 @@ const ThesisUploadForm = ({
               type="text"
               name={`field${index}`}
               placeholder={`분류 코드 ${index + 1}`}
-              value={field || ''}
+              value={field}
               onChange={(e) => handleFieldsChange(index, e.target.value)}
               style={styles.input}
             />
