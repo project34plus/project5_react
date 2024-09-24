@@ -45,7 +45,7 @@ const ThesisUploadContainer = () => {
         await uploadFile(file);
       }
 
-      await uploadThesis(formData); // 새 논문 업로드
+      await uploaxdThesis(formData); // 새 논문 업로드
       alert('논문이 성공적으로 등록되었습니다.');
 
       window.location.href = '/mypage/MyThesisList'; // 리다이렉트
