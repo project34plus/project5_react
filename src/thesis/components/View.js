@@ -13,8 +13,7 @@ const View = ({ item, form, onChange, onSubmit, errors, comments }) => {
         onSubmit={onSubmit}
         errors={errors}
       />
-
-      {comments?.length > 0 && <CommentItems comments={comments} />}
+      <CommentItems comments={comments} />
     </>
   );
 };

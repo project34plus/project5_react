@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import UserInfoContext, { getUserStates } from '@/commons/contexts/UserInfoContext';
+import UserInfoContext, {
+  getUserStates,
+} from '@/commons/contexts/UserInfoContext';
 import MessageBox from '@/commons/components/MessageBox';
 import styled from 'styled-components';
 import fontSize from '@/theme/fontSize';
@@ -24,39 +26,49 @@ const FormBox = styled.form`
 
   .comment-form {
     margin-bottom: 20px;
-    border-top: 2px solid black;
+    border-top: 3px solid black;
     padding: 20px 10px 0 10px;
 
     .commenter {
       margin: 0 0 10px 5px;
       font-size: ${small};
     }
-
-    .input-area {
+    .cBody {
       display: flex;
       align-items: center;
+      position: relative;
 
-      textarea {
-        display: block;
-        width: 100%;
-        height: 100px;
-        padding: 12px 16px;
-        border: 1px solid ${gray};
-        color: ${navy};
-        box-sizing: border-box;
-        resize: none;
-        border-radius: 5px;
-        font-size: ${small};
+      .input-area {
+        display: flex;
+        flex-direction: column;
+        width: 90%;
+
+        textarea {
+          display: block;
+          width: 100%;
+          height: 100px;
+          padding: 12px 16px;
+          border: 1px solid ${gray};
+          color: ${navy};
+          box-sizing: border-box;
+          resize: none;
+          border-radius: 5px;
+          font-size: ${small};
+        }
       }
-
       button {
         width: 100px;
         height: 40px;
         margin: 0 5px 0 15px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
       }
     }
   }
 `;
+
+const mStyle = styled(MessageBox)``;
 
 const CommentForm = ({ form, onChange, onSubmit, errors }) => {
   const { t } = useTranslation();
@@ -71,17 +83,22 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
             ? userInfo.userName
             : t('로그인_후_댓글_작성이_가능합니다')}
         </div>
-        {/*로그인한 회원명 나와야 하는데 안나옴*/}
-        <div className="input-area">
-          <textarea
-            name="content"
-            placeholder={t('소중한_의견을_남겨주세요')}
-            value={form?.content}
-            onChange={onChange}
-          ></textarea>
-          {errors?.content && (
-            <MessageBox color="danger" messages={errors.content} />
-          )}
+        <div className="cBody">
+          <div className="input-area">
+            <textarea
+              name="content"
+              placeholder={t('소중한_의견을_남겨주세요')}
+              value={form?.content}
+              onChange={onChange}
+            ></textarea>
+            {errors?.content && (
+              <MessageBox
+                color="danger"
+                messages={errors.content}
+                styled={mStyle}
+              />
+            )}
+          </div>
           <button type="submit">{t('작성하기')}</button>
         </div>
       </div>

@@ -11,7 +11,7 @@ import { apiGet, apiFileGet } from '../apis/apiInfo.js';
 import { getInfo, getList, write } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
-import UserInfoContext, { getUserContext, getUserStates } from '@/commons/contexts/UserInfoContext.js';
+import { getUserStates } from '@/commons/contexts/UserInfoContext.js';
 import { useRouter } from 'next/navigation'; //CSR ->router는 SSR
 import View from '../components/View.js';
 
@@ -177,7 +177,6 @@ const ThesisViewContainer = ({ params }) => {
           onChange={onChange}
           onDelete={onDelete}
           errors={errors}
-
         />
       </div>
     </>
