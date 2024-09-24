@@ -25,6 +25,8 @@ export const apiList = (search) => {
 
 // 상세 조회
 export const apiGet = (tid) => requestData(`/thesis/info/${tid}`);
+export const apiFileGet = (gid) => requestData(`/file/list/${gid}`); 
+//파일 목록 조회(할수만 있다면 pdf 파일 한개만 올릴 수 있게 해주세요... 제발..)
 // export const apiGet = (tid) => requestData(`http://localhost:4003/info/${tid}`); //로컬 DB
 
 // // 내가 등록한 논문 조회

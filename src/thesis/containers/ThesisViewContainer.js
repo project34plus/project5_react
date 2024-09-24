@@ -7,7 +7,7 @@ import React, {
   useContext,
 } from 'react';
 import { List } from 'react-content-loader';
-import { apiGet } from '../apis/apiInfo.js';
+import { apiGet, apiFileGet } from '../apis/apiInfo.js';
 import { getList } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
@@ -45,6 +45,10 @@ const ThesisViewContainer = ({ params }) => {
         const item = await apiGet(tid);
         setMainTitle(item.title);
         setItem(item);
+
+        // if (item.gid) {
+        //   const fileData = await apiFileGet(item.gid);
+        // }
       } catch (err) {
         console.error(err);
         router.back();
@@ -153,8 +157,6 @@ const ThesisViewContainer = ({ params }) => {
   if (!item) {
     return <MyListLoader />;
   }
-
-
 
   return (
     <>

@@ -93,6 +93,7 @@ const ItemDescription = ({ item }) => {
     publisher,
     keywords,
     viewCount,
+    gid,
   } = item;
 
   const toggleInfo = (section) => {
@@ -153,6 +154,7 @@ const ItemDescription = ({ item }) => {
           </dl>
         )}
       </div>
+      <div>파일정보: {gid}</div>
       <div className="btn-group">
         <button>{t('원문보기')}</button>
         <button>{t('다운로드')}</button>
