@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import UserInfoContext from '@/commons/contexts/UserInfoContext';
+import UserInfoContext, { getUserStates } from '@/commons/contexts/UserInfoContext';
 import MessageBox from '@/commons/components/MessageBox';
 import styled from 'styled-components';
 import fontSize from '@/theme/fontSize';
@@ -60,7 +60,7 @@ const FormBox = styled.form`
 
 const CommentForm = ({ form, onChange, onSubmit, errors }) => {
   const { t } = useTranslation();
-  const { userInfo } = useContext(UserInfoContext); // 사용자 정보 가져오기
+  const { userInfo } = getUserStates(UserInfoContext); // 사용자 정보 가져오기
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
