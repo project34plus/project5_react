@@ -24,7 +24,7 @@ export const apiList = (search) => {
 };
 
 // 상세 조회
-export const apiGet = (tid) => requestData(`/thesis/info/${tid}`);
+export const apiGet = (tid) => requestData(`/thesis/info/${tid}`); 
 // export const apiGet = (tid) => requestData(`http://localhost:4003/info/${tid}`); //로컬 DB
 
 // // 내가 등록한 논문 조회
