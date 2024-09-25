@@ -2,13 +2,16 @@
 import React, { useContext, useCallback, useState, useEffect } from 'react';
 import ProfileForm from '../components/ProfileForm';
 import Container2 from '@/commons/components/Container2';
-import UserInfoContext, { getUserContext } from '@/commons/contexts/UserInfoContext';
+import UserInfoContext, {
+  getUserContext,
+} from '@/commons/contexts/UserInfoContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { apiUpdate } from '../apis/apiMyPage';
 import { apiPatch } from '../apis/apiMyPage';
 import { apiList } from '@/member/apis/apiFields';
 import { apiFieldList } from '@/member/apis/apiFields';
+import { apiInterests } from '@/thesis/apis/apiInterests';
 import styled from 'styled-components';
 
 const StyledProfileImage = styled.div`
@@ -69,10 +72,10 @@ const InfoContainer = ({ searchParams }) => {
 
   useEffect(() => {
     apiInterests(userInfo.email).then((res) => {
-
       setForm({ ...form, interests: [res[0]?.id, res[1]?.id] });
     });
   }, []);
+
   useEffect(() => {
     apiList(search)
       .then((res) => {
@@ -92,7 +95,6 @@ const InfoContainer = ({ searchParams }) => {
         console.error('실패사유:', error);
       });
   }, [search]);
-
 
   const { t } = useTranslation();
   const router = useRouter();
