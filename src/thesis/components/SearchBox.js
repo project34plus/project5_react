@@ -362,7 +362,7 @@ const FormBox = styled.form`
       border-radius: 50%;
     }
     .react-datepicker__day:hover {
-      background: ${midgray}; /* 마우스 오버 시 배경색 변경 */
+      background: ${navy}; /* 마우스 오버 시 배경색 변경 */
       color: ${white}; /* 마우스 오버 시 텍스트 색상 변경 */
       border-radius: 50%; /* 원형 테두리 적용 */
     }

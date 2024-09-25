@@ -31,8 +31,9 @@ const FieldBarStat = ({ stat, field }) => {
   const data = [];
   let indexBy = '대분류';
 
-  if (field) {
+  if (field && stat[field]) {
     indexBy = '중분류';
+
     for (const { name, subfield, count, wishCount } of stat[field].sub) {
       if (count > 0 || wishCount > 0) {
         data.push({

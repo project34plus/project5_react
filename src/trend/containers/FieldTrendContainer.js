@@ -17,8 +17,8 @@ import styled from 'styled-components';
 import { ko } from 'date-fns/locale';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
-
-const { gray, white, navy, midNavy } = color;
+import { apiList as apiFields } from '@/member/apis/apiFields';
+const { gray, white, lightgray, navy, darkgray, midgray, midNavy } = color;
 const { small, normal, center } = fontSize;
 
 const Wrapper = styled.div`
@@ -33,16 +33,124 @@ const Wrapper = styled.div`
     margin-bottom: 10px;
   }
   .date {
+    border: 1px solid ${gray};
     display: inline-block;
-    border: 1px solid #000;
-    height: 25px;
-    width: 120px;
+    align-items: center;
+    width: 160px;
+    height: 45px;
     text-align: center;
+    box-sizing: border-box;
+    font-size: ${small};
+    padding: 8px 20px;
+    border-radius: 4px;
 
     .pick_date {
       cursor: pointer;
       width: 100%;
       border: none;
+    }
+
+    .react-datepicker {
+      width: 300px;
+      height: 300px;
+      border-radius: 10px;
+    }
+
+    .react-datepicker__navigation--next,
+    .react-datepicker__navigation--previous {
+      margin: 5px 5px 0 5px;
+    }
+
+    .react-datepicker__month-container {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+      border: 1px solid ${gray};
+    }
+
+    .react-datepicker__triangle {
+      fill: ${white};
+      color: ${white};
+    }
+
+    .react-datepicker__header {
+      background: ${lightgray};
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px 10px 0 0;
+      text-align: center;
+    }
+
+    //요일
+    .react-datepicker__day-names {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      width: 100%;
+      font-weight: bold;
+    }
+
+    .react-datepicker__week {
+      justify-content: space-between;
+      display: flex;
+      padding: 5px;
+
+      > * {
+        display: flex;
+        width: 30px;
+        height: 30px;
+        justify-content: center;
+        align-items: center;
+        color: ${darkgray};
+        text-align: center;
+        font-size: ${small};
+        line-height: 1;
+      }
+
+      //날짜
+      .react-datepicker__month {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+      }
+
+      .react-datepicker__day {
+        color: ${darkgray};
+        margin: 0;
+      }
+
+      .react-datepicker__current-month {
+        font-size: ${small};
+        margin-top: 3px;
+      }
+
+      .react-datepicker__day--today {
+        // 오늘 날짜 하이라이트 커스텀
+        color: ${navy};
+        border: 1px solid ${navy};
+        border-radius: 50%;
+      }
+      .react-datepicker__day--selected {
+        background: ${gray};
+        color: ${white};
+        border-radius: 50%;
+      }
+      .react-datepicker__day:hover {
+        background: ${navy}; /* 마우스 오버 시 배경색 변경 */
+        color: ${white}; /* 마우스 오버 시 텍스트 색상 변경 */
+        border-radius: 50%; /* 원형 테두리 적용 */
+      }
+
+      .react-datepicker__day--outside-month {
+        color: ${gray};
+      }
+
+      .react-datepicker__day--keyboard-selected {
+        border-radius: 50%;
+        background: ${navy};
+        color: ${white};
+      }
     }
   }
   .sel {
@@ -99,19 +207,20 @@ const FieldTrendContainer = ({ searchParams }) => {
     sDate: lastday,
     eDate: today,
   });
+  const [stats, setStats] = useState(null);
+  const [field, setField] = useState(null);
+  const [fields, setFields] = useState(null);
+  const [items, setItems] = useState([]); // items 상태 추가
+  const [pagination, setPagination] = useState({}); // pagination 상태 추가
+
   const { setMainTitle } = getCommonActions();
 
   useLayoutEffect(() => {
     setMainTitle(t('학문별_인기논문'));
   }, [setMainTitle, t]);
 
-  const [stats, setStats] = useState(null);
-  const [field, setField] = useState(null);
-  const [items, setItems] = useState([]); // items 상태 추가
-  const [pagination, setPagination] = useState({}); // pagination 상태 추가
-
   useEffect(() => {
-    console.log('search', search);
+    //console.log('search', search);
     apiFieldRanking(search).then((res) => {
       console.log('API response: ', res);
       const itemsArray = res ? Object.values(res) : [];
@@ -154,6 +263,17 @@ const FieldTrendContainer = ({ searchParams }) => {
     });
   }, [startDate, endDate]);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const fields = await apiFields();
+        setFields(fields);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+  }, []);
+
   return (
     <Container>
       <h1>학문별인기논문</h1>
@@ -179,9 +299,9 @@ const FieldTrendContainer = ({ searchParams }) => {
             dateFormat="yyyy-MM-dd"
           />
         </div>
-        {stats && (
+        {stats && fields && (
           <div>
-            {Object.keys(stats).map((name) => (
+            {fields.map((name) => (
               <span className="names" key={name} onClick={() => setField(name)}>
                 {name}
               </span>
