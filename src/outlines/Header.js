@@ -6,6 +6,8 @@ import { getCommonStates } from '../commons/contexts/CommonContext';
 import { getUserContext } from '@/commons/contexts/UserInfoContext';
 import { IoHome } from 'react-icons/io5';
 
+const ADMIN_URL = process.env.NEXT_PUBLIC_ADMIN_URL;
+
 const HeaderBox = styled.header`
   position: relative;
   top: 0;
@@ -96,15 +98,14 @@ const Header = () => {
                 <div>
                   <a href="/mypage/info">{t('마이페이지')}</a>
                   <a onClick={onLogout}>{t('로그아웃')}</a>
-                  <a href="/admin" target="_blank">
+                  <a href={ADMIN_URL} target="_blank">
                     {t('사이트_관리')}
                   </a>
-                  {/* 개발 기간에는 관리자 페이지 열어둘게요 */}
-                  {/* {isAdmin && (
-                    <a href="/admin" target="_blank">
+                  {isAdmin && (
+                    <a href={ADMIN_URL} target="_blank">
                       {t('사이트_관리')}
                     </a>
-                  )} */}
+                  )}
                 </div>
               ) : (
                 <div>
