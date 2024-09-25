@@ -59,6 +59,11 @@ export const apiMyList = () => {
     });
 };
 
+
+//버전 조회
+export const apiVersion = (tid) => requestData(`/thesis/info/${tid}/versions`);
+
+
 // 찜한 목록 조회
 export const apiWishlist = (page = 1, limit = 8) => {
   return requestData(`/thesis/wish?page=${page}&limit=${limit}`);
