@@ -28,10 +28,15 @@ const FormContainer = ({ params }) => {
     mode: 'write',
     attachFiles: [],
     editorImages: [],
-    poster: userInfo?.userName,
+    username: userInfo?.userName,
+    content: '',
+    email: userInfo?.email,
+    subject:'',
+
   });
 
-  const onSubmit = () => {
+  const onSubmit = useCallback((e) => {
+    e.preventDefault();
     console.log('Submitting form data:', form); // 추가
     write(params.nid, form)
       .then((res) => {
@@ -41,10 +46,10 @@ const FormContainer = ({ params }) => {
         console.log(err);
         alert('저장 실패');
       });
-  };
-  const onChange = () => {
-    console.log('onChange()');
-  };
+  }, []);
+  const onChange = useCallback((e) => {
+    setForm((form => ({ ...form, [e.target.name]: e.target.value })));
+  });
   const onClick = (e, params, form) => {
     console.log('click!');
   };

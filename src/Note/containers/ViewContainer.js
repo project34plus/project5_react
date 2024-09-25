@@ -11,7 +11,7 @@ import Loading from '../../commons/components/Loading';
 import MessageBox from '../../commons/components/MessageBox';
 
 import DefaultView from '../components/skins/default/View';
-import GalleryView from '../components/skins/gallery/View';
+import GalleryView from '../components/skins/default copy/View';
 import ListContainer from './ListContainer';
 
 function skinRoute(skin) {

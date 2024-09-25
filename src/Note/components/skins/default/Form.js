@@ -59,7 +59,7 @@ const Form = ({ form, errors, onSubmit, onChange, onClick}) => {
       <dl>
         <dd>
           {/* {useEditor ? ( */}
-          {true ? (
+          {(
             mounted && (
               <CKEditor
                 editor={ClassicEditor}
@@ -83,13 +83,6 @@ const Form = ({ form, errors, onSubmit, onChange, onClick}) => {
                 }}
               />
             )
-          ) : (
-            <textarea
-              name="content"
-              value={form?.content}
-              onChange={onChange}
-              className="textarea"
-            ></textarea>
           )}
           {errors?.content && (
             <div className="message-box">

@@ -1,9 +1,9 @@
 'use client';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
-import ListItems from '../components/ListItems';
 import Pagination from '@/commons/components/Pagination';
 import { getList } from '../apis/apiNote';
+import ListItems from '@/Note/components/skins/default/ListItems';
 
 const { useLayoutEffect } = require("react");
 
