@@ -2,13 +2,14 @@
 import React, { useContext, useCallback, useState, useEffect } from 'react';
 import ProfileForm from '../components/ProfileForm';
 import Container2 from '@/commons/components/Container2';
-import UserInfoContext from '@/commons/contexts/UserInfoContext';
+import UserInfoContext, { getUserContext } from '@/commons/contexts/UserInfoContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import { apiUpdate } from '../apis/apiMyPage';
 import { apiPatch } from '../apis/apiMyPage';
 import { apiList } from '@/member/apis/apiFields';
 import { apiFieldList } from '@/member/apis/apiFields';
+import { apiInterests } from '@/thesis/apis/apiInterests';
 
 function getQueryString(searchParams) {
   const qs = {};
@@ -24,25 +25,32 @@ const InfoContainer = ({ searchParams }) => {
   const {
     states: { isLogin, userInfo, isAdmin },
     actions: { setIsLogin, setIsAdmin, setUserInfo },
-  } = useContext(UserInfoContext);
+  } = getUserContext();
 
   const initialForm = {
     ...userInfo,
-    interests: userInfo.interests || ['', ''], // 관심 분야 초기값 설정
+    interests: ['', ''],
+    // interests: userInfo.interests || ['', ''], // 관심 분야 초기값 설정
     birth: userInfo.birth || '', // 생일 초기값 설정
   };
   delete initialForm.password;
   delete initialForm.confirmPassword;
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-  const [fields, setfields] = useState([]);
-  const [interests, setinterests] = useState([]);
+  const [fields, setFields] = useState([]);
+  const [interests, setInterests] = useState([]);
   const [search, setSearch] = useState(() => getQueryString(searchParams));
 
   useEffect(() => {
+    apiInterests(userInfo.email).then((res) => {
+
+      setForm({ ...form, interests: [res[0]?.id, res[1]?.id] });
+    });
+  }, []);
+  useEffect(() => {
     apiList(search)
       .then((res) => {
-        setfields(res || []);
+        setFields(res || []);
       })
       .catch((error) => {
         console.error('실패사유:', error);
@@ -52,12 +60,13 @@ const InfoContainer = ({ searchParams }) => {
   useEffect(() => {
     apiFieldList(search)
       .then((res) => {
-        setinterests(res || []);
+        setInterests(res || []);
       })
       .catch((error) => {
         console.error('실패사유:', error);
       });
   }, [search]);
+
 
   const { t } = useTranslation();
   const router = useRouter();
@@ -68,9 +77,11 @@ const InfoContainer = ({ searchParams }) => {
 
     if (name.startsWith('interest')) {
       const index = parseInt(name.replace('interest', '')) - 1;
+      console.log(index, value);
       setForm((prevForm) => {
         const interests = [...(prevForm.interests || [])];
         interests[index] = value;
+
         return { ...prevForm, interests };
       });
     } else {
@@ -80,7 +91,6 @@ const InfoContainer = ({ searchParams }) => {
       }));
     }
   }, []);
-
   const onLogout = useCallback(() => {
     setIsLogin(false);
     setIsAdmin(false);
@@ -169,7 +179,6 @@ const InfoContainer = ({ searchParams }) => {
     },
     [setUserInfo],
   );
-
   return (
     <Container2>
       <ProfileForm

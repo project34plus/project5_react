@@ -18,158 +18,157 @@ import {
 import JoinInput from '@/member/components/JoinInput';
 
 const FormBox = styled.form`
-  width: 1000px;
-  padding: 40px 50px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
-  margin-left: 20px;
+    width: 1000px;
+    padding: 40px 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+    margin-left: 20px;
 
-  select {
-    padding: 10px;
-    border: 2px solid ${({ theme }) => theme.color.whiteGrayNavy};
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    color: ${({ theme }) => theme.color.black};
-    font-size: ${({ theme }) => theme.fontSize.small};
-    transition: border-color 0.3s;
-  }
+    select {
+        padding: 10px;
+        border: 2px solid ${({ theme }) => theme.color.whiteGrayNavy};
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        color: ${({ theme }) => theme.color.black};
+        font-size: ${({ theme }) => theme.fontSize.small};
+        transition: border-color 0.3s;
+    }
 
-  select:focus {
-    border-color: ${({ theme }) => theme.color.grayNavy};
-    outline: none;
-  }
-  .selectBox {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 30px;
-    margin-left: 25px;
-  }
+    select:focus {
+        border-color: ${({ theme }) => theme.color.grayNavy};
+        outline: none;
+    }
+
+    .selectBox {
+        display: flex;
+        gap: 5px;
+        margin-bottom: 30px;
+        margin-left: 25px;
+    }
 `;
 
 const Title = styled.h1`
-  font-size: ${({ theme }) => theme.fontSize.big};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-  text-align: center;
-  margin-bottom: 30px;
-  color: ${({ theme }) => theme.color.black};
+    font-size: ${({ theme }) => theme.fontSize.big};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    text-align: center;
+    margin-bottom: 30px;
+    color: ${({ theme }) => theme.color.black};
 `;
 
 const Subtitle = styled.h2`
-  font-size: ${({ theme }) => theme.fontSize.center};
-  font-weight: ${({ theme }) => theme.fontWeight.bold};
-  text-align: left;
-  margin-bottom: 30px;
-  color: ${({ theme }) => theme.color.navy};
-  display: flex;
-  align-items: center;
+    font-size: ${({ theme }) => theme.fontSize.center};
+    font-weight: ${({ theme }) => theme.fontWeight.bold};
+    text-align: left;
+    margin-bottom: 30px;
+    color: ${({ theme }) => theme.color.navy};
+    display: flex;
+    align-items: center;
 `;
 
 const InputWrapper = styled.div`
-  position: relative;
-  padding-bottom: 10px;
+    position: relative;
+    padding-bottom: 10px;
 `;
 
 const Icon = styled.div`
-  position: absolute;
-  left: 10px;
-  top: 37%;
-  font-size: ${({ theme }) => theme.fontSize.small};
-  color: ${({ theme }) => theme.color.midgray};
+    position: absolute;
+    left: 10px;
+    top: 37%;
+    font-size: ${({ theme }) => theme.fontSize.small};
+    color: ${({ theme }) => theme.color.midgray};
 `;
 
 const Icon2 = styled.span`
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
 `;
 
 const Icon3 = styled.span`
-  margin-right: 3px;
-  color: ${({ theme }) => theme.color.navy};
+    margin-right: 3px;
+    color: ${({ theme }) => theme.color.navy};
 `;
 
 const StyledInput2 = styled(JoinInput)`
-  padding-left: 40px;
-  height: 40px;
-  font-size: ${({ theme }) => theme.fontSize.center};
+    padding-left: 40px;
+    height: 40px;
+    font-size: ${({ theme }) => theme.fontSize.center};
 `;
 
 const OptionContainer = styled.div`
-  display: flex;
-  gap: 80px;
-  font-size: ${({ theme }) => theme.fontSize.center};
-  align-items: center;
-  margin-bottom: 20px;
-  margin-left: 25px;
-
-  .options {
     display: flex;
-    flex-direction: column;
-    gap: 25px;
-  }
-
-  span {
-    display: flex;
+    gap: 80px;
+    font-size: ${({ theme }) => theme.fontSize.center};
     align-items: center;
-    cursor: pointer;
+    margin-bottom: 20px;
+    margin-left: 25px;
 
-    &:hover {
-      color: ${({ theme }) => theme.color.navy};
-      font-weight: ${({ theme }) => theme.fontWeight.bold};
+    .options {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
     }
 
-    &.selected {
-      color: ${({ theme }) => theme.color.navy};
-      font-weight: ${({ theme }) => theme.fontWeight.bold};
+    span {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+            color: ${({ theme }) => theme.color.navy};
+            font-weight: ${({ theme }) => theme.fontWeight.bold};
+        }
+
+        &.selected {
+            color: ${({ theme }) => theme.color.navy};
+            font-weight: ${({ theme }) => theme.fontWeight.bold};
+        }
     }
-  }
 `;
 
 const OptionContainer2 = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.center};
+    font-size: ${({ theme }) => theme.fontSize.center};
 
-  textarea {
-    display: block;
-    aligin-items: center;
-    width: 100%;
-    height: 150px;
-    overflow-y: 10px;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    border: 3px solid ${({ theme }) => theme.color.whiteGrayNavy};
-    border-radius: 5px;
-    padding: 13px;
-    background-color: #f9f9f9;
-    font-size: ${({ theme }) => theme.fontSize.small};
-  }
+    textarea {
+        display: block;
+        aligin-items: center;
+        width: 100%;
+        height: 150px;
+        overflow-y: 10px;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        border: 3px solid ${({ theme }) => theme.color.whiteGrayNavy};
+        border-radius: 5px;
+        padding: 13px;
+        background-color: #f9f9f9;
+        font-size: ${({ theme }) => theme.fontSize.small};
+    }
 
-  .agree {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-  }
+    .agree {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
 `;
 
 const StyledButtons = styled.div`
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 `;
 
 const ProfileForm = ({
-  form,
-  _onChange,
-  errors,
-  onSubmit,
-  onClick,
-  onToggle,
-  onReset,
-  fields,
-  interests,
-}) => {
+                       form,
+                       _onChange,
+                       errors,
+                       onSubmit,
+                       onClick,
+                       onToggle,
+                       onReset,
+                       fields,
+                       interests,
+                     }) => {
   const { t } = useTranslation();
-  console.log(form);
-
   return (
     <>
       <FormBox onSubmit={onSubmit}>
