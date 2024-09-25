@@ -6,8 +6,9 @@ import WishButton from '@/commons/components/WishButton';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { FaFileArrowDown } from 'react-icons/fa6';
 
-const { gray, navy } = color;
+const { gray, navy, black } = color;
 
 const { small, normal, big } = fontSize;
 
@@ -54,7 +55,7 @@ const Wrapper = styled.div`
 
   .info2_wrap {
     margin: 40px 0;
-    border-top: 2px solid black;
+    border-top: 2px solid ${black};
   }
 
   .toggle {
@@ -73,6 +74,33 @@ const Wrapper = styled.div`
     position: absolute;
     right: 10px;
     top: 10px;
+  }
+
+  .file_down {
+    margin-top: 40px;
+    border-top: 2px solid ${black};
+    font-size: ${normal};
+    padding: 15px;
+
+    p {
+      margin: 0;
+    }
+    .fileList {
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    li > a {
+      display: flex;
+      align-items: center;
+      > p {
+        width: 95%;
+      }
+
+      svg {
+        margin-right: 10px;
+      }
+    }
   }
 `;
 
@@ -93,7 +121,10 @@ const ItemDescription = ({ item }) => {
     publisher,
     keywords,
     viewCount,
+    fileInfo,
   } = item;
+
+  console.log('file', fileInfo);
 
   const toggleInfo = (section) => {
     setIsOpen((prev) => ({
@@ -108,8 +139,8 @@ const ItemDescription = ({ item }) => {
         <WishButton tid={tid}></WishButton>
       </div>
 
-      {/**넣을지 말지 고민중 */}
       <div className="title">{title}</div>
+      {/**넣을지 말지 고민중 */}
       {/* <dl>
         <dt>{t('조회수')}</dt>
         <dd>{viewCount}</dd>
@@ -133,7 +164,7 @@ const ItemDescription = ({ item }) => {
               ? `${Object.values(_fields)?.[0][0]} | ${
                   Object.values(_fields)?.[0][1]
                 }`
-              : '학문 분류 없음'}
+              : '미분류'}
           </dd>
         </dl>
         <dl>
@@ -153,10 +184,26 @@ const ItemDescription = ({ item }) => {
           </dl>
         )}
       </div>
-      <div className="btn-group">
-        <button>{t('원문보기')}</button>
-        <button>{t('다운로드')}</button>
+      <div className="file_down">
+        <p className="fileList">{t('첨부파일_목록')}</p>
+        {fileInfo?.length > 0 ? (
+          <ul className="download">
+            {fileInfo.map(({ downloadUrl, fileName }) => (
+              <li key={downloadUrl}>
+                <a href={downloadUrl}>
+                  <FaFileArrowDown />
+                  <p>{fileName}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (t('첨부파일이_없습니다'))}
       </div>
+      {/* 보류 */}
+      {/* <div className="btn-group">
+        <button>{t('원문보기')}</button>
+
+      </div> */}
       <div className="info2_wrap">
         <dl>
           <dt onClick={() => toggleInfo('abstract')} className="toggle">

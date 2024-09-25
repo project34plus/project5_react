@@ -42,6 +42,7 @@ const ThesisListContainer = ({ searchParams }) => {
 
   useEffect(() => {
     setLoading(true);
+    console.log('search', search);
     apiList(search).then((res) => {
       console.log('res', res);
       setItems(res.items || []);
@@ -137,6 +138,21 @@ const ThesisListContainer = ({ searchParams }) => {
     window.location.hash = '#root';
   }, []);
 
+  //분류명 필터 처리
+  const handleFieldChange = useCallback((selectedField) => {
+    console.log('search', search);
+    setSearch((search) => {
+      let fields = search.fields ?? [];
+      if (fields.includes(selectedField)) {
+        // 이미 분류가 있다면 제거
+        fields = fields.filter((f) => f !== selectedField);
+      } else {
+        fields = fields.concat(selectedField);
+      }
+      return { ...search, fields };
+    });
+  }, [search]);
+
   /* 로딩 처리 */
   if (loading) {
     return <MyListLoader />;
@@ -146,9 +162,11 @@ const ThesisListContainer = ({ searchParams }) => {
     <>
       <SearchBox
         form={form}
+        search={search}
         onChange={onChangeSearch}
         onSubmit={onSubmitSearch}
         selectChange={selectChange}
+        onFieldChange={handleFieldChange}
       />
       <ListSort search={search} onChange={onChangeSort} />
       <ItemsBox items={items} pagination={pagination} />
