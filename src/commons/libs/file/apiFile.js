@@ -22,6 +22,7 @@ export const deleteFiles = (gid, location) => {
 export const deleteFile = (seq) => requestData(`/file/delete/${seq}`, 'DELETE');
 /* 파일 삭제 E */
 
+//혹시나 사용하는 분을 위해 남겨둡니다..
 export const apiFileDelete = (seq) =>
   new Promise((resolve, reject) => {
     (async () => {
