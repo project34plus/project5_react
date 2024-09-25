@@ -18,6 +18,8 @@
     "@nivo/pie": "^0.87.0",
     "axios": "^1.7.7",
     "ckeditor": "^4.12.1",
+    "ckeditor5": "^43.1.1",
+    "ckeditor5-premium-features": "^43.1.1",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
     "i18next": "^23.15.1",
