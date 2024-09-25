@@ -5,7 +5,7 @@ import MyRecentlyViewContainer from '@/mypage/containers/MyRecentlyViewContainer
 import MyThesisContainer from '@/mypage/containers/MyThesisContainer';
 import MyWishListContainer from '@/mypage/containers/MyWishListContainer';
 
-const MypageModePage = ({ params }) => {
+const MypageModePage = ({ params, searchParams }) => {
   const { mode } = params;
 
   let Container = null;
@@ -27,7 +27,7 @@ const MypageModePage = ({ params }) => {
   }
   return (
     <MemberOnlyContainer>
-      <Container />
+      <Container searchParams={searchParams} />
     </MemberOnlyContainer>
   );
 };
