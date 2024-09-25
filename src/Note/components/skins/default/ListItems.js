@@ -12,8 +12,6 @@ const ListItem = ({ item, className }) => {
     seq,
     subject,
     member,
-    viewCount,
-    commentCount,
     createdAt,
   } = item;
 
@@ -23,22 +21,9 @@ const ListItem = ({ item, className }) => {
         <li className={className}>
           <div className="seq">{seq}</div>
           <div className="title">
-            {notice && `[${t('공지')}]`}
             {subject}
-            {commentCount > 0 && `(${commentCount.toLocaleString()})`}
           </div>
-          <div className="post-info">
-            <div className="poster">
-              {poster}
-              {/* {member !== null && `(${member.email})`} */}
-            </div>
-            <div className="view">
-              {viewCount > 0 && (
-                <span className="view-count">
-                  {t('조회수')}: {viewCount.toLocaleString()}
-                </span>
-              )}
-            </div>
+          <div>
             <span className="datetime">{createdAt}</span>
           </div>
         </li>
@@ -110,7 +95,7 @@ const ListItems = ({ items }) => {
         items.map((item) => <StyledListItem key={item.seq} item={item} />)
       ) : (
         <NoData>
-          {t('조회된_게시글이_없습니다')}
+          {t('조회된_노트가_없습니다')}
           <FcInspection />
         </NoData>
       )}

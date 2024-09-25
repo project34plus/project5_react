@@ -4,11 +4,11 @@ import MemberOnlyContainer from '@/member/containers/MemberOnlyContainer';
 const NoteWritePage = ({ params }) => {
   console.log('params', params);
   return (
-      <MemberOnlyContainer>
+    <MemberOnlyContainer>
       <h1>노트 작성</h1>
-      <FormContainer params={params}/>
-      </MemberOnlyContainer>
-   
-)};
+      <FormContainer params={params} />
+    </MemberOnlyContainer>
+  );
+};
 
 export default React.memo(NoteWritePage);

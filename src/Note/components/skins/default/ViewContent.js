@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FaCloudDownloadAlt } from 'react-icons/fa';
-import { BoardButton } from '../../../../commons/components/Buttons';
-import { color } from '../../../../styles/color';
-import fontSize from '../../../../styles/fontSize';
+import { MidButton } from '../../../../commons/components/buttons/BlueButtons';
 import WishButton from '../../../../commons/components/WishButton';
+import fontSize from '@/theme/fontSize';
+import { color } from '@/theme/color';
 
 const { medium, extraBig } = fontSize;
 const { whiteGray, mid_gray } = color;
@@ -97,7 +97,7 @@ const Buttons = styled.div`
 
 const ViewContent = ({ data, onDelete }) => {
   const { t } = useTranslation();
-  const { board } = data;
+  const { note } = data;
 
   return (
     <Wrapper>
@@ -119,26 +119,26 @@ const ViewContent = ({ data, onDelete }) => {
         )}
       </StyledContents>
       <Buttons>
-        <BoardButton>
+        <MidButton>
           {data.showList && (
             <Link to={'/note/list/' + note.nid}>{t('글목록')}</Link>
           )}
-        </BoardButton>
+        </MidButton>
 
         {data.showEdit && (
           <>
-            <BoardButton>
+            <MidButton>
               <Link to={'/note/write/' + note.nid}>{t('글쓰기')}</Link>
-            </BoardButton>
-            <BoardButton>
+            </MidButton>
+            <MidButton>
               <Link to={'/note/update/' + note.seq}>{t('글수정')}</Link>
-            </BoardButton>
+            </MidButton>
           </>
         )}
         {data.showDelete && (
-          <BoardButton type="button" onClick={() => onDelete(data.seq)}>
+          <MidButton type="button" onClick={() => onDelete(data.seq)}>
             {t('글삭제')}
-          </BoardButton>
+          </MidButton>
         )}
       </Buttons>
     </Wrapper>

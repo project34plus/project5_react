@@ -1,15 +1,14 @@
-'use client';
 import ListContainer from '@/Note/containers/ListContainer';
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-const NoteListPage = () => {
-  const [setPageTitle] = useState('');
-  const { nid } = useParams();
+import React from 'react';
+
+
+const NoteListPage = ({ searchParams, params }) => {
+ 
 
   return (
     <div>
       <h1>노트 목록</h1>
-      <ListContainer/>
+      <ListContainer searchParams={searchParams} params={params} />
     </div>
   );
 };

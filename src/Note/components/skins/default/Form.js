@@ -79,6 +79,7 @@ const Form = ({ form, errors, onSubmit, onChange }) => {
           )}
         </dd>
       </dl>
+      
       <StyledButton type="submit" variant="primary">
         {form?.mode === 'update' ? t('수정하기') : t('등록하기')}
       </StyledButton>
