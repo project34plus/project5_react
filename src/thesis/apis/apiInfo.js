@@ -73,3 +73,18 @@ export const apiWishlist = (page = 1, limit = 8) => {
 export const apiUserLog = (page = 1, limit = 8) => {
   return requestData(`/thesis/myView?page=${page}&limit=${limit}`);
 };
+
+// 방문기록 논문 조회
+export const apiVisit = () =>{
+  const url = '/thesis/visit';
+
+  return requestData(url, 'GET')
+    .then((response) => {
+      console.log('API 응답:', response); // API 응답 성공 시 데이터 출력
+      return response; // 응답 데이터 반환
+    })
+    .catch((error) => {
+      console.error('API 요청 중 오류 발생:', error); // 에러 발생 시 에러 로그 출력
+      throw error; // 에러 다시 던지기
+    });
+};
