@@ -183,7 +183,7 @@ const SearchBox = ({ form, search, onChange, onSubmit, onFieldChange }) => {
       </div>
       <div className="btn-group">
         <Button>검색하기</Button>
-        <Button type="reset">초기화</Button>
+        {/* <Button type="reset">초기화</Button> */}
       </div>
     </FormBox>
   );
