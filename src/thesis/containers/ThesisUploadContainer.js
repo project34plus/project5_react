@@ -18,6 +18,8 @@ const initialFormData = {
   language: '한국어',
   country: '한국',
   keywords: '',
+  majorVersion: '1',
+  minorVersion: '',
 };
 
 const ThesisUploadContainer = () => {
