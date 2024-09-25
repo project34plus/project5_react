@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import TrendSub from '../components/TrendSub';
 import Container from '@/commons/components/Container';
+import TrendMain from '../components/TrendMain';
 
 const TrendMainTitle = () => {
   const { t } = useTranslation();
@@ -13,13 +14,13 @@ const TrendMainTitle = () => {
   }, [setMainTitle, t]);
 };
 
-const TrendMain = () => {
+const TrendMainContainer = () => {
   return (
     <Container>
       <TrendMainTitle />
-      <TrendSub />
+      <TrendMain />
     </Container>
   );
 };
 
-export default React.memo(TrendMain);
+export default React.memo(TrendMainContainer);

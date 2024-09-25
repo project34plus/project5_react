@@ -13,7 +13,13 @@ import Container from '@/commons/components/Container';
 import Pagination from '@/commons/components/Pagination';
 import { useSearchParams } from 'next/navigation';
 import RecentSort from '../components/RecentSort';
-import { format } from 'date-fns';
+import { format, subDays, subWeeks, subMonths } from 'date-fns';
+import styled from 'styled-components';
+import { color } from '@/theme/color';
+import fontSize from '@/theme/fontSize';
+
+const { gray, navy, white } = color;
+const { small, normal, center } = fontSize;
 
 function getQueryString(searchParams) {
   if (!searchParams) return { limit: 9 };
@@ -28,9 +34,50 @@ function getQueryString(searchParams) {
 }
 
 let today = format(new Date(), 'yyyy-MM-dd');
-let lastMonth = new Date();
-lastMonth.setMonth(lastMonth.getMonth() - 1);
-lastMonth = format(lastMonth, 'yyyy-MM-dd');
+
+const getPeriodRange = (period) => {
+  switch (period) {
+    case 'daily':
+      return {
+        sDate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
+        eDate: today,
+      };
+    case 'weekly':
+      return {
+        sDate: format(subWeeks(new Date(), 1), 'yyyy-MM-dd'),
+        eDate: today,
+      };
+    case 'monthly':
+    default:
+      return {
+        sDate: format(subMonths(new Date(), 1), 'yyyy-MM-dd'),
+        eDate: today,
+      };
+  }
+};
+
+const PeriodTabs = ({ currentPeriod, onChangePeriod }) => (
+  <div>
+    <button
+      onClick={() => onChangePeriod('monthly')}
+      className={currentPeriod === 'monthly' ? 'active' : ''}
+    >
+      월간
+    </button>
+    <button
+      onClick={() => onChangePeriod('weekly')}
+      className={currentPeriod === 'weekly' ? 'active' : ''}
+    >
+      주간
+    </button>
+    <button
+      onClick={() => onChangePeriod('daily')}
+      className={currentPeriod === 'daily' ? 'active' : ''}
+    >
+      일간
+    </button>
+  </div>
+);
 
 const RecentTrendContainer = () => {
   const { t } = useTranslation();
@@ -43,58 +90,90 @@ const RecentTrendContainer = () => {
 
   const [form, setForm] = useState(() => getQueryString(searchParams));
   const [search, setSearch] = useState({
-    sDate: lastMonth,
-    eDate: today,
+    ...getPeriodRange('monthly'),
     page: 1,
     limit: 10,
+    sort: 'viewCount_DESC',
   });
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({});
+  const [currentPeriod, setCurrentPeriod] = useState('monthly'); // 현재 선택된 기간
 
   useEffect(() => {
-    console.log('search', search);
     apiList(search).then((res) => {
-      console.log('API response:', res);
       setItems(res.items || []);
       setPagination(res.pagination || {});
     });
   }, [search]);
 
-  /* 검색 관련 함수(사용할 수도 있으니까... 지우지마세요) */
-  const onChangeSearch = useCallback((e) => {
-    setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
-  }, []);
+  const onChangePeriod = (period) => {
+    setCurrentPeriod(period);
+    const newPeriod = getPeriodRange(period);
+    setSearch((search) => ({ ...search, ...newPeriod, page: 1 }));
+  };
 
-  const onSubmitSearch = useCallback(
-    (e) => {
-      e.preventDefault();
-      setSearch((search) => ({ ...search, ...form, page: 1 }));
-    },
-    [form],
-  );
-
-  /* 정렬 */
   const onChangeSort = useCallback((e) => {
     setSearch((search) => ({ ...search, sort: e.target.value }));
   }, []);
 
-  /* 페이지 변경 함수 */
   const onChangePage = useCallback((p) => {
     setSearch((search) => ({ ...search, page: p }));
     window.location.hash = '#root';
   }, []);
+
   return (
     <Container>
-      <h1>
-        {lastMonth}부터 {today}까지의 최신 논문 목록
-      </h1>
-      <RecentSort search={search} onChange={onChangeSort} />
-      <RecentTrend items={items} />
-      {items.length > 0 && (
-        <Pagination onClick={onChangePage} pagination={pagination} />
-      )}
+      <Wrapper>
+        <PeriodTabs
+          currentPeriod={currentPeriod}
+          onChangePeriod={onChangePeriod}
+        />
+        <div className="listform">
+          <h1>
+            {currentPeriod === 'daily'
+              ? '일간'
+              : currentPeriod === 'weekly'
+              ? '주간'
+              : '월간'}
+            &nbsp;최신 논문 목록
+          </h1>
+          <RecentSort
+            className="sort"
+            search={search}
+            onChange={onChangeSort}
+          />
+          <RecentTrend items={items} />
+          {items.length > 0 && (
+            <Pagination onClick={onChangePage} pagination={pagination} />
+          )}
+        </div>
+      </Wrapper>
     </Container>
   );
 };
+
+const Wrapper = styled.div`
+  font-size: ${small};
+
+  button {
+    font-size: ${normal};
+    display: inline-block;
+    margin: 10px 10px 0 10px;
+    padding: 3px 0;
+    text-align: center;
+    vertical-align: middle;
+    height: 40px;
+    width: 100px;
+    border: 1px solid ${gray};
+    background: ${white};
+    border-radius: 50px;
+    cursor: pointer;
+
+    &.active {
+      background: ${navy};
+      color: ${white};
+    }
+  }
+`;
 
 export default React.memo(RecentTrendContainer);
