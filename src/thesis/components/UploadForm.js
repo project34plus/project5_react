@@ -170,7 +170,6 @@ const ThesisUploadForm = ({
                 style={styles.select}
                 required
               >
-                <option value="E-001">미분류</option>
                 <option value="E-002">건축공학</option>
                 <option value="E-003">고분자공학</option>
                 <option value="E-005">교통공학</option>
