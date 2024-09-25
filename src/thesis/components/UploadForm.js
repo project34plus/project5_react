@@ -1,5 +1,5 @@
 'use client';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import FileUpload from '@/commons/components/FileUpload';
 import styled from 'styled-components';
 
@@ -12,6 +12,8 @@ const ThesisUploadForm = ({
   handleSubmit,
   fileUploadCallback,
   isEditMode,
+  majorVersion,
+  minorVersion,
 }) => {
   const [selectedFiles, setSelectedFiles] = useState([]); // 선택한 파일 저장
 
@@ -59,7 +61,7 @@ const ThesisUploadForm = ({
           <input
             type="text"
             name="poster"
-            placeholder="편집자를 입력하세요"
+            placeholder="저자를 입력하세요"
             value={formData.poster || ''}
             onChange={(e) => handleInputChange('poster', e.target.value)}
             style={styles.input}
@@ -189,15 +191,15 @@ const ThesisUploadForm = ({
               파일 선택
             </StyledFileUpload>
             <input
-                type="file"
-                multiple
-                onChange={handleFileChange} // 파일 선택 시 호출
-                style={styles.input}
-              />
+              type="file"
+              multiple
+              onChange={handleFileChange} // 파일 선택 시 호출
+              style={styles.input}
+            />
           </div>
         )}
-         {/* 선택한 파일 목록 표시 */}
-         {selectedFiles.length > 0 && (
+        {/* 선택한 파일 목록 표시 */}
+        {selectedFiles.length > 0 && (
           <div style={styles.formGroup}>
             <label style={styles.label}>선택한 파일</label>
             <ul>
@@ -207,7 +209,6 @@ const ThesisUploadForm = ({
             </ul>
           </div>
         )}
-      
 
         {isEditMode && (
           <div style={styles.formGroup}>
@@ -219,7 +220,7 @@ const ThesisUploadForm = ({
                 type="number"
                 name="majorVersion"
                 placeholder="주 버전을 입력하세요"
-                value={formData.majorVersion || 0}
+                value={majorVersion !== undefined ? majorVersion : formData.majorVersion}
                 onChange={(e) =>
                   handleInputChange('majorVersion', e.target.value)
                 }
@@ -236,7 +237,7 @@ const ThesisUploadForm = ({
                 type="number"
                 name="minorVersion"
                 placeholder="부 버전을 입력하세요"
-                value={formData.minorVersion || 0}
+                value={minorVersion !== undefined ? minorVersion : formData.minorVersion}
                 onChange={(e) =>
                   handleInputChange('minorVersion', e.target.value)
                 }
