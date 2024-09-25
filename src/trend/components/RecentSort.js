@@ -27,14 +27,6 @@ const RecentSort = ({ search, onChange }) => {
       <Wrapper>
         <div
           className={`sort-item ${
-            search?.sort === 'viewCount_DESC' ? 'active' : ''
-          }`}
-          onClick={() => handleSortChange('viewCount_DESC')}
-        >
-          {t('조회순')}
-        </div>
-        <div
-          className={`sort-item ${
             search?.sort === 'createdAt_DESC' ? 'active' : ''
           }`}
           onClick={() => handleSortChange('createdAt_DESC')}
