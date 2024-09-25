@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Link from 'next/link'; // Link 추가
 
 const SearchBoxContainer = styled.div`
   display: flex;
@@ -13,7 +14,7 @@ const SearchInput = styled.input`
   height: 60px;
   background-color: ${({ theme }) => theme.color.white};
   border: 3px solid ${({ theme }) => theme.color.navy};
-  padding: 10px;
+  padding: 20px;
   flex: 1;
   border-radius: 5px 0 0 5px;
   color: ${({ theme }) => theme.color.black};
@@ -39,14 +40,20 @@ const SearchButton = styled.button`
   cursor: pointer;
   transition: background-color 0.3s;
   height: 60px;
-  width: 80px;
+  width: 130px;
 `;
 
 const SearchBox = () => {
   return (
     <SearchBoxContainer>
-      <SearchInput type="text" placeholder="검색어를 입력하세요" />
-      <SearchButton>검색</SearchButton>
+      <SearchInput
+        type="text"
+        placeholder="상세 검색이 필요하신가요?"
+        readOnly
+      />
+      <Link href="/thesis/list" passHref>
+        <SearchButton>검색으로 이동</SearchButton>
+      </Link>
     </SearchBoxContainer>
   );
 };
