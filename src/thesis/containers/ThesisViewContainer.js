@@ -55,16 +55,16 @@ const ThesisViewContainer = ({ params }) => {
     (async () => {
       try {
         const item = await apiGet(tid);
-        if (item) { //파일 유무 체크
+        if (item) {
+          //파일 유무 체크
           const files = await getFiles(item.gid);
           if (files && files.length > 0) {
-            item.fileInfo = files[0];
+            item.fileInfo = files;
           }
         }
         setMainTitle(item.title);
         setItem(item);
         console.log('item', item);
-
       } catch (err) {
         console.error('논문 정보 불러오기 실패:', err);
         // 필요에 따라 적절한 에러 처리 로직 추가
@@ -148,9 +148,6 @@ const ThesisViewContainer = ({ params }) => {
             console.log(res);
           });
           setCommentForm({
-            // tid: tid,
-            // mode: 'write',
-            // username: userInfo?.userName,
             ...commentForm,
             content: '',
           });

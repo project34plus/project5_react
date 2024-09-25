@@ -65,7 +65,7 @@ const Wrapper = styled.div`
   }
 
   .sort-item.active {
-    background: ${lemon};
+    background: radial-gradient(${lemon} 50%, ${white});
     color: ${darkgray};
   }
 `;
