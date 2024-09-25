@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import UserInfoContext, {
+  getUserStates,
+} from '@/commons/contexts/UserInfoContext';
 import styled from 'styled-components';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
@@ -8,9 +11,12 @@ import { format } from 'date-fns';
 const { gray, darkgray, midgray } = color;
 const { small, extraSmall } = fontSize;
 
-const CommentItems = ({ comments }) => {
+const CommentItems = ({ comments, onDelete }) => {
   const { t } = useTranslation();
-  console.log('comments', comments);
+  const { userInfo } = getUserStates(); // 사용자 정보 가져오기
+  
+  console.log('comments: ', comments);
+  console.log('user: ', userInfo);
 
   return (
     <Wrapper>
@@ -22,6 +28,11 @@ const CommentItems = ({ comments }) => {
               <p className="date">{format(new Date(createdAt), 'yy.MM.dd')}</p>
             </div>
             <p className="content">{content}</p>
+            {username === userInfo?.userName && ( // 현재 로그인한 회원과 작성자 비교
+              <button type="button" onClick={() => onDelete(seq)}>
+                {t('삭제하기')}
+              </button>
+            )}
           </li>
         ))
       ) : (
@@ -37,7 +48,7 @@ const Wrapper = styled.div`
   li {
     border-top: 1px solid ${gray};
     border-bottos: 1px solid ${gray};
-    padding: 10px;
+    padding: 15px 10px;
     font-size: ${small};
 
     p {
@@ -47,13 +58,19 @@ const Wrapper = styled.div`
 
   .top {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     color: ${darkgray};
-    margin-bottom: 7px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .date {
+    color: ${midgray};
+    font-size: ${extraSmall};
   }
 
   .content {
-    color: ${midgray};
+    color: ${darkgray};
   }
 `;
 

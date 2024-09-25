@@ -7,14 +7,15 @@ import React, {
   useContext,
 } from 'react';
 import { List } from 'react-content-loader';
-import { apiGet, apiFileGet } from '../apis/apiInfo.js';
+import { apiGet } from '../apis/apiInfo.js';
 import { getInfo, getList, write } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
 import { getUserStates } from '@/commons/contexts/UserInfoContext.js';
 import { useRouter } from 'next/navigation'; //CSR ->router는 SSR
 import View from '../components/View.js';
-
+import { deleteData } from '../apis/apiComment.js';
+import { getFiles } from '@/commons/libs/file/apiFile.js';
 const MyListLoader = () => <List />;
 
 const ThesisViewContainer = ({ params }) => {
@@ -41,7 +42,8 @@ const ThesisViewContainer = ({ params }) => {
     setMainTitle(t('논문_상세정보'));
   }, [setMainTitle, t]);
   useEffect(() => {
-    if (userInfo) {  // userInfo가 존재할 때만 업데이트
+    if (userInfo) {
+      // userInfo가 존재할 때만 업데이트
       setCommentForm((prevForm) => ({
         ...prevForm,
         userName: userInfo.userName, // userInfo가 로딩되면 userName을 설정
@@ -50,16 +52,19 @@ const ThesisViewContainer = ({ params }) => {
   }, [userInfo]);
 
   useEffect(() => {
-
-    ( async () => {
+    (async () => {
       try {
         const item = await apiGet(tid);
+        if (item) {
+          const files = await getFiles(item.gid);
+          if (files && files.length > 0) {
+            item.fileInfo = files[0];
+          }
+        }
         setMainTitle(item.title);
         setItem(item);
+        console.log('item', item);
 
-        // if (item.gid) {
-        //   const fileData = await apiFileGet(item.gid);
-        // }
       } catch (err) {
         console.error('논문 정보 불러오기 실패:', err);
         // 필요에 따라 적절한 에러 처리 로직 추가
@@ -68,9 +73,7 @@ const ThesisViewContainer = ({ params }) => {
 
       try {
         const res = await getList(tid);
-        console.log(res);
         setComments(res); // 댓글 목록
-
       } catch (err) {
         console.error(err);
         setMessage(err.message);
@@ -82,6 +85,7 @@ const ThesisViewContainer = ({ params }) => {
     })();
   }, [tid, router, userInfo, setMainTitle]);
 
+  //삭제 처리
   const onDelete = useCallback(
     (seq) => {
       if (!window.confirm(t('정말_삭제_하시겠습니까'))) {
@@ -91,13 +95,14 @@ const ThesisViewContainer = ({ params }) => {
       (async () => {
         try {
           await deleteData(seq);
-          router.push(`/thesis/comment/list/${seq}`);
+          setComments((comments) => comments.filter((c) => c.seq != seq));
+          //router.push(`/thesis/comment/list/${seq}`);
         } catch (err) {
           console.error(err);
         }
       })();
     },
-    [t, router],
+    [t],
   );
 
   //댓글 작성 처리
@@ -158,7 +163,7 @@ const ThesisViewContainer = ({ params }) => {
     },
     [t, router, isLogin, commentForm],
   );
-  
+
   const onChange = useCallback((e) => {
     setCommentForm((form) => ({ ...form, [e.target.name]: e.target.value }));
   }, []);

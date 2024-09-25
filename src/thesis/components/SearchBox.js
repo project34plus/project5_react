@@ -75,10 +75,9 @@ const SearchItemRows = ({ options, form, onChange, i }) => {
   );
 };
 
-const SearchBox = ({ form, onChange, onSubmit }) => {
+const SearchBox = ({ form, search, onChange, onSubmit, onFieldChange }) => {
   const [itemsRows, setItemRows] = useState([]);
   const { t } = useTranslation();
-  const [filteredField, setFilteredField] = useState(null); // 필터링된 필드 상태
 
   useEffect(() => {
     setItemRows(
@@ -103,11 +102,6 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
     },
     [onChange],
   );
-
-  // 대분류 필터링 처리
-  const handleFieldChange = (selectedField) => {
-    setFilteredField(selectedField);
-  };
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
@@ -149,7 +143,11 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
       </div>
       <div className="field-subject">
         <p>주제분류</p>
-        <FieldFilter fieldList={fieldList} onFieldChange={handleFieldChange} />
+        <FieldFilter
+          fieldList={fieldList}
+          selected={search?.fields ?? []}
+          onFieldChange={onFieldChange}
+        />
       </div>
       <div className="publish-date">
         <p>발행일</p>

@@ -36,14 +36,13 @@ const ThesisListContainer = ({ searchParams }) => {
   const [loading, setLoading] = useState(false);
   const { setMainTitle } = getCommonActions();
 
-  const [filteredField, setFilteredField] = useState(null);
-
   useLayoutEffect(() => {
     setMainTitle(t('논문학술자료'));
   }, [setMainTitle, t]);
 
   useEffect(() => {
     setLoading(true);
+    console.log('search', search);
     apiList(search).then((res) => {
       console.log('res', res);
       setItems(res.items || []);
@@ -140,9 +139,19 @@ const ThesisListContainer = ({ searchParams }) => {
   }, []);
 
   //분류명 필터 처리
-  const handleFieldChange = (selectedField) => {
-    setFilteredField(selectedField);
-  };
+  const handleFieldChange = useCallback((selectedField) => {
+    console.log(search);
+    setSearch((search) => {
+      let fields = search.fields ?? [];
+      if (fields.includes(selectedField)) {
+        // 이미 분류가 있다면 제거
+        fields = fields.filter((f) => f !== selectedField);
+      } else {
+        fields = fields.concat(selectedField);
+      }
+      return { ...search, fields };
+    });
+  }, [search]);
 
   /* 로딩 처리 */
   if (loading) {
@@ -153,6 +162,7 @@ const ThesisListContainer = ({ searchParams }) => {
     <>
       <SearchBox
         form={form}
+        search={search}
         onChange={onChangeSearch}
         onSubmit={onSubmitSearch}
         selectChange={selectChange}

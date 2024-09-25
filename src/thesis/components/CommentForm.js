@@ -10,7 +10,7 @@ import { color } from '@/theme/color';
 import fontWeight from '@/theme/fontWeight';
 
 const { small, normal, center, medium } = fontSize;
-const { gray, white, navy } = color;
+const { gray, white, navy, midgray, darkgray } = color;
 const { semiBold } = fontWeight;
 
 //댓글 작성
@@ -32,6 +32,7 @@ const FormBox = styled.form`
     .commenter {
       margin: 0 0 10px 5px;
       font-size: ${small};
+      color: ${navy};
     }
     .cBody {
       display: flex;
@@ -49,7 +50,7 @@ const FormBox = styled.form`
           height: 100px;
           padding: 12px 16px;
           border: 1px solid ${gray};
-          color: ${navy};
+          color: ${darkgray};
           box-sizing: border-box;
           resize: none;
           border-radius: 5px;
@@ -61,8 +62,11 @@ const FormBox = styled.form`
         height: 40px;
         margin: 0 5px 0 15px;
         position: absolute;
-        top: 10px;
+        top: 25px;
         right: 10px;
+        background: ${navy};
+        color: ${white};
+        border-radius: 5px;
       }
     }
   }

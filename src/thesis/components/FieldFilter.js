@@ -1,24 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import classNames from 'classnames';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 
 const { navy, white, yellow } = color;
 const { small } = fontSize;
 
-const FieldFilter = ({ fieldList, onFieldChange }) => {
-  const [selectedField, setSelectedField] = useState(null);
-
-  const handleFieldCheck = (value) => {
-    setSelectedField(value);
-    onFieldChange(value); // 부모 컴포넌트에 선택된 필드 전달
-    console.log('selected field:', value);
-  };
-
+const FieldFilter = ({ fieldList, selected, onFieldChange }) => {
   return (
     <Wrapper>
       {fieldList.map(({ value, name }) => (
-        <Button key={value} onClick={() => handleFieldCheck(value)}>
+        <Button
+          type="button"
+          key={value}
+          className={classNames({ on: selected.includes(value) })}
+          onClick={() => onFieldChange(value)}
+        >
           {name}
         </Button>
       ))}
