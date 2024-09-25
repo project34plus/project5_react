@@ -1,5 +1,6 @@
 'use client';
-import React, { useContext, useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
+import cookies from 'react-cookies';
 import ProfileForm from '../components/ProfileForm';
 import Container2 from '@/commons/components/Container2';
 import UserInfoContext, {
@@ -233,8 +234,8 @@ const InfoContainer = ({ searchParams }) => {
       try {
         await apiPatch(form);
         alert(t('회원탈퇴완료'));
-        router.replace('/member/login');
         onLogout();
+        router.replace('/member/login');
       } catch (err) {
         console.error(err);
         alert(t('회원탈퇴실패'));

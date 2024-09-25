@@ -98,9 +98,6 @@ const Header = () => {
                 <div>
                   <a href="/mypage/info">{t('마이페이지')}</a>
                   <a onClick={onLogout}>{t('로그아웃')}</a>
-                  <a href={ADMIN_URL} target="_blank">
-                    {t('사이트_관리')}
-                  </a>
                   {isAdmin && (
                     <a href={ADMIN_URL} target="_blank">
                       {t('사이트_관리')}
