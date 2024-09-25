@@ -1,15 +1,30 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useLayoutEffect } from 'react';
 import MyThesisList from '../components/MyThesisList';
 import { apiMyList } from '@/thesis/apis/apiInfo';
 import styled from 'styled-components';
 import Container2 from '@/commons/components/Container2';
 import { getUserStates } from '@/commons/contexts/UserInfoContext';
+import { useTranslation } from 'react-i18next';
+import CommonContext, {
+  getCommonActions,
+} from '@/commons/contexts/CommonContext';
+
 const MyThesisListContainer = () => {
+  const { t } = useTranslation();
+  const { setMainTitle } = getCommonActions();
   const [thesisList, setThesisList] = useState([]); // 논문 목록 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [error, setError] = useState(null); // 에러 상태
   const { isLogin } = getUserStates();
+
+  const {
+    actions: { setLinkText, setLinkHref },
+  } = useContext(CommonContext);
+
+  useLayoutEffect(() => {
+    setMainTitle(t('내 논문 관리'));
+  }, [setMainTitle, t]);
 
   useEffect(() => {
     const fetchTheses = async () => {
@@ -19,6 +34,8 @@ const MyThesisListContainer = () => {
       try {
         const data = await apiMyList(); // API에서 데이터 가져오기
 
+        setLinkText('내 논문 관리');
+        setLinkHref('/mypage/MyThesisList');
         setThesisList(data.items || []); // 가져온 데이터를 상태에 저장 (items가 있는 경우에만)
       } catch (err) {
         setError(err); // 에러가 발생하면 에러 상태 저장
@@ -27,7 +44,7 @@ const MyThesisListContainer = () => {
       }
     };
     fetchTheses();
-  }, [isLogin]);
+  }, [isLogin, setLinkHref, setLinkText]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
