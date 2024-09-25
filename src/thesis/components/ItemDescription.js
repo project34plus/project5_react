@@ -7,7 +7,7 @@ import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-const { gray, navy } = color;
+const { gray, navy, black } = color;
 
 const { small, normal, big } = fontSize;
 
@@ -54,7 +54,7 @@ const Wrapper = styled.div`
 
   .info2_wrap {
     margin: 40px 0;
-    border-top: 2px solid black;
+    border-top: 2px solid ${black};
   }
 
   .toggle {
@@ -93,6 +93,7 @@ const ItemDescription = ({ item }) => {
     publisher,
     keywords,
     viewCount,
+    fileInfo,
     gid,
   } = item;
 
@@ -154,7 +155,18 @@ const ItemDescription = ({ item }) => {
           </dl>
         )}
       </div>
-      <div>파일정보: {gid}</div>
+      <p>파일목록 나와라아</p>
+      {item.fileInfo?.length > 0 && (
+        <ul className="downloads">
+          {t('첨부파일_목록')}
+          {fileInfo.map(({ fileDownloadUrl, fileName }) => (
+            <li key={fileDownloadUrl}>
+              <a href={fileDownloadUrl}>{fileName}</a>
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div className="btn-group">
         <button>{t('원문보기')}</button>
         <button>{t('다운로드')}</button>

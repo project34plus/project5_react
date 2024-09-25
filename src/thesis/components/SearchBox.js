@@ -218,7 +218,7 @@ const FormBox = styled.form`
     }
     > p {
       margin: 0 20px 0 0;
-      font-size: ${small};
+      font-size: ${normal};
     }
   }
 
@@ -230,7 +230,7 @@ const FormBox = styled.form`
     > p {
       margin: 0 20px 0 0;
       text-align: left; /* 왼쪽 정렬 */
-      font-size: ${small};
+      font-size: ${normal};
     }
   }
 
@@ -242,8 +242,12 @@ const FormBox = styled.form`
   .minus {
     width: 50px;
     height: 50px;
+    background: ${midNavy};
+    border-radius: 5px;
+    border: 1px solid ${midNavy};
 
     svg {
+      color: ${white};
       width: 25px;
       height: 25px;
     }
@@ -256,7 +260,7 @@ const FormBox = styled.form`
     align-items: center;
     > p {
       margin: 0 10px 0 0;
-      font-size: ${small};
+      font-size: ${normal};
     }
 
     .pick_sdate,

@@ -55,7 +55,7 @@ const ThesisViewContainer = ({ params }) => {
     (async () => {
       try {
         const item = await apiGet(tid);
-        if (item) {
+        if (item) { //파일 유무 체크
           const files = await getFiles(item.gid);
           if (files && files.length > 0) {
             item.fileInfo = files[0];

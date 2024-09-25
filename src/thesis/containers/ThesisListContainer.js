@@ -140,7 +140,7 @@ const ThesisListContainer = ({ searchParams }) => {
 
   //분류명 필터 처리
   const handleFieldChange = useCallback((selectedField) => {
-    console.log(search);
+    console.log('search', search);
     setSearch((search) => {
       let fields = search.fields ?? [];
       if (fields.includes(selectedField)) {

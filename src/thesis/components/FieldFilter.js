@@ -4,8 +4,8 @@ import classNames from 'classnames';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 
-const { navy, white, yellow } = color;
-const { small } = fontSize;
+const { navy, white, yellow, gray } = color;
+const { small, normal } = fontSize;
 
 const FieldFilter = ({ fieldList, selected, onFieldChange }) => {
   return (
@@ -31,16 +31,24 @@ const Wrapper = styled.div`
 
 const Button = styled.button`
   padding: 10px 15px;
-  border: 1px solid #ccc;
+  border: 1px solid ${gray};
   background: ${white};
   color: ${navy};
   cursor: pointer;
   border-radius: 15px;
-  font-size: ${small};
+  font-size: ${normal};
 
   &:hover {
     background: ${yellow};
     color: ${white};
+    border-color: ${yellow};
+  }
+
+  &.on {
+    // 선택된 버튼 스타일
+    background: ${yellow}; // 선택된 상태에서 배경색
+    color: ${white}; // 선택된 상태에서 글자색
+    border: none;
   }
 `;
 

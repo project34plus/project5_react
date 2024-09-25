@@ -10,7 +10,7 @@ import { color } from '@/theme/color';
 import fontWeight from '@/theme/fontWeight';
 
 const { small, normal, center, medium } = fontSize;
-const { gray, white, navy, midgray, darkgray } = color;
+const { gray, white, navy, black, darkgray, danger } = color;
 const { semiBold } = fontWeight;
 
 //댓글 작성
@@ -26,7 +26,7 @@ const FormBox = styled.form`
 
   .comment-form {
     margin-bottom: 20px;
-    border-top: 3px solid black;
+    border-top: 3px solid ${black};
     padding: 20px 10px 0 10px;
 
     .commenter {
@@ -72,8 +72,6 @@ const FormBox = styled.form`
   }
 `;
 
-const mStyle = styled(MessageBox)``;
-
 const CommentForm = ({ form, onChange, onSubmit, errors }) => {
   const { t } = useTranslation();
   const { userInfo } = getUserStates(UserInfoContext); // 사용자 정보 가져오기
@@ -97,9 +95,8 @@ const CommentForm = ({ form, onChange, onSubmit, errors }) => {
             ></textarea>
             {errors?.content && (
               <MessageBox
-                color="danger"
+                color='danger'
                 messages={errors.content}
-                styled={mStyle}
               />
             )}
           </div>

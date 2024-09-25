@@ -5,8 +5,17 @@ import { useTranslation } from 'react-i18next';
 import fontSize from '@/theme/fontSize';
 import WishButton from '@/commons/components/WishButton';
 
-const { gray, midgray, lemon, lightgray } = color;
-const { small, normal, center } = fontSize;
+const {
+  gray,
+  midgray,
+  lemon,
+  lightgray,
+  lightGrayNavy,
+  whiteGrayNavy,
+  grayNavy,
+  white,
+} = color;
+const { small, normal, center, medium } = fontSize;
 
 const ItemsBox = ({ items, pagination }) => {
   const { t } = useTranslation();
@@ -60,7 +69,7 @@ const Wrapper = styled.div`
     z-index: 1000;
   }
   .title {
-    font-size: ${center};
+    font-size: ${medium};
     margin: 5px 0 10px;
   }
   .total {
@@ -73,11 +82,12 @@ const Wrapper = styled.div`
   .poster,
   .publisher {
     margin: 5px 0;
-    font-size: ${small};
+    font-size: ${center};
   }
 
   .fields {
-    background: ${lemon};
+    background: ${lightGrayNavy};
+    color: ${white};
     width: 110px;
     text-align: center;
     border-radius: 50px;

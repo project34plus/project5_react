@@ -8,13 +8,13 @@ import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 import { format } from 'date-fns';
 
-const { gray, darkgray, midgray } = color;
+const { gray, darkgray, midgray, black, white } = color;
 const { small, extraSmall } = fontSize;
 
 const CommentItems = ({ comments, onDelete }) => {
   const { t } = useTranslation();
   const { userInfo } = getUserStates(); // 사용자 정보 가져오기
-  
+
   console.log('comments: ', comments);
   console.log('user: ', userInfo);
 
@@ -23,13 +23,21 @@ const CommentItems = ({ comments, onDelete }) => {
       {comments.length > 0 ? (
         comments.map(({ seq, createdAt, username, content }) => (
           <li key={seq}>
-            <div className="top">
-              <p className="commenter">{username}</p>
-              <p className="date">{format(new Date(createdAt), 'yy.MM.dd')}</p>
+            <div className="fBody">
+              <div className="top">
+                <p className="commenter">{username}</p>
+                <p className="date">
+                  {format(new Date(createdAt), 'yy.MM.dd')}
+                </p>
+              </div>
+              <div className="content">{content}</div>
             </div>
-            <p className="content">{content}</p>
             {username === userInfo?.userName && ( // 현재 로그인한 회원과 작성자 비교
-              <button type="button" onClick={() => onDelete(seq)}>
+              <button
+                type="button"
+                className="delete-btn"
+                onClick={() => onDelete(seq)}
+              >
                 {t('삭제하기')}
               </button>
             )}
@@ -43,17 +51,23 @@ const CommentItems = ({ comments, onDelete }) => {
 };
 
 const Wrapper = styled.div`
-  border-top: 1px solid black;
+  border-top: 1px solid ${black};
 
   li {
     border-top: 1px solid ${gray};
-    border-bottos: 1px solid ${gray};
+    border-bottom: 1px solid ${gray};
     padding: 15px 10px;
     font-size: ${small};
+    display: flex;
+    align-items: center;
 
     p {
       margin: 0;
     }
+  }
+
+  .fBody {
+    width: 90%;
   }
 
   .top {
@@ -71,6 +85,17 @@ const Wrapper = styled.div`
 
   .content {
     color: ${darkgray};
+     overflow-wrap: break-word; /* 텍스트 줄 개행 */
+  }
+
+  .delete-btn {
+    width: 100px;
+    height: 40px;
+    margin-left: 20px;
+    background: ${darkgray};
+    color: ${white};
+    border-radius: 5px;
+    // border-color: ${midgray};
   }
 `;
 
