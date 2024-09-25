@@ -1,3 +1,5 @@
+import TrendMainContainer from "@/trend/containers/TrendMainContainer";
+import TrendSub from "@/trend/components/TrendSub";
 import Head from "next/head";
 
 export const metadata = {
@@ -11,7 +13,7 @@ const Trend = () => {
       <Head>
         <title>최신 연구 트렌드</title>
       </Head>
-      <h1>최신 연구 트렌드 메인</h1>
+      <TrendMainContainer/>
     </>
   );
 };

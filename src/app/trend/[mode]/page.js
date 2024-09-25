@@ -1,7 +1,7 @@
 import FieldTrendContainer from '@/trend/containers/FieldTrendContainer';
 import GroupTrendContainer from '@/trend/containers/GroupTrendContainer';
 import RecentTrendContainer from '@/trend/containers/RecentTrendContainer';
-import TrendMain from '@/trend/containers/TrendMain';
+import TrendMainContainer from '@/trend/containers/TrendMainContainer';
 
 const MypageModePage = ({ params, searchParams }) => {
   const { mode } = params;
@@ -18,7 +18,7 @@ const MypageModePage = ({ params, searchParams }) => {
       Containers = GroupTrendContainer;
       break;
     default:
-      Containers = TrendMain;
+      Containers = TrendMainContainer;
   }
   return (
     <>

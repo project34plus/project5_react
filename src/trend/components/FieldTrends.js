@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Bar } from '@nivo/bar';
 import Loading from '@/commons/components/Loading';
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -28,29 +29,36 @@ const FieldsRank = ({ item, className }) => {
 
 const FieldBarStat = ({ stat, field }) => {
   const data = [];
-  let indexBy ='대분류';
+  let indexBy = '대분류';
 
   if (field) {
     indexBy = '중분류';
     for (const { name, subfield, count, wishCount } of stat[field].sub) {
-      data.push({
-        중분류: `${name}/${subfield}`,
-        조회수: count,
-        찜하기: wishCount,
-      });
+      if (count > 0 || wishCount > 0) {
+        data.push({
+          중분류: `${name}/${subfield}`,
+          조회수: count,
+          찜하기: wishCount,
+        });
+      }
     }
   } else {
     for (const [name, item] of Object.entries(stat)) {
-      data.push({
-        대분류: name,
-        조회수: item.count,
-        찜하기: item.wishCount,
-      });
+      if (item.count > 0 || item.wishCount > 0) {
+        data.push({
+          대분류: name,
+          조회수: item.count,
+          찜하기: item.wishCount,
+        });
+      }
     }
   }
 
-  console.log('data', data);
-  console.log('field', field);
+  /*
+  const name = data.map((item) => item.대분류);
+  console.log('name', name);
+  const sub = data.map((item) => item.중분류);
+  console.log('sub', sub);*/
 
   return (
     <Bar
@@ -61,13 +69,49 @@ const FieldBarStat = ({ stat, field }) => {
       width={1000}
       height={500}
       padding={0.3}
+      theme={{
+        labels: {
+          text: {
+            fontSize: 14,
+            fill: '#000',
+          },
+          legends: {
+            text: {
+              fontSize: 12,
+              fill: '#000',
+            },
+          },
+          axis: {
+            legend: {
+              text: {
+                fontSize: 20,
+                fill: '#000',
+              },
+            },
+            ticks: {
+              text: {
+                fontSize: 16,
+                fill: '#000',
+              },
+            },
+          },
+        },
+      }}
       axisBottom={{
         tickSize: 5,
         tickPadding: 5,
-        tickRotation: 0,
+        tickRotation: -45,
         legend: field ? '중분류' : '대분류',
         legendPosition: 'middle',
         legendOffset: 32,
+      }}
+      axisLeft={{
+        tickSize: 5,
+        tickPadding: 5,
+        tickRotation: 0,
+        legend: 'indexBy',
+        legendPosition: 'middle',
+        legendOffset: -60,
       }}
     />
   );
