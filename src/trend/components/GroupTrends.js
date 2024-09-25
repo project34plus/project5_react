@@ -108,13 +108,15 @@ const GroupTrend = ({ items }) => {
       {groupedData[selectedJob || '전체'] ? (
         <>
           <div className="subtitle">
-            {selectedJob ? `${selectedJob}` : '전체'} 인기 검색어
+            {selectedJob ? `${selectedJob}` : '전체'} 인기 검색어 TOP10
           </div>
           <Pie
             className="pie"
             width={700}
             height={700}
-            data={groupedData[selectedJob || '전체']}
+            data={groupedData[selectedJob || '전체']
+              .sort((a, b) => b.value - a.value) // value 기준으로 내림차순 정렬
+              .slice(0, 10)} // 상위 10개 항목만 선택
             margin={{ top: 30, right: 100, bottom: 30, left: 100 }}
             innerRadius={0.5}
             padAngle={0.7}
