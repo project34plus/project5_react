@@ -80,7 +80,6 @@ const ThesisViewContainer = ({ params }) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(commentForm);
       const _errors = {};
       let hasErrors = false;
 
