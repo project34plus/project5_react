@@ -12,7 +12,6 @@ export const apiUpdate = (form) =>
           reject(res.data);
           return;
         }
-
         resolve(res.data); // 성공
       })
       .catch((err) => {

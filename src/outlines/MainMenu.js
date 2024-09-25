@@ -63,7 +63,7 @@ const MainMenu = () => {
             <a href="/thesis/list">{t('논문학술자료')}</a>
           </MenuItem>
           <MenuItem>
-            <a href="/thesis/upload">{t('논문_등록')}</a>
+            <a href="/thesis/agree">{t('논문_등록')}</a>
           </MenuItem>
           <MenuItem>
             <a href="/trend">{t('최신_연구_트렌드')}</a>
@@ -72,7 +72,7 @@ const MainMenu = () => {
             <a href="/recommend">{t('추천_논문')}</a>
           </MenuItem>
           <MenuItem>
-            <a href="/note">{t('연구노트')}</a>
+            <a href="/note/write/default">{t('연구노트')}</a>
           </MenuItem>
           <MenuItem>
             <a href="/info">{t('이용안내')}</a>

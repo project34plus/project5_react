@@ -34,7 +34,7 @@ const MyWishListContainer = () => {
   } = useContext(CommonContext);
 
   useLayoutEffect(() => {
-    setMainTitle(t('즐겨찾기 한 논문'));
+    setMainTitle(t('즐겨찾는 논문'));
   }, [setMainTitle, t]);
 
   // API 호출 및 데이터 설정
@@ -60,7 +60,7 @@ const MyWishListContainer = () => {
         <div className="header-tid">번호</div>
         <div className="header-gid">고유번호</div>
         <div className="header-title">제목</div>
-        <div className="header-poster">작성자</div>
+        <div className="header-poster">저자</div>
       </Header>
 
       {items && items.length > 0 ? (

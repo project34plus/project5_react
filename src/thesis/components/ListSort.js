@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import fontSize from '@/theme/fontSize';
 import { color } from '@/theme/color';
 
-const { gray, midgray, white, navy } = color;
-const { small } = fontSize;
+const { lemon, midgray, white, navy, lightgray, darkgray, yellow } = color;
+const { small, center } = fontSize;
 
 const ListSort = ({ search, onChange }) => {
   const { t } = useTranslation();
@@ -49,11 +49,11 @@ const Wrapper = styled.div`
   padding: 20px 0 0 10px;
 
   .sort-item {
-    margin: 0 10px 0 0;
-    padding: 5px 10px;
+    margin: 0 5px 0 0;
+    padding: 10px 15px;
     cursor: pointer;
-    border-radius: 10px;
-    font-size: ${small};
+    border-radius: 15px;
+    font-size: ${center};
     // background: ${navy};
     color: ${navy};
     transition: background 0.3s, color 0.3s;
@@ -61,12 +61,12 @@ const Wrapper = styled.div`
 
   .sort-item:hover {
     // background: ${midgray};
-    color: ${midgray};
+    color: ${yellow};
   }
 
   .sort-item.active {
-    background: ${midgray};
-    color: ${white};
+    background: radial-gradient(${lemon} 50%, ${white});
+    color: ${darkgray};
   }
 `;
 

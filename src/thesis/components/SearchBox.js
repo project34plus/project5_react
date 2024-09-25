@@ -13,8 +13,9 @@ import { ko } from 'date-fns/locale/ko';
 import FieldFilter from './FieldFilter';
 registerLocale('ko', ko);
 
-const { gray, white, navy, darkgray, midgray, lightgray } = color;
-const { small, normal } = fontSize;
+const { gray, white, navy, darkgray, midgray, whiteGrayNavy, midNavy, lemon } =
+  color;
+const { small, normal, extraSmall } = fontSize;
 
 const fieldList = [
   { name: '공학', value: '공학' },
@@ -74,10 +75,9 @@ const SearchItemRows = ({ options, form, onChange, i }) => {
   );
 };
 
-const SearchBox = ({ form, onChange, onSubmit }) => {
+const SearchBox = ({ form, search, onChange, onSubmit, onFieldChange }) => {
   const [itemsRows, setItemRows] = useState([]);
   const { t } = useTranslation();
-  const [filteredField, setFilteredField] = useState(null); // 필터링된 필드 상태
 
   useEffect(() => {
     setItemRows(
@@ -102,11 +102,6 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
     },
     [onChange],
   );
-
-  // 대분류 필터링 처리
-  const handleFieldChange = (selectedField) => {
-    setFilteredField(selectedField);
-  };
 
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
@@ -148,7 +143,11 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
       </div>
       <div className="field-subject">
         <p>주제분류</p>
-        <FieldFilter fieldList={fieldList} onFieldChange={handleFieldChange} />
+        <FieldFilter
+          fieldList={fieldList}
+          selected={search?.fields ?? []}
+          onFieldChange={onFieldChange}
+        />
       </div>
       <div className="publish-date">
         <p>발행일</p>
@@ -184,7 +183,7 @@ const SearchBox = ({ form, onChange, onSubmit }) => {
       </div>
       <div className="btn-group">
         <Button>검색하기</Button>
-        <Button type="reset">초기화</Button>
+        {/* <Button type="reset">초기화</Button> */}
       </div>
     </FormBox>
   );
@@ -219,7 +218,7 @@ const FormBox = styled.form`
     }
     > p {
       margin: 0 20px 0 0;
-      font-size: ${small};
+      font-size: ${normal};
     }
   }
 
@@ -231,7 +230,7 @@ const FormBox = styled.form`
     > p {
       margin: 0 20px 0 0;
       text-align: left; /* 왼쪽 정렬 */
-      font-size: ${small};
+      font-size: ${normal};
     }
   }
 
@@ -243,8 +242,12 @@ const FormBox = styled.form`
   .minus {
     width: 50px;
     height: 50px;
+    background: ${midNavy};
+    border-radius: 5px;
+    border: 1px solid ${midNavy};
 
     svg {
+      color: ${white};
       width: 25px;
       height: 25px;
     }
@@ -257,7 +260,7 @@ const FormBox = styled.form`
     align-items: center;
     > p {
       margin: 0 10px 0 0;
-      font-size: ${small};
+      font-size: ${normal};
     }
 
     .pick_sdate,
@@ -289,7 +292,7 @@ const FormBox = styled.form`
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      border: 1px solid ${gray};
+      border: 1px solid ${midNavy};
     }
 
     .react-datepicker__triangle {
@@ -298,9 +301,9 @@ const FormBox = styled.form`
     }
 
     .react-datepicker__header {
-      background: ${lightgray};
+      background: ${whiteGrayNavy};
       width: 100%;
-      padding: 10px;
+      padding: 10px 5px;
       border-radius: 10px 10px 0 0;
       text-align: center;
     }
@@ -318,7 +321,7 @@ const FormBox = styled.form`
     .react-datepicker__week {
       justify-content: space-between;
       display: flex;
-      padding: 5px;
+      padding: 2px;
 
       > * {
         display: flex;
@@ -328,7 +331,7 @@ const FormBox = styled.form`
         align-items: center;
         color: ${darkgray};
         text-align: center;
-        font-size: ${small};
+        font-size: ${extraSmall};
         line-height: 1;
       }
     }
@@ -353,7 +356,7 @@ const FormBox = styled.form`
     .react-datepicker__day--today {
       // 오늘 날짜 하이라이트 커스텀
       color: ${navy};
-      border: 1px solid ${navy};
+      border: 1px solid ${midNavy};
       border-radius: 50%;
     }
     .react-datepicker__day--selected {
@@ -362,7 +365,7 @@ const FormBox = styled.form`
       border-radius: 50%;
     }
     .react-datepicker__day:hover {
-      background: ${navy}; /* 마우스 오버 시 배경색 변경 */
+      background: ${midNavy}; /* 마우스 오버 시 배경색 변경 */
       color: ${white}; /* 마우스 오버 시 텍스트 색상 변경 */
       border-radius: 50%; /* 원형 테두리 적용 */
     }
@@ -390,6 +393,10 @@ const FormBox = styled.form`
     font-size: ${small};
     padding-left: 5px;
     color: ${midgray};
+
+    option {
+      color: ${darkgray};
+    }
   }
 `;
 

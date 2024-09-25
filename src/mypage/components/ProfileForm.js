@@ -1,9 +1,12 @@
-import React, { useTransition } from 'react';
+'use client';
+import React, { useTransition, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { StyledInput } from '@/commons/components/inputs/StyledInput';
 import { MidButton } from '@/commons/components/buttons/BlueButtons';
 import StyledMessage from '@/commons/components/StyledMessage';
+import { FcImageFile } from 'react-icons/fc';
+import Image from 'next/image';
 import {
   IoAtSharp,
   IoLockClosed,
@@ -16,6 +19,8 @@ import {
   IoCalendarNumberOutline,
 } from 'react-icons/io5';
 import JoinInput from '@/member/components/JoinInput';
+import FileUpload from '@/commons/components/FileUpload';
+import ProfileImage from './ProfileImage';
 
 const FormBox = styled.form`
   width: 1000px;
@@ -43,6 +48,13 @@ const FormBox = styled.form`
     gap: 5px;
     margin-bottom: 30px;
     margin-left: 25px;
+  }
+
+  .upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -88,6 +100,13 @@ const Icon3 = styled.span`
   color: ${({ theme }) => theme.color.navy};
 `;
 
+const Icon4 = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.small};
+  position: relative;
+  top: 3px;
+  margin-right: 3px;
+`;
+
 const StyledInput2 = styled(JoinInput)`
   padding-left: 40px;
   height: 40px;
@@ -125,6 +144,17 @@ const OptionContainer = styled.div`
   }
 `;
 
+const StyledFileUpload = styled(FileUpload)`
+  width: 220px;
+  height: 220px;
+  margin-bottom: 30px;
+  margin: auto;
+  button {
+    background: transparent;
+    margin: auto;
+  }
+`;
+
 const OptionContainer2 = styled.div`
   font-size: ${({ theme }) => theme.fontSize.center};
 
@@ -156,6 +186,19 @@ const StyledButtons = styled.div`
   justify-content: center;
 `;
 
+const ImageView = styled.div`
+  width: 210px;
+  height: 210px;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  border: 3px solid ${({ theme }) => theme.color.whiteGrayNavy};
+  display: block;
+  margin: auto;
+  padding: 10px;
+  background-position: center;
+  box-sizing: border-box;
+`;
+
 const ProfileForm = ({
   form,
   _onChange,
@@ -166,6 +209,8 @@ const ProfileForm = ({
   onReset,
   fields,
   interests,
+  profileImage,
+  fileUploadCallback,
 }) => {
   const { t } = useTranslation();
   console.log(form);
@@ -286,9 +331,9 @@ const ProfileForm = ({
                   <IoCalendarNumberOutline />
                 </Icon>
                 <StyledInput2
-                  type="date"
+                  type="text"
                   name="birth"
-                  value={form?.birth || ''}
+                  value={form?.birth}
                   onChange={_onChange}
                 />
               </InputWrapper>
@@ -648,7 +693,35 @@ const ProfileForm = ({
             </select>
           </div>
         </div>
-
+        <Subtitle>
+          <Icon2>
+            <IoPersonSharp />
+          </Icon2>
+          {t('프로필_이미지')}
+        </Subtitle>
+        <div className="upload">
+          <StyledFileUpload
+            gid={form?.gid}
+            imageOnly={true}
+            single={true}
+            callback={fileUploadCallback}
+            done={true}
+          >
+            {form?.profileImage ? (
+              <ImageView
+                style={{ backgroundImage: `url('${form.profileImage}')` }}
+              ></ImageView>
+            ) : (
+              <Image src="/images/noImage.jpg" width={190} height={190} />
+            )}
+          </StyledFileUpload>
+          <div>
+            <Icon4>
+              <FcImageFile />
+            </Icon4>
+            {t('이미지를_눌러_수정하세요')}
+          </div>
+        </div>
         {errors?.global && (
           <StyledMessage variant="danger">{errors?.global}</StyledMessage>
         )}

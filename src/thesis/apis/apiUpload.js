@@ -13,6 +13,11 @@ export const updateThesis = (tid, thesisData) => {
   return saveProcess(`/thesis/update/${tid}/submit`, 'PATCH', thesisData);
 };
 
+export const deleteThesis = (tid) => {
+  return saveProcess(`/thesis/${tid}`, 'DELETE');
+}
+
+
 // import saveProcess from ".";
 
 // // 파일 업로드 API

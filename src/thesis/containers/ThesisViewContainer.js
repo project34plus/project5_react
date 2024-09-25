@@ -11,15 +11,17 @@ import { apiGet } from '../apis/apiInfo.js';
 import { getInfo, getList, write } from '../apis/apiComment.js';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
-import UserInfoContext, { getUserContext, getUserStates } from '@/commons/contexts/UserInfoContext.js';
+import { getUserStates } from '@/commons/contexts/UserInfoContext.js';
 import { useRouter } from 'next/navigation'; //CSR ->router는 SSR
 import View from '../components/View.js';
-
+import { deleteData } from '../apis/apiComment.js';
+import { getFiles } from '@/commons/libs/file/apiFile.js';
 const MyListLoader = () => <List />;
 
 const ThesisViewContainer = ({ params }) => {
   const { t } = useTranslation();
-  const [item, setItem] = useState(null);
+  const [item, setItem] = useState(null); //논문 데이터
+
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
   const router = useRouter();
@@ -40,7 +42,8 @@ const ThesisViewContainer = ({ params }) => {
     setMainTitle(t('논문_상세정보'));
   }, [setMainTitle, t]);
   useEffect(() => {
-    if (userInfo) {  // userInfo가 존재할 때만 업데이트
+    if (userInfo) {
+      // userInfo가 존재할 때만 업데이트
       setCommentForm((prevForm) => ({
         ...prevForm,
         userName: userInfo.userName, // userInfo가 로딩되면 userName을 설정
@@ -49,12 +52,19 @@ const ThesisViewContainer = ({ params }) => {
   }, [userInfo]);
 
   useEffect(() => {
-
-    const fetchData = async () => {
+    (async () => {
       try {
         const item = await apiGet(tid);
+        if (item) {
+          //파일 유무 체크
+          const files = await getFiles(item.gid);
+          if (files && files.length > 0) {
+            item.fileInfo = files;
+          }
+        }
         setMainTitle(item.title);
         setItem(item);
+        console.log('item', item);
       } catch (err) {
         console.error('논문 정보 불러오기 실패:', err);
         // 필요에 따라 적절한 에러 처리 로직 추가
@@ -64,23 +74,41 @@ const ThesisViewContainer = ({ params }) => {
       try {
         const res = await getList(tid);
         setComments(res); // 댓글 목록
-
       } catch (err) {
+        console.error(err);
+        setMessage(err.message);
         console.error('댓글 목록 불러오기 실패:', err);
         // 필요에 따라 적절한 에러 처리 로직 추가
       } finally {
         window.scrollTo(0, 0); // 페이지 상단으로 스크롤
       }
-    };
-    fetchData();
-  }, [tid, router, setMainTitle]);
+    })();
+  }, [tid, router, userInfo, setMainTitle]);
 
+  //삭제 처리
+  const onDelete = useCallback(
+    (seq) => {
+      if (!window.confirm(t('정말_삭제_하시겠습니까'))) {
+        return;
+      }
+
+      (async () => {
+        try {
+          await deleteData(seq);
+          setComments((comments) => comments.filter((c) => c.seq != seq));
+          //router.push(`/thesis/comment/list/${seq}`);
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    },
+    [t],
+  );
 
   //댓글 작성 처리
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(commentForm);
       const _errors = {};
       let hasErrors = false;
 
@@ -129,8 +157,9 @@ const ThesisViewContainer = ({ params }) => {
         }
       })();
     },
-    [t, router, isLogin, item, commentForm, userInfo],
+    [t, router, isLogin, commentForm],
   );
+
   const onChange = useCallback((e) => {
     setCommentForm((form) => ({ ...form, [e.target.name]: e.target.value }));
   }, []);
@@ -146,8 +175,9 @@ const ThesisViewContainer = ({ params }) => {
           comments={comments}
           form={commentForm}
           onSubmit={onSubmit}
-          errors={errors}
           onChange={onChange}
+          onDelete={onDelete}
+          errors={errors}
         />
       </div>
     </>

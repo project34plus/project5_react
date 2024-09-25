@@ -54,7 +54,13 @@ const LoginContainer = ({ searchParams }) => {
       apiLogin(form)
         .then((res) => {
           const token = res.data;
-          cookies.save('token', token, { path: '/' });
+          const options = { path: '/' };
+          if (process.env.NODE_ENV !== 'development') {
+            // 실서버에서 동작중일때
+            const domain = process.env.NEXT_PUBLIC_DOMAIN;
+            options.domain = `*.${domain}`;
+          }
+          cookies.save('token', token, options);
           console.log(form);
 
           (async () => {
@@ -62,6 +68,12 @@ const LoginContainer = ({ searchParams }) => {
               // 로그인 처리
               const user = await apiUser();
               console.log('user', user);
+
+              if (user.deletedAt) {
+                setErrors({ global: ['탈퇴한 회원입니다.'] });
+                return;
+              }
+
               setIsLogin(true); // 로그인 상태
               setUserInfo(user);
               setIsAdmin(user.userType === 'ADMIN'); // 관리자 여부
