@@ -91,7 +91,6 @@ const ThesisUpdateContainer = ({ params }) => {
       <ThesisUploadForm
         formData={formData}
         handleInputChange={handleInputChange}
-        fileUploadCallback={fileUploadCallback}
         handleSubmit={handleSubmit}
         isEditMode={true} // 수정 모드
       />
