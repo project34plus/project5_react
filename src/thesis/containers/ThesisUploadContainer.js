@@ -18,6 +18,8 @@ const initialFormData = {
   language: '한국어',
   country: '한국',
   keywords: '',
+  majorVersion: '1',
+  minorVersion: '',
 };
 
 const ThesisUploadContainer = () => {
@@ -32,10 +34,10 @@ const ThesisUploadContainer = () => {
     newFields[index] = value;
     setFormData({ ...formData, fields: newFields });
   };
-
   const fileUploadCallback = useCallback((files) => {
     console.log('files', files);
   }, []);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
