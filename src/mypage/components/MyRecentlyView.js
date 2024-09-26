@@ -1,46 +1,104 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/navigation';
 
 const MyRecentlyView = ({ items, className }) => {
+
+  const router = useRouter();
+
+  const handleClick = (tid) => {
+    router.push(`/thesis/view/${tid}`); // Next.js 라우터를 사용해 논문 상세 페이지로 이동
+  };
+
   return (
-    <div className={className}>
+    <StyledContainer className={className}>
       <h1>최근 본 논문</h1>
-      <ul>
-        {items.slice(0, 10).map((item) => (
-          <StyledListItem key={item.tid}>
-            <p><strong>논문번호:</strong> {item.tid}</p>
-            <p><strong>제목:</strong> {item.title}</p>
-            <p><strong>저자:</strong> {item.poster}</p>
-            <p><strong>발행기관:</strong> {item.publisher}</p>
-            <p><strong>초록:</strong> {item.thAbstract}</p>
-            
+      <StyledList>
+        {items.slice(0, 6).map((item) => (
+          <StyledListItem key={item.tid} onClick={() => handleClick(item.tid)}>
+            <div>
+              <strong>논문번호:</strong> <span>{item.tid}</span>
+            </div>
+            <div>
+              <strong>제목:</strong> <span>{item.title}</span>
+            </div>
+            <div>
+              <strong>저자:</strong> <span>{item.poster}</span>
+            </div>
+            <div>
+              <strong>발행기관:</strong> <span>{item.publisher}</span>
+            </div>
           </StyledListItem>
         ))}
-      </ul>
-    </div>
+      </StyledList>
+    </StyledContainer>
   );
 };
 
 export default React.memo(MyRecentlyView);
 
-const StyledListItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 10px;
+const StyledContainer = styled.div`
+  padding: 40px 50px;
+  max-width: 1000px;
+  margin-left: 20px;
+  border: 1px solid rgba(0,0,0,0.6);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-  p {
-    margin: 0;
-    padding: 0 10px;
-    font-size: 14px;
-    flex-basis: 20%; /* 각 항목이 동일한 너비를 차지하도록 설정 */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; /* 텍스트가 길어질 경우 줄바꿈 방지 */
-  }
-
-  strong {
-    font-weight: bold;
+  h1 {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
   }
 `;
+
+const StyledList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const StyledListItem = styled.li`
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1rem;
+
+  div {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      color: #555;
+      flex-shrink: 0;
+      margin-right: 10px;
+    }
+
+    span {
+      font-weight: 550;
+      color: #333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+  }
+
+  &:hover {
+    background-color: #d0dde9;
+    transform: translateY(-3px);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+  }
+`;
+
