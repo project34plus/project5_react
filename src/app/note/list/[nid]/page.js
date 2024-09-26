@@ -8,12 +8,11 @@ import MemberOnlyContainer from '@/member/containers/MemberOnlyContainer';
 const NoteListPage = () => {
   const [setPageTitle] = useState('');
   return (
-    // <MemberOnlyContainer>
-    <Container>
-      <h1>노트 목록</h1>
-      <ListContainer />
-    </Container>
-    // </MemberOnlyContainer>
+    <MemberOnlyContainer>
+      <Container>
+        <ListContainer />
+      </Container>
+    </MemberOnlyContainer>
   );
 };
 
