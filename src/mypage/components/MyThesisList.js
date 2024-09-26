@@ -98,6 +98,8 @@ const StyledThesisListItem = styled(ThesisListItem)`
 
   .delete-button {
     ${ButtonLinkStyles}/* ThesisDelete에도 동일한 스타일 적용 */
+    background-color: white;
+    font-size: 1.2rem;
   }
 
   // .edit-button {
