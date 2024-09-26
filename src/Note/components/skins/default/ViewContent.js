@@ -13,91 +13,91 @@ const { whiteGray, mid_gray } = color;
 
 // 게시글 제목 부분(제목, 작성자, ...)
 const Wrapper = styled.div`
-  font-size: ${medium};
-  margin: 5px;
+    font-size: ${medium};
+    margin: 5px;
 
-  .subject {
-    font-size: ${extraBig};
-    font-weight: bold;
-    text-align: left;
-    padding: 18px 30px;
-    background: #e2f7dd;
-    border: 2px solid ${whiteGray};
-    border-top: 3px solid ${whiteGray};
-    border-radius: 5px 5px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    .subject {
+        font-size: ${extraBig};
+        font-weight: bold;
+        text-align: left;
+        padding: 18px 30px;
+        background: #e2f7dd;
+        border: 2px solid ${whiteGray};
+        border-top: 3px solid ${whiteGray};
+        border-radius: 5px 5px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-    .button {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 15px;
-      color: ${mid_gray};
+        .button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 15px;
+            color: ${mid_gray};
+        }
     }
-  }
 
-  .post-info {
-    color: ${mid_gray};
-    border-collapse: collapse;
-    display: flex;
-    justify-content: space-between;
-    border-left: 2px solid ${whiteGray};
-    border-right: 2px solid ${whiteGray};
+    .post-info {
+        color: ${mid_gray};
+        border-collapse: collapse;
+        display: flex;
+        justify-content: space-between;
+        border-left: 2px solid ${whiteGray};
+        border-right: 2px solid ${whiteGray};
 
-    .items {
-      vertical-align: middle;
-      padding: 15px 15px;
+        .items {
+            vertical-align: middle;
+            padding: 15px 15px;
+        }
     }
-  }
 `;
 
 // 게시글 내용 부분
 const StyledContents = styled.div`
 
-  .contents {
-    padding-left: 15px;
-    border: 1px solid ${whiteGray};
-    border-radius: 0 0 5px 5px;
-    font-size: ${medium};
-    min-height: 500px;
-    max-height: 700px;
-    overflow-y: auto;
-    img {
-      max-width: 750px !important;
-      width: auto !important;
-      height: auto !important;
-    }
-  }
+    .contents {
+        padding-left: 15px;
+        border: 1px solid ${whiteGray};
+        border-radius: 0 0 5px 5px;
+        font-size: ${medium};
+        min-height: 500px;
+        max-height: 700px;
+        overflow-y: auto;
 
-  .downloads {
-    height: 85px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    color: ${mid_gray};
-    vertical-align: middle;
-    padding: 5px 5px 5px 15px;
-    border: 1px solid ${whiteGray};
-    border-radius: 5px;
-    margin-top: 5px;
-  }
+        img {
+            max-width: 750px !important;
+            width: auto !important;
+            height: auto !important;
+        }
+    }
+
+    .downloads {
+        height: 85px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        color: ${mid_gray};
+        vertical-align: middle;
+        padding: 5px 5px 5px 15px;
+        border: 1px solid ${whiteGray};
+        border-radius: 5px;
+        margin-top: 5px;
+    }
 `;
 
 // 버튼 그룹
 const Buttons = styled.div`
-  align-items: flex-end;
-  padding: 10px 0;
-  margin-left: auto;
-  width: 430px;
-  display: flex;
-  justify-content: space-between;
+    align-items: flex-end;
+    padding: 10px 0;
+    margin-left: auto;
+    width: 430px;
+    display: flex;
+    justify-content: space-between;
 `;
 
-const ViewContent = ({ data, onDelete }) => {
+const ViewContent = ({ data, note, onDelete }) => {
   const { t } = useTranslation();
-  const { note } = data;
 
   return (
     <Wrapper>
