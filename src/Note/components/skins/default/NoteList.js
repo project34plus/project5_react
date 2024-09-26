@@ -10,7 +10,7 @@ const NoteList = ({ items }) => {
       {items?.length > 0 ? (
         items.map(({ noteSeq, subject, content }) => (
           <li key={noteSeq}>
-            <a href={`/note/view/${seq}`}>
+            <a href={`/note/view/${noteSeq}`}>
               <div className="subject">{subject}</div>
               <div className="content">{content}</div>
             </a>

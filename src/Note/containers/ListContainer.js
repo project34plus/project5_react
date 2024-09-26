@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
 import Pagination from '@/commons/components/Pagination';
@@ -29,26 +29,37 @@ const ListContainer = () => {
   // }, [nid]);
   useEffect(() => {
     (async () => {
-      try {
-        const data = await getList(search)
-          .then((res) => {
-            console.log(res);
-            setItems(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        console.log('data', data);
-        if (data) {
-          setItems(data.items);
-          setPagination(data.pagination);
-        }
-      } catch (err) {
-        console.error(err);
+      const data = await getList(search);
+      console.log(data);
+      if (data) {
+        setItems(data.items);
+        setPagination(data.pagination);
       }
+      //     .then((res) => {
+      //       console.log('음하핳', res);
+      //       console.log('items', res.items);
+
+      //       setItems(res.items);
+      //       setPagination(res.pagination);
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //     });
+      //   console.log('data', data);
+      // } catch (err) {
+      //   console.error(err);
+      // }
     })();
   }, [search]);
 
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
+  
+  const onChangePage = useCallback((p) => {
+    setSearch((search) => ({ ...search, page: p }));
+    window.location.hash = '#root';
+  }, []);
   /* 로딩 처리 */
   if (loading) {
     return <MyListLoader />;
@@ -57,7 +68,7 @@ const ListContainer = () => {
   return (
     <>
       <NoteList items={items} />
-      {items.length > 0 && (
+      {items?.length > 0 && (
         <Pagination onClick={onChangePage} pagination={pagination} />
       )}
     </>

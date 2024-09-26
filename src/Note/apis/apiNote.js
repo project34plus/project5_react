@@ -38,10 +38,7 @@ function saveProcess2(url, method, form) {
 export const getInfo = async (seq) => {
   const res = await requestData(`/note/info/${seq}`);
   console.log('res', res);
-  if (res.status === 200) {
-    return res.data; // 노트 정보
-  }
-  throw new Error('노트 조회 실패');
+  return res; // 노트 정보
 };
 
 export const getList = async (nid, search) => {
@@ -52,10 +49,7 @@ export const getList = async (nid, search) => {
     console.log('err? :', err);
   });
   console.log('data:', res);
-  if (res.status === 200) {
-    return res.data; // 노트 목록
-  }
-  throw new Error('노트 목록 조회 실패');
+  return res; // 노트 목록
 };
 
 export const deleteData = (seq) => requestData(`/note/delete/${seq}`, 'DELETE');
