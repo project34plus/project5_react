@@ -24,7 +24,7 @@ const ViewContainer = ({ params }) => {
   const { setMainTitle } = getCommonActions();
 
   useLayoutEffect(() => {
-    setMainTitle(t('노트_상세'));
+    setMainTitle(t('나의_연구노트'));
   }, [setMainTitle, t]);
 
   useEffect(() => {
