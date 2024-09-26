@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 100%;
   margin-top: 10px;
-  font-size: ${medium};
+  font-size: ${center};
 
   .job-list {
     width: 900px;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
     cursor: pointer;
 
     .job-item {
-      padding-top: 5px;
+      padding-top: 12px;
     }
 
     div {
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
       text-align: center;
       align-items: center;
       vertical-align: middle;
-      height: 40px;
+      height: 50px;
       width: 150px;
       border: 1px solid ${gray};
       border-radius: 25px;

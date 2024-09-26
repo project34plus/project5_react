@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 100%;
   margin-top: 30px;
-  font-size: ${medium};
+  font-size: ${center};
   border: 1px solid ${gray};
 `;
 
@@ -60,7 +60,7 @@ const FieldBarStat = ({ stat, field }) => {
     }
   }
 
-  if (!field) {
+  if (field && !stat[field]) {
     return <div>데이터 집계중입니다</div>;
   }
 

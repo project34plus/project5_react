@@ -45,7 +45,7 @@ const Wrapper = styled.div`
         cursor: pointer;
         width: 100%;
         border: none;
-        padding-left: 18%;
+        padding-left: 20%;
       }
 
       .react-datepicker {
