@@ -31,6 +31,7 @@ const FormBox = styled.form`
 `;
 
 const Form = ({ form, errors, onSubmit, onChange }) => {
+  console.log('form', form);
   const [mounted, setMounted] = useState(true);
   const { t } = useTranslation();
 
