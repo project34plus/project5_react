@@ -3,6 +3,7 @@ import apiRequest from '../../commons/libs/apiRequest';
 import requestData from '../../commons/libs/requestData';
 
 export const write = (nid, form) => {
+  console.log('api 넘어간 form',form);
   return apiRequest(`/note/write/${nid}`, 'POST', form);
 };
 export const write1 = async (nid, form) => {

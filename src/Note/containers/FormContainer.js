@@ -25,31 +25,64 @@ const FormContainer = ({ params }) => {
   const [errors, setErrors] = useState({});
   const [form, setForm] = useState({
     gid: '' + Date.now(),
+    nid: params.nid,
     mode: 'write',
     attachFiles: [],
     editorImages: [],
     username: userInfo?.userName,
     content: '',
     email: userInfo?.email,
-    subject:'',
-
+    subject: '',
   });
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-    console.log('Submitting form data:', form); // 추가
-    write(params.nid, form)
-      .then((res) => {
+  const onSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      console.log('Submitting form data:', form); // 추가
+      const _errors = {};
+      let hasErrors = false;
+
+      const requiredFields = {
+        subject: t('제목을_입력하세요'),
+        content: t('내용을_입력하세요'),
+      };
+
+      for (const [field, message] of Object.entries(requiredFields)) {
+        if (!form[field] || !form[field].trim()) {
+          _errors[field] = _errors[field] ?? [];
+          _errors[field].push(message);
+          hasErrors = true;
+        }
+      }
+      console.log('form 입력, 에러', _errors);
+      setErrors(_errors);
+      if (hasErrors) {
+        return;
+      }
+      try {
+        const res = await write(params.nid, form);
+        const newForm = { ...form, ...res };
+        setForm(newForm);
         alert('게시글 저장 성공');
-      })
-      .catch((err) => {
+      } catch (err) {
         console.log(err);
         alert('저장 실패');
-      });
-  }, []);
+        const messages = err.message.global
+          ? err.message.global
+          : { global: [err.message] };
+        setErrors(messages);
+      }
+    },
+    [params.nid, t, form],
+  );
+
   const onChange = useCallback((e) => {
-    setForm((form => ({ ...form, [e.target.name]: e.target.value })));
-  });
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(name, value);
+    setForm((prevForm) => ({ ...prevForm, [name]: value }));
+  }, []);
+
   const onClick = (e, params, form) => {
     console.log('click!');
   };
