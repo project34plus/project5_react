@@ -75,7 +75,7 @@ const StyledThesisListItem = styled(ThesisListItem)`
   }
 
   .poster {
-    width: 20%;
+    width: 30%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; /* 긴 텍스트 말줄임 처리 */
@@ -98,6 +98,8 @@ const StyledThesisListItem = styled(ThesisListItem)`
 
   .delete-button {
     ${ButtonLinkStyles}/* ThesisDelete에도 동일한 스타일 적용 */
+    background-color: white;
+    font-size: 1.2rem;
   }
 
   // .edit-button {
