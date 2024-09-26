@@ -4,9 +4,11 @@ import { Bar } from '@nivo/bar';
 import Loading from '@/commons/components/Loading';
 import fontSize from '@/theme/fontSize';
 import { color } from '@/theme/color';
+import { LuLoader } from 'react-icons/lu';
+import { useTranslation } from 'react-i18next';
 
 const { gray, white, lightgray, navy, darkgray, midgray, midNavy } = color;
-const { center, medium, big } = fontSize;
+const { center, medium, big, giantBig } = fontSize;
 
 const Wrapper = styled.div`
   width: 1200px;
@@ -16,12 +18,26 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 100%;
   margin-top: 30px;
-  font-size: ${medium};
+  font-size: ${center};
   border: 1px solid ${gray};
+
+  .load {
+    font-size: ${medium};
+    height: 300px;
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    margin-top: 140px;
+    .icon {
+      font-size: ${giantBig};
+      margin-bottom: 20px;
+    }
+  }
 `;
 
 const FieldsRank = ({ item, className }) => {
   const { name, subfield, count, wishCount } = item;
+
   return (
     <li className={className}>
       <div className="name">대분류:{name}</div>
@@ -34,6 +50,7 @@ const FieldsRank = ({ item, className }) => {
 
 const FieldBarStat = ({ stat, field }) => {
   const data = [];
+  const { t } = useTranslation();
   let indexBy = '대분류';
   console.log('field', field, 'stat', stat);
   if (field && stat[field]) {
@@ -60,8 +77,14 @@ const FieldBarStat = ({ stat, field }) => {
     }
   }
 
-  if (!field) {
-    return <div>데이터 집계중입니다</div>;
+  if (field && !stat[field]) {
+    return (
+      <div className="load">
+        <LuLoader className="icon" />
+        <br />
+        {t('데이터_집계중입니다')}&nbsp;
+      </div>
+    );
   }
 
   /*

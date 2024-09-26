@@ -1,25 +1,26 @@
+'use client';
 import React from 'react';
-import { FaWindowClose, FaFileUpload } from 'react-icons/fa';
+import styled from 'styled-components';
+import { FaFile, FaRegWindowClose } from 'react-icons/fa';
+const FileItem = styled.li``;
 
-const FileItems = ({
-  files,
-  mode,
-  insertImageCallback,
-  fileDeleteCallback,
-}) => {
+/**
+ *
+ * fileName
+ * seq
+ * downloadUrl
+ */
+const FileItems = ({ files, className, onDelete }) => {
   return (
     files &&
     files.length > 0 && (
-      <ul>
-        {files.map(({ seq, fileName, fileDownloadUrl, fileUrl }) => (
-          <li key={seq}>
-            <a href={fileDownloadUrl}>{fileName}</a>
-            {fileName}
-            {mode === 'editor' && (
-              <FaFileUpload onClick={() => insertImageCallback(fileUrl)} />
-            )}
-            <FaWindowClose onClick={() => fileDeleteCallback(seq)} />
-          </li>
+      <ul className={className}>
+        {files.map(({ fileName, seq, downloadUrl }) => (
+          <FileItem key={`file_${seq}`}>
+            <FaFile />
+            <a href={downloadUrl}>{fileName}</a>
+            <FaRegWindowClose onClick={() => onDelete(seq)} />
+          </FileItem>
         ))}
       </ul>
     )

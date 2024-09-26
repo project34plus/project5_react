@@ -124,10 +124,6 @@ const RecentTrendContainer = () => {
   return (
     <Container>
       <Wrapper>
-        <PeriodTabs
-          currentPeriod={currentPeriod}
-          onChangePeriod={onChangePeriod}
-        />
         <div className="listform">
           <h1>
             {currentPeriod === 'daily'
@@ -135,8 +131,12 @@ const RecentTrendContainer = () => {
               : currentPeriod === 'weekly'
               ? '주간'
               : '월간'}
-            &nbsp;최신 논문 목록
+            &nbsp;{t('인기논문리스트')}
           </h1>
+          <PeriodTabs
+            currentPeriod={currentPeriod}
+            onChangePeriod={onChangePeriod}
+          />
           <RecentSort
             className="sort"
             search={search}
@@ -153,7 +153,12 @@ const RecentTrendContainer = () => {
 };
 
 const Wrapper = styled.div`
-  font-size: ${small};
+  font-size: ${normal};
+  padding: 30px;
+
+  h1 {
+    margin-left: 20px;
+  }
 
   button {
     font-size: ${normal};
@@ -162,7 +167,7 @@ const Wrapper = styled.div`
     padding: 3px 0;
     text-align: center;
     vertical-align: middle;
-    height: 40px;
+    height: 45px;
     width: 100px;
     border: 1px solid ${gray};
     background: ${white};

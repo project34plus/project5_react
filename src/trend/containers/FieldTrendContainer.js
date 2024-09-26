@@ -36,12 +36,12 @@ const Wrapper = styled.div`
 
     .names {
       background: ${white};
-      display: inline-block;
       margin: 10px;
+      padding-top: 13px;
       text-align: center;
       align-items: center;
       vertical-align: middle;
-      height: 40px;
+      height: 50px;
       width: 150px;
       border: 1px solid ${gray};
       border-radius: 25px;
@@ -77,7 +77,7 @@ const Wrapper = styled.div`
         cursor: pointer;
         width: 100%;
         border: none;
-        padding-left: 18%;
+        padding-left: 20%;
       }
 
       .react-datepicker {

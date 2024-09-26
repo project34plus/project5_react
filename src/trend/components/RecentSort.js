@@ -5,13 +5,18 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: right;
   margin: 20px 0;
+  padding-left: 15px;
 
   div {
     padding: 0 20px;
     border-right: 1px solid #ddd;
     cursor: pointer;
+
+    &:first-child {
+      border-left: 1px solid #ddd;
+    }
   }
 `;
 

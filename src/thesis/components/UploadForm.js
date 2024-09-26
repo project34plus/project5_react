@@ -132,11 +132,16 @@ const ThesisUploadForm = ({
 }) => {
   const [selectedFiles, setSelectedFiles] = useState([]); // 선택한 파일 저장
 
-  // 파일 선택 시 호출될 함수
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    setSelectedFiles(files); // 선택한 파일을 상태로 저장
+  const handleFileUpload = (files) => {
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    // 선택한 파일 상태로 저장
+    console.log('Uploaded files:', files);
+    setSelectedFiles([...files]);
   };
+
   return (
     <FormWrapper>
       <Heading>{isEditMode ? '논문 수정' : '논문 등록'}</Heading>
@@ -443,25 +448,23 @@ const ThesisUploadForm = ({
           <FormGroup>
             <FileUpload
               gid={formData?.gid}
-              callback={fileUploadCallback}
+              callback={handleFileUpload}
               color="navy"
             >
               파일 선택
             </FileUpload>
-            <Input type="file" multiple onChange={handleFileChange} />
           </FormGroup>
         )}
-        {/* 선택한 파일 목록 표시 */}
         {selectedFiles.length > 0 && (
           <FormGroup>
             <Label>선택한 파일</Label>
             <ul>
               {selectedFiles.map((file, index) => (
-                <li key={index}>{file.name}</li>
+                <li key={index}>{file.fileName || file.originalName || file.name}</li> // 파일 이름을 찾는 방식 변경
               ))}
             </ul>
           </FormGroup>
-        )}
+        )}  
 
         {isEditMode && (
           <FormGroup>
