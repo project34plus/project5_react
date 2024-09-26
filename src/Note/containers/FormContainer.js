@@ -7,6 +7,7 @@ import UserInfoContext from '@/commons/contexts/UserInfoContext';
 import Container from '@/commons/components/Container';
 import Form from '../components/skins/default/Form';
 import { getNote, getInfo, write, update } from '../apis/apiConfig';
+import styled from 'styled-components';
 
 /* 스킨별 양식 가져오기 */
 function getSkin(skin) {
@@ -137,16 +138,25 @@ const FormContainer = ({ params }) => {
 
   return (
     <Container>
-      <Form
-        note={note}
-        form={form}
-        errors={errors}
-        onChange={onChange}
-        onClick={onClick}
-        onSubmit={onSubmit}
-      />
+      <StyledForm>
+        <Form
+          note={note}
+          form={form}
+          errors={errors}
+          onChange={onChange}
+          onClick={onClick}
+          onSubmit={onSubmit}
+        />
+      </StyledForm>
     </Container>
   );
 };
+
+const StyledForm = styled.div`
+  width: 100%;
+  padding: 40px 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+`;
 
 export default React.memo(FormContainer);
