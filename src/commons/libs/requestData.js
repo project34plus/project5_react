@@ -16,6 +16,7 @@ const requestData = (url, method = 'GET') =>
         }
         resolve(res.data.data);
       } catch (err) {
+        console.log('에러 ', err);
         reject(err);
       }
     })();

@@ -1,186 +1,62 @@
-import React, { useEffect, useState, useCallback, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+'use client';
+import React, {
+  useLayoutEffect,
+  useEffect,
+  useState,
+  useCallback,
+  useContext,
+} from 'react';
+import { List } from 'react-content-loader';
+import { getCommonActions } from '@/commons/contexts/CommonContext';
 import { useTranslation } from 'react-i18next';
-import { produce } from 'immer';
-import { getInfo, deleteData } from '../apis/apiBoard';
-import { write as writeComment } from '../apis/apiComment';
-import UserInfoContext from '../../member/modules/UserInfoContext';
-import CommonContext from '../../commons/modules/CommonContext';
+import { useRouter } from 'next/navigation'; //CSR ->router는 SSR
+import { getFiles } from '@/commons/libs/file/apiFile.js';
+import NoteItem from '../components/skins/default/NoteItem.js';
+import { getInfo } from '../apis/apiNote';
 
-import Loading from '../../commons/components/Loading';
-import MessageBox from '../../commons/components/MessageBox';
+const MyListLoader = () => <List />;
 
-import DefaultView from '../components/skins/default/View';
-import GalleryView from '../components/skins/default copy/View';
-import ListContainer from './ListContainer';
-
-function skinRoute(skin) {
-  switch (skin) {
-    case 'gallery':
-      return GalleryView;
-    default:
-      return DefaultView;
-  }
-}
-
-const ViewContainer = ({ setPageTitle }) => {
-  const { seq } = useParams();
-  const [note, setNote] = useState(null);
-  const [data, setData] = useState(null);
-  const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState('');
+const ViewContainer = ({ params }) => {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const [item, setItem] = useState(null); //노트 데이터
+  const router = useRouter();
+  const { seq } = params;
+  const { setMainTitle } = getCommonActions();
 
-  const {
-    states: { userInfo, isLogin },
-  } = useContext(UserInfoContext);
-
-  const {
-    actions: { setLinkText, setLinkHref },
-  } = useContext(CommonContext);
+  useLayoutEffect(() => {
+    setMainTitle(t('노트_상세'));
+  }, [setMainTitle, t]);
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await getInfo(seq);
-        setData(res);
-        setNote(res.note);
-        setPageTitle(res.subject);
-        setLinkText(res.note.bname);
-        setLinkHref(`/note/list/${res.note.nid}`);
-
-        /* 댓글 기본 양식 */
-        setCommentForm({
-          bSeq: seq,
-          mode: 'write',
-          commenter: userInfo?.userName,
-        });
-
-        window.scrollTo(0, 0);
+        const item = await getInfo(seq);
+        if (item) {
+          //파일 유무 체크
+          const files = await getFiles(item.gid);
+          if (files && files.length > 0) {
+            item.fileInfo = files;
+          }
+        }
+        setItem(item);
+        console.log('item:', item);
       } catch (err) {
-        console.error(err);
-        setMessage(err.message);
-        setTimeout(function () {
-          setMessage('');
-          navigate(-1);
-        }, 3000);
+        console.error('노트 정보 불러오기 실패:', err);
+        // 필요에 따라 적절한 에러 처리 로직 추가
+        return; // 실패 시 함수 종료
       }
     })();
-  }, [
-    seq,
-    setPageTitle,
-    navigate,
-    message,
-    userInfo,
-    setLinkHref,
-    setLinkText,
-  ]);
+  }, [seq, router]);
 
-  const onDelete = useCallback(
-    (seq) => {
-      if (!window.confirm(t('정말_삭제_하시겠습니까'))) {
-        return;
-      }
-
-      (async () => {
-        try {
-          await deleteData(seq);
-          navigate(`/note/list/${note.bid}`);
-        } catch (err) {
-          console.error(err);
-        }
-      })();
-    },
-    [t, navigate, note],
-  );
-
-  const onChange = useCallback((e) => {
-    setCommentForm((form) => ({ ...form, [e.target.name]: e.target.value }));
-  }, []);
-
-  /**
-   * 댓글 작성 처리
-   *
-   */
-  const onSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-
-      const _errors = {};
-      let hasErrors = false;
-
-      /* 필수 항목 검증 S */
-      const requiredFields = {
-        commenter: t('작성자를_입력하세요'),
-        content: t('댓글을_입력하세요'),
-      };
-      if (!isLogin) {
-        // 로그인 상태가 아닌 경우
-        requiredFields.guestPw = t('비밀번호를_입력하세요');
-      }
-
-      for (const [field, message] of Object.entries(requiredFields)) {
-        if (!commentForm[field]?.trim()) {
-          _errors[field] = _errors[field] ?? [];
-          _errors[field].push(message);
-          hasErrors = true;
-        }
-      }
-      /* 필수 항목 검증 E*/
-
-      setErrors(_errors);
-
-      if (hasErrors) {
-        return;
-      }
-
-      // 댓글 등록 처리
-      (async () => {
-        try {
-          const comments = await writeComment(commentForm);
-          setData(
-            produce((draft) => {
-              draft.comments = comments;
-            }),
-          );
-          setCommentForm({
-            bSeq: data.seq,
-            mode: 'write',
-            commenter: userInfo?.userName,
-          });
-        } catch (err) {
-          setErrors(err.message);
-        }
-      })();
-    },
-    [t, isLogin, commentForm, data, userInfo],
-  );
-
-  if (!data) {
-    return (
-      <>
-        {message && <MessageBox color="info">{message}</MessageBox>}
-        <Loading />
-      </>
-    );
+  if (!item) {
+    return <MyListLoader />;
   }
-
-  const { skin, showListBelowView, nid } = note;
-  const View = skinRoute(skin);
 
   return (
     <>
-      <View
-        note={note}
-        data={data}
-        onDelete={onDelete}
-        form={commentForm}
-        onChange={onChange}
-        onSubmit={onSubmit}
-        errors={errors}
-      />
-      {showListBelowView && <ListContainer nid={nid} />}
+      <div>
+        <NoteItem item={item} />
+      </div>
     </>
   );
 };

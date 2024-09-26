@@ -97,7 +97,7 @@ const MenuContainer = () => {
               height={120}
             />
           </a>
-          <a href="/note">{t('연구노트')}</a>
+          <a href="/note/list/1">{t('연구노트')}</a>
         </div>
         <div className="menus">
           <a href="/info">

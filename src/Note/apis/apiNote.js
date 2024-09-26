@@ -37,20 +37,19 @@ function saveProcess2(url, method, form) {
 
 export const getInfo = async (seq) => {
   const res = await requestData(`/note/info/${seq}`);
-  if (res.status === 200) {
-    return res.data; // 노트 정보
-  }
-  throw new Error('노트 조회 실패');
+  console.log('res', res);
+  return res; // 노트 정보
 };
 
 export const getList = async (nid, search) => {
   const qs = new URLSearchParams(search).toString();
   const url = `/note/list/${nid}${qs ? '?' + qs : ''}`;
-  const res = await requestData(url);
-  if (res.status === 200) {
-    return res.data; // 노트 목록
-  }
-  throw new Error('노트 목록 조회 실패');
+  console.log('url asdfasdf:', url);
+  const res = await requestData(url).catch((err) => {
+    console.log('err? :', err);
+  });
+  console.log('data:', res);
+  return res; // 노트 목록
 };
 
 export const deleteData = (seq) => requestData(`/note/delete/${seq}`, 'DELETE');
