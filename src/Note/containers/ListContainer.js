@@ -16,7 +16,7 @@ const ListContainer = () => {
   const { setMainTitle } = getCommonActions();
   const [search, setSearch] = useState(nid);
   const [items, setItems] = useState([]);
-  const [pagination, setPagination] = useState({});
+  const [pagination, setPagination] = useState();
   const [loading, setLoading] = useState(false);
 
   const { t } = useTranslation();
@@ -24,9 +24,7 @@ const ListContainer = () => {
   useLayoutEffect(() => {
     setMainTitle(t('연구노트'));
   }, [setMainTitle, t]);
-  // useEffect(() => {
-  // console.log('searchParams : ', nid);
-  // }, [nid]);
+
   useEffect(() => {
     (async () => {
       const data = await getList(search);
@@ -35,31 +33,18 @@ const ListContainer = () => {
         setItems(data.items);
         setPagination(data.pagination);
       }
-      //     .then((res) => {
-      //       console.log('음하핳', res);
-      //       console.log('items', res.items);
-
-      //       setItems(res.items);
-      //       setPagination(res.pagination);
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-      //   console.log('data', data);
-      // } catch (err) {
-      //   console.error(err);
-      // }
     })();
   }, [search]);
 
   useEffect(() => {
     console.log(items);
   }, [items]);
-  
+
   const onChangePage = useCallback((p) => {
     setSearch((search) => ({ ...search, page: p }));
     window.location.hash = '#root';
   }, []);
+
   /* 로딩 처리 */
   if (loading) {
     return <MyListLoader />;

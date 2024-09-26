@@ -7,8 +7,7 @@ import Container from '@/commons/components/Container';
 const NotePage = () => {
   return (
     <Container>
-      <h1>연구노트</h1>
-      <h2>컨테이너 추가해주세요~</h2>
+      <h1>연구노트메인</h1>
     </Container>
   );
 };

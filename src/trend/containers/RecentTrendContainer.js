@@ -39,7 +39,7 @@ const getPeriodRange = (period) => {
   switch (period) {
     case 'daily':
       return {
-        sDate: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
+        sDate: (subDays(new Date(), 1), 'yyyy-MM-ddformat'),
         eDate: today,
       };
     case 'weekly':

@@ -8,7 +8,6 @@ const NoteWritePage = ({ params }) => {
   return (
     <Container>
       <MemberOnlyContainer>
-      <h1>노트 작성</h1>
       <FormContainer params={params}/>
       </MemberOnlyContainer>
       </Container>
