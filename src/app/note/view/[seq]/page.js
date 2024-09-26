@@ -1,14 +1,9 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import ViewContainer from '@/Note/containers/ViewContainer';
+import MemberOnlyContainer from '@/member/containers/MemberOnlyContainer';
 
-const NoteViewPage = () => {
-  const nid = 'note';
-
-  return (
-    <div>
-      <h1>노트 목록</h1>
-    </div>
-  );
+const NoteViewPage = ({ params }) => {
+  return <ViewContainer params={params} />;
 };
 
-export default NoteViewPage;
+export default React.memo(NoteViewPage);
