@@ -56,12 +56,11 @@ const LoginContainer = ({ searchParams }) => {
           const token = res.data;
           const options = { path: '/' };
           //if (process.env.NODE_ENV !== 'development') {
-            // 실서버에서 동작중일때
-            //const domain = process.env.NEXT_PUBLIC_DOMAIN;
-           // options.domain = `*.${domain}`;
+          // 실서버에서 동작중일때
+          //const domain = process.env.NEXT_PUBLIC_DOMAIN;
+          // options.domain = `*.${domain}`;
           //}
           cookies.save('token', token, options);
-          console.log(form);
 
           (async () => {
             try {
@@ -84,7 +83,8 @@ const LoginContainer = ({ searchParams }) => {
                *
                */
               setForm({});
-              const redirectURL = searchParams.get('redirectUrl') || '/';
+              const redirectURL = searchParams.redirectUrl ?? '/';
+
               router.replace(redirectURL);
             } catch (err) {
               console.error(err);
