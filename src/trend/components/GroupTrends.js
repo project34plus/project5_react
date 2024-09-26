@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
+import { LuLoader } from 'react-icons/lu';
 
 const { gray, navy, white, black } = color;
-const { center, medium, big } = fontSize;
+const { center, medium, big, giantBig } = fontSize;
 
 const Wrapper = styled.div`
   width: 1100px;
@@ -17,7 +18,7 @@ const Wrapper = styled.div`
   justify-content: center;
   height: 100%;
   margin-top: 10px;
-  font-size: ${medium};
+  font-size: ${center};
 
   .job-list {
     width: 900px;
@@ -27,7 +28,7 @@ const Wrapper = styled.div`
     cursor: pointer;
 
     .job-item {
-      padding-top: 5px;
+      padding-top: 12px;
     }
 
     div {
@@ -37,7 +38,7 @@ const Wrapper = styled.div`
       text-align: center;
       align-items: center;
       vertical-align: middle;
-      height: 40px;
+      height: 50px;
       width: 150px;
       border: 1px solid ${gray};
       border-radius: 25px;
@@ -51,6 +52,15 @@ const Wrapper = styled.div`
   .subtitle {
     text-align: center;
     font-size: ${medium};
+  }
+
+  .load {
+    font-size: ${medium};
+    padding-top: 60px;
+    .icon {
+      font-size: ${giantBig};
+      margin-bottom: 20px;
+    }
   }
 `;
 
@@ -192,7 +202,11 @@ const GroupTrend = ({ items }) => {
           </div>
         </>
       ) : (
-        <p>{t('데이터_수집중입니다')}</p>
+        <p className="load">
+          <LuLoader className="icon" />
+          <br></br>
+          {t('데이터_집계중입니다')}
+        </p>
       )}
     </Wrapper>
   );
