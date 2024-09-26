@@ -65,7 +65,7 @@ const Wrapper = styled.div`
   .wishButton {
     position: absolute;
     right: 25px;
-    top: calc(100% - 95px);
+    top: calc(100% - 105px);
     z-index: 1000;
   }
   .title {
