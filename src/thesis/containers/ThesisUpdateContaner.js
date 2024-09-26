@@ -63,9 +63,7 @@ const ThesisUpdateContainer = ({ params }) => {
     setFormData({ ...formData, fields: newFields });
   };
   */
-  const fileUploadCallback = useCallback((files) => {
-    console.log('files', files);
-  }, []);
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
