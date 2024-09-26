@@ -75,7 +75,7 @@ const StyledThesisListItem = styled(ThesisListItem)`
   }
 
   .poster {
-    width: 20%;
+    width: 30%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis; /* 긴 텍스트 말줄임 처리 */

@@ -44,19 +44,18 @@ export const apiGet = (tid) => requestData(`/thesis/info/${tid}`);
 //   return requestData(url); // requestData로 API 호출
 // };
 //내가 등록한 논문 -2버전
-export const apiMyList = () => {
+export const apiMyList = async () => {
   const url = '/thesis/mylist';
   console.log('API 요청 보냄:', url); // API 요청 전 로그 출력
 
-  return requestData(url, 'GET')
-    .then((response) => {
-      console.log('API 응답:', response); // API 응답 성공 시 데이터 출력
-      return response; // 응답 데이터 반환
-    })
-    .catch((error) => {
-      console.error('API 요청 중 오류 발생:', error); // 에러 발생 시 에러 로그 출력
-      throw error; // 에러 다시 던지기
-    });
+  try {
+    const response = await requestData(url, 'GET');
+    console.log('API 응답:', response); // API 응답 성공 시 데이터 출력
+    return response;
+  } catch (error) {
+    console.error('API 요청 중 오류 발생:', error); // 에러 발생 시 에러 로그 출력
+    throw error; // 에러 다시 던지기
+  }
 };
 
 
@@ -75,16 +74,15 @@ export const apiUserLog = (page = 1, limit = 8) => {
 };
 
 // 방문기록 논문 조회
-export const apiVisit = () =>{
+export const apiVisit = async () =>{
   const url = '/thesis/visit';
 
-  return requestData(url, 'GET')
-    .then((response) => {
-      console.log('API 응답:', response); // API 응답 성공 시 데이터 출력
-      return response; // 응답 데이터 반환
-    })
-    .catch((error) => {
-      console.error('API 요청 중 오류 발생:', error); // 에러 발생 시 에러 로그 출력
-      throw error; // 에러 다시 던지기
-    });
+  try {
+    const response = await requestData(url, 'GET');
+    console.log('API 응답:', response); // API 응답 성공 시 데이터 출력
+    return response;
+  } catch (error) {
+    console.error('API 요청 중 오류 발생:', error); // 에러 발생 시 에러 로그 출력
+    throw error; // 에러 다시 던지기
+  }
 };
