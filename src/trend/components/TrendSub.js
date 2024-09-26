@@ -11,14 +11,14 @@ const { normal, big } = fontSize;
 const { bold } = fontWeight;
 
 const SubMenuBox = styled.aside`
-  height: 220px;
+  height: 180px;
   min-width: 210px;
   background: ${white};
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-left: -100px;
-  margin-top: 30px;
+  margin-top: 60px;
   items-align: center;
 
   a {

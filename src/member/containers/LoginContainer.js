@@ -55,11 +55,11 @@ const LoginContainer = ({ searchParams }) => {
         .then((res) => {
           const token = res.data;
           const options = { path: '/' };
-          if (process.env.NODE_ENV !== 'development') {
+          //if (process.env.NODE_ENV !== 'development') {
             // 실서버에서 동작중일때
-            const domain = process.env.NEXT_PUBLIC_DOMAIN;
-            options.domain = `*.${domain}`;
-          }
+            //const domain = process.env.NEXT_PUBLIC_DOMAIN;
+           // options.domain = `*.${domain}`;
+          //}
           cookies.save('token', token, options);
           console.log(form);
 
