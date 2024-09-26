@@ -2,17 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Bar } from '@nivo/bar';
 import Loading from '@/commons/components/Loading';
+import fontSize from '@/theme/fontSize';
+import { color } from '@/theme/color';
+
+const { gray, white, lightgray, navy, darkgray, midgray, midNavy } = color;
+const { center, medium, big } = fontSize;
 
 const Wrapper = styled.div`
-  display: flex;
+  width: 1200px;
+  display: flex; /* Flexbox를 사용하여 중앙 정렬 */
+  flex-direction: column; /* 세로 방향 정렬 */
   align-items: center;
-  justify-content: left;
-
-  div {
-    display: inline-block;
-    border: 1px solid #000;
-    padding: 10px;
-  }
+  justify-content: center;
+  height: 100%;
+  margin-top: 30px;
+  font-size: ${medium};
+  border: 1px solid ${gray};
 `;
 
 const FieldsRank = ({ item, className }) => {
@@ -30,14 +35,14 @@ const FieldsRank = ({ item, className }) => {
 const FieldBarStat = ({ stat, field }) => {
   const data = [];
   let indexBy = '대분류';
-
+  console.log('field', field, 'stat', stat);
   if (field && stat[field]) {
     indexBy = '중분류';
 
     for (const { name, subfield, count, wishCount } of stat[field].sub) {
       if (count > 0 || wishCount > 0) {
         data.push({
-          중분류: `${name}/${subfield}`,
+          중분류: `${subfield}`,
           조회수: count,
           찜하기: wishCount,
         });
@@ -55,6 +60,10 @@ const FieldBarStat = ({ stat, field }) => {
     }
   }
 
+  if (!field) {
+    return <div>데이터 집계중입니다</div>;
+  }
+
   /*
   const name = data.map((item) => item.대분류);
   console.log('name', name);
@@ -67,9 +76,10 @@ const FieldBarStat = ({ stat, field }) => {
       keys={['조회수', '찜하기']}
       indexBy={indexBy}
       labelPosition="middle"
-      width={1000}
+      width={1200}
       height={500}
       padding={0.3}
+      margin={{ top: 30, right: 30, bottom: 30, left: 40 }}
       theme={{
         labels: {
           text: {
@@ -78,7 +88,7 @@ const FieldBarStat = ({ stat, field }) => {
           },
           legends: {
             text: {
-              fontSize: 12,
+              fontSize: 30,
               fill: '#000',
             },
           },
@@ -91,7 +101,7 @@ const FieldBarStat = ({ stat, field }) => {
             },
             ticks: {
               text: {
-                fontSize: 16,
+                fontSize: 30,
                 fill: '#000',
               },
             },
@@ -99,20 +109,22 @@ const FieldBarStat = ({ stat, field }) => {
         },
       }}
       axisBottom={{
-        tickSize: 5,
-        tickPadding: 5,
-        tickRotation: -45,
+        tickSize: 15,
+        tickPadding: 0,
+        tickRotation: 0,
         legend: field ? '중분류' : '대분류',
-        legendPosition: 'middle',
-        legendOffset: 32,
+        legendPosition: 'start',
+        legendOffset: 20,
       }}
       axisLeft={{
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: 'indexBy',
-        legendPosition: 'middle',
-        legendOffset: -60,
+        tickValues: [5, 10, 15, 20, 25, 30, 35, 40],
+        tickFormat: (value) => `${value}회`,
+        //legend: 'indexBy',
+        legendPosition: 'top',
+        legendOffset: -50,
       }}
     />
   );

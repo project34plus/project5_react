@@ -6,16 +6,18 @@ import styled from 'styled-components';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 
-const { gray, navy, white } = color;
+const { gray, navy, white, black } = color;
 const { center, medium, big } = fontSize;
 
 const Wrapper = styled.div`
+  width: 1100px;
   display: flex; /* Flexbox를 사용하여 중앙 정렬 */
   flex-direction: column; /* 세로 방향 정렬 */
   align-items: center;
   justify-content: center;
   height: 100%;
   margin-top: 10px;
+  font-size: ${medium};
 
   .job-list {
     width: 900px;
@@ -167,15 +169,16 @@ const GroupTrend = ({ items }) => {
             innerRadius={0.5}
             padAngle={0.7}
             cornerRadius={3}
-            activeOuterRadiusOffset={8}
-            borderWidth={1}
+            activeOuterRadiusOffset={10}
+            borderWidth={1.5}
             borderColor={{
               from: 'color',
-              modifiers: [['darker', 0.2]],
+              modifiers: [['darker', 0.3]],
             }}
             arcLinkLabelsSkipAngle={10}
-            arcLinkLabelsTextColor="#333333"
-            arcLinkLabelsThickness={2}
+            arcLinkLabelsTextColor={black}
+            arcLinkLabelsThickness={3}
+            arcLabelsTextSize={50} //라벨 텍스트 크기
             arcLinkLabelsColor={{ from: 'color' }}
             arcLabel={(e) => `${e.id}: ${e.value}`}
             tooltip={({ datum }) => (

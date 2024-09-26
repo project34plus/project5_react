@@ -19,6 +19,7 @@ const Wrapper = styled.div`
   font-size: ${center};
   align-items: center;
   text-align: center;
+  width: 1100px;
 
   .datebox {
     width: 500px;
@@ -37,7 +38,7 @@ const Wrapper = styled.div`
       margin: 0 auto;
       height: 70px;
       font-size: ${normal};
-      padding: 8px 20px;
+      padding: 10px 20px;
       border-radius: 4px;
 
       .pick_date {

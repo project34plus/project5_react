@@ -22,134 +22,165 @@ const { gray, white, lightgray, navy, darkgray, midgray, midNavy } = color;
 const { small, normal, center } = fontSize;
 
 const Wrapper = styled.div`
-  width: 1022px;
-  display: block;
-  border: 1px solid #000;
-  padding: 15px 10px 10px 10px;
-  margin: 5px 0;
-  font-size: ${small};
+  //border: 1px solid ${gray};
+  width: 1200px;
+  font-size: ${center};
+  align-items: center;
+  text-align: center;
 
-  div {
-    margin-bottom: 10px;
-  }
-  .date {
-    border: 1px solid ${gray};
-    display: inline-block;
-    align-items: center;
-    width: 160px;
-    height: 45px;
+  .fieldsbox {
+    width: 900px;
+    border-radius: 10px;
     text-align: center;
-    box-sizing: border-box;
-    font-size: ${small};
-    padding: 8px 20px;
-    border-radius: 4px;
+    cursor: pointer;
 
-    .pick_date {
-      cursor: pointer;
-      width: 100%;
-      border: none;
-    }
-
-    .react-datepicker {
-      width: 300px;
-      height: 300px;
-      border-radius: 10px;
-    }
-
-    .react-datepicker__navigation--next,
-    .react-datepicker__navigation--previous {
-      margin: 5px 5px 0 5px;
-    }
-
-    .react-datepicker__month-container {
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-      border: 1px solid ${gray};
-    }
-
-    .react-datepicker__triangle {
-      fill: ${white};
-      color: ${white};
-    }
-
-    .react-datepicker__header {
-      background: ${lightgray};
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px 10px 0 0;
+    .names {
+      background: ${white};
+      display: inline-block;
+      margin: 10px;
       text-align: center;
-    }
-
-    //요일
-    .react-datepicker__day-names {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-top: 10px;
-      width: 100%;
-      font-weight: bold;
-    }
+      vertical-align: middle;
+      height: 40px;
+      width: 150px;
+      border: 1px solid ${gray};
+      border-radius: 25px;
 
-    .react-datepicker__week {
-      justify-content: space-between;
-      display: flex;
-      padding: 5px;
-
-      > * {
-        display: flex;
-        width: 30px;
-        height: 30px;
-        justify-content: center;
-        align-items: center;
-        color: ${darkgray};
-        text-align: center;
-        font-size: ${small};
-        line-height: 1;
-      }
-
-      //날짜
-      .react-datepicker__month {
-        display: flex;
-        flex-direction: column;
-        margin-top: 5px;
-      }
-
-      .react-datepicker__day {
-        color: ${darkgray};
-        margin: 0;
-      }
-
-      .react-datepicker__current-month {
-        font-size: ${small};
-        margin-top: 3px;
-      }
-
-      .react-datepicker__day--today {
-        // 오늘 날짜 하이라이트 커스텀
-        color: ${navy};
-        border: 1px solid ${navy};
-        border-radius: 50%;
-      }
-      .react-datepicker__day--selected {
-        background: ${gray};
-        color: ${white};
-        border-radius: 50%;
-      }
-      .react-datepicker__day:hover {
-        background: ${navy}; /* 마우스 오버 시 배경색 변경 */
-        color: ${white}; /* 마우스 오버 시 텍스트 색상 변경 */
-        border-radius: 50%; /* 원형 테두리 적용 */
-      }
-
-      .react-datepicker__day--outside-month {
-        color: ${gray};
-      }
-
-      .react-datepicker__day--keyboard-selected {
-        border-radius: 50%;
+      &:hover {
         background: ${navy};
         color: ${white};
+      }
+    }
+  }
+
+  .datebox {
+    width: 500px;
+    display: flex;
+    gap: 10px;
+    margin: 20px auto;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    cursor: pointer;
+
+    .date {
+      border: 1px solid ${gray};
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      height: 70px;
+      font-size: ${normal};
+      padding: 10px 20px;
+      border-radius: 4px;
+
+      .pick_date {
+        cursor: pointer;
+        width: 100%;
+        border: none;
+        padding-left: 18%;
+      }
+
+      .react-datepicker {
+        width: 300px;
+        height: 300px;
+        border-radius: 10px;
+      }
+
+      .react-datepicker__navigation--next,
+      .react-datepicker__navigation--previous {
+        margin: 5px 5px 0 5px;
+      }
+
+      .react-datepicker__month-container {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        border: 1px solid ${gray};
+      }
+
+      .react-datepicker__triangle {
+        fill: ${white};
+        color: ${white};
+      }
+
+      .react-datepicker__header {
+        background: ${lightgray};
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px 10px 0 0;
+        text-align: center;
+      }
+
+      //요일
+      .react-datepicker__day-names {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        width: 100%;
+        font-weight: bold;
+      }
+
+      .react-datepicker__week {
+        justify-content: space-between;
+        display: flex;
+        padding: 5px;
+
+        > * {
+          display: flex;
+          width: 30px;
+          height: 30px;
+          justify-content: center;
+          align-items: center;
+          color: ${darkgray};
+          text-align: center;
+          font-size: ${small};
+          line-height: 1;
+        }
+
+        //날짜
+        .react-datepicker__month {
+          display: flex;
+          flex-direction: column;
+          margin-top: 5px;
+        }
+
+        .react-datepicker__day {
+          color: ${darkgray};
+          margin: 0;
+        }
+
+        .react-datepicker__current-month {
+          font-size: ${small};
+          margin-top: 3px;
+        }
+
+        .react-datepicker__day--today {
+          // 오늘 날짜 하이라이트 커스텀
+          color: ${navy};
+          border: 1px solid ${navy};
+          border-radius: 50%;
+        }
+        .react-datepicker__day--selected {
+          background: ${gray};
+          color: ${white};
+          border-radius: 50%;
+        }
+        .react-datepicker__day:hover {
+          background: ${navy}; /* 마우스 오버 시 배경색 변경 */
+          color: ${white}; /* 마우스 오버 시 텍스트 색상 변경 */
+          border-radius: 50%; /* 원형 테두리 적용 */
+        }
+
+        .react-datepicker__day--outside-month {
+          color: ${gray};
+        }
+
+        .react-datepicker__day--keyboard-selected {
+          border-radius: 50%;
+          background: ${navy};
+          color: ${white};
+        }
       }
     }
   }
@@ -276,31 +307,34 @@ const FieldTrendContainer = ({ searchParams }) => {
 
   return (
     <Container>
-      <h1>학문별인기논문</h1>
       <Wrapper>
-        <div className="sel"> 기간별 조회 &nbsp;</div>
-        <div className="date">
-          <DatePicker
-            className="pick_date"
-            locale={ko}
-            selected={form?.sDate ? new Date(form.sDate) : startDate}
-            onChange={(date) => setStartDate(date)}
-            dateFormat="yyyy-MM-dd"
-            placeholderText="시작일"
-          />
-        </div>
-        <div className="sel">&nbsp;~&nbsp;</div>
-        <div className="date">
-          <DatePicker
-            className="pick_date"
-            locale={ko}
-            selected={form?.eDate ? new Date(form.eDate) : endDate}
-            onChange={(date) => setEndDate(date)}
-            dateFormat="yyyy-MM-dd"
-          />
+        <h1>학문별인기논문</h1>
+        <div className="datebox">
+          <div className="date">
+            <label>{t('검색시작일')}</label>
+            <DatePicker
+              className="pick_date"
+              locale={ko}
+              selected={form?.sDate ? new Date(form.sDate) : startDate}
+              onChange={(date) => setStartDate(date)}
+              dateFormat="yyyy-MM-dd"
+              placeholderText="시작일"
+            />
+          </div>
+          <div className="sel">&nbsp;~&nbsp;</div>
+          <div className="date">
+            <label>{t('검색종료일')}</label>
+            <DatePicker
+              className="pick_date"
+              locale={ko}
+              selected={form?.eDate ? new Date(form.eDate) : endDate}
+              onChange={(date) => setEndDate(date)}
+              dateFormat="yyyy-MM-dd"
+            />
+          </div>
         </div>
         {stats && fields && (
-          <div>
+          <div className="fieldsbox">
             {fields.map((name) => (
               <span className="names" key={name} onClick={() => setField(name)}>
                 {name}
