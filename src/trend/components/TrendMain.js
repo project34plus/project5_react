@@ -8,16 +8,16 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import fontSize from '@/theme/fontSize';
 import { color } from '@/theme/color';
-const { small, normal, medium, big } = fontSize;
+const { small, normal, center, medium, big } = fontSize;
 const { gray, grayNavy } = color;
 
 const Wrapper = styled.div`
-  font-size: ${small};
+  font-size: ${center};
   margin-top: -100px;
 
   .img {
-    display: flex; 
-    flex-direction: column; 
+    display: flex;
+    flex-direction: column;
     align-items: left;
     justify-content: center;
     height: 100%;
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
   div {
     .info-title {
       padding-bottom: 10px;
-      font-size: ${medium};
+      font-size: ${normal};
       font-weight: bold;
       border-bottom: 1px solid ${gray};
     }

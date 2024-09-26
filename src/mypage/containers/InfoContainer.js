@@ -1,5 +1,11 @@
 'use client';
-import React, { useCallback, useState, useEffect } from 'react';
+import React, {
+  useLayoutEffect,
+  useCallback,
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
 import cookies from 'react-cookies';
 import ProfileForm from '../components/ProfileForm';
 import Container2 from '@/commons/components/Container2';
@@ -14,6 +20,8 @@ import { apiList } from '@/member/apis/apiFields';
 import { apiFieldList } from '@/member/apis/apiFields';
 import { apiInterests } from '@/thesis/apis/apiInterests';
 import styled from 'styled-components';
+import CommonContext from '@/commons/contexts/CommonContext';
+import { getCommonActions } from '@/commons/contexts/CommonContext';
 
 const StyledProfileImage = styled.div`
   width: 250px;
@@ -57,6 +65,10 @@ const InfoContainer = ({ searchParams }) => {
     actions: { setIsLogin, setIsAdmin, setUserInfo },
   } = getUserContext();
 
+  const { t } = useTranslation();
+
+  const { setMainTitle } = getCommonActions();
+
   const initialForm = {
     ...userInfo,
     interests: ['', ''],
@@ -70,6 +82,25 @@ const InfoContainer = ({ searchParams }) => {
   const [fields, setFields] = useState([]);
   const [interests, setInterests] = useState([]);
   const [search, setSearch] = useState(() => getQueryString(searchParams));
+
+  const {
+    actions: { setLinkText, setLinkHref },
+  } = useContext(CommonContext);
+
+  useLayoutEffect(() => {
+    setMainTitle(t('내 프로필'));
+  }, [setMainTitle, t]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        setLinkText('내 프로필');
+        setLinkHref(`/mypage/info`);
+      } catch (err) {
+        console.error('Failed to info:', err);
+      }
+    })();
+  }, [setLinkHref, setLinkText]);
 
   useEffect(() => {
     apiInterests(userInfo.email).then((res) => {
@@ -97,7 +128,6 @@ const InfoContainer = ({ searchParams }) => {
       });
   }, [search]);
 
-  const { t } = useTranslation();
   const router = useRouter();
 
   const _onChange = useCallback((e) => {
