@@ -1,6 +1,10 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { LuLoader } from 'react-icons/lu';
+import fontSize from '@/theme/fontSize';
+
+const { center, medium, big, giantBig } = fontSize;
 
 const Wrapper = styled.div`
   li {
@@ -18,6 +22,19 @@ const Wrapper = styled.div`
     }
     .subfield {
       display: inline-block;
+    }
+  }
+
+  .load {
+    font-size: ${medium};
+    height: 300px;
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    margin-top: 140px;
+    .icon {
+      font-size: ${giantBig};
+      margin-bottom: 20px;
     }
   }
 `;
@@ -61,7 +78,11 @@ const RecentTrend = ({ items }) => {
           ))}
         </ul>
       ) : (
-        <div>...Loading...</div>
+        <div className="load">
+          <LuLoader className="icon" />
+          <br />
+          {t('데이터_집계중입니다')}&nbsp;
+        </div>
       )}
     </Wrapper>
   );
