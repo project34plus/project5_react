@@ -6,6 +6,7 @@ import fontSize from '@/theme/fontSize';
 import { format } from 'date-fns';
 import { MidButton } from '@/commons/components/buttons/BlueButtons';
 import { PiNotebookBold } from 'react-icons/pi';
+import Link from 'next/link';
 
 const {
   gray,
@@ -31,7 +32,9 @@ const NoteList = ({ items }) => {
       </h1>
 
       <div className="noteHead">
-        <MidButton href="note/write/1">{t('작성하기')}</MidButton>
+        <Link href="/note/write/1">
+          <MidButton>{t('작성하기')}</MidButton>
+        </Link>
       </div>
       {items?.length > 0 ? (
         items.map(({ noteSeq, subject, content, createdAt }) => (
