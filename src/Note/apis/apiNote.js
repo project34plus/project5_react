@@ -37,6 +37,7 @@ function saveProcess2(url, method, form) {
 
 export const getInfo = async (seq) => {
   const res = await requestData(`/note/info/${seq}`);
+  console.log('res', res);
   if (res.status === 200) {
     return res.data; // 노트 정보
   }
@@ -46,7 +47,11 @@ export const getInfo = async (seq) => {
 export const getList = async (nid, search) => {
   const qs = new URLSearchParams(search).toString();
   const url = `/note/list/${nid}${qs ? '?' + qs : ''}`;
-  const res = await requestData(url);
+  console.log('url asdfasdf:', url);
+  const res = await requestData(url).catch((err) => {
+    console.log('err? :', err);
+  });
+  console.log('data:', res);
   if (res.status === 200) {
     return res.data; // 노트 목록
   }
