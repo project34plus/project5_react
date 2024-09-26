@@ -5,6 +5,7 @@ import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 import { format } from 'date-fns';
 import { MidButton } from '@/commons/components/buttons/BlueButtons';
+import { PiNotebookBold } from 'react-icons/pi';
 
 const {
   gray,
@@ -15,6 +16,7 @@ const {
   whiteGrayNavy,
   grayNavy,
   white,
+  navy,
 } = color;
 const { small, normal, center, big } = fontSize;
 
@@ -23,7 +25,11 @@ const NoteList = ({ items }) => {
   console.log(items);
   return (
     <Wrapper>
-      <h1>노트 목록</h1>
+      <h1>
+        <PiNotebookBold className="icon" />
+        노트 목록
+      </h1>
+
       <div className="noteHead">
         <MidButton href="note/write/1">{t('작성하기')}</MidButton>
       </div>
@@ -37,10 +43,10 @@ const NoteList = ({ items }) => {
                   {format(new Date(createdAt), 'yy.MM.dd')}
                 </div>
               </div>
-              <div
+              {/* <div
                 className="content"
                 dangerouslySetInnerHTML={{ __html: content }}
-              />
+              /> */}
             </a>
           </li>
         ))
@@ -55,6 +61,11 @@ const Wrapper = styled.div`
   margin-top: 10px;
   h1 {
     font-size: ${big};
+    .icon {
+      color: ${navy};
+      padding-top: 8px;
+      padding-right: 3px;
+    }
   }
 
   .noteHead {
@@ -76,15 +87,31 @@ const Wrapper = styled.div`
       .subject {
         font-size: ${center};
         font-weight: bold;
+        overflow: hidden; //글자 넘치는 부분 감추기
+        text-overflow: ellipsis; //숨겨지는 영역 끝에 말줄임표 생성
+        white-space: normal; //줄바꿈
+        text-align: left; //텍스트 윈쪽 정렬
+        word-wrap: break-word; //단어 단위로 줄바꿈
+        display: -webkit-box; //영역을 box형태로 지정
+        -webkit-line-clamp: 2; //해당 영역 내 텍스트 최대 라인수
+        -webkit-box-orient: vertical; //박스 방향 설정(가로)
       }
     }
     .date {
       color: ${midgray};
     }
 
-    .content {
-      font-size: ${normal};
-    }
+    // .content {
+    //   font-size: ${normal};
+    //   overflow: hidden; //글자 넘치는 부분 감추기
+    //   text-overflow: ellipsis; //숨겨지는 영역 끝에 말줄임표 생성
+    //   white-space: normal; //줄바꿈
+    //   text-align: left; //텍스트 윈쪽 정렬
+    //   word-wrap: break-word; //단어 단위로 줄바꿈
+    //   display: -webkit-box; //영역을 box형태로 지정
+    //   -webkit-line-clamp: 2; //해당 영역 내 텍스트 최대 라인수
+    //   -webkit-box-orient: vertical; //박스 방향 설정(가로)
+    // }
   }
 `;
 

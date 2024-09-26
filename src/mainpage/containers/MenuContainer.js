@@ -89,7 +89,7 @@ const MenuContainer = () => {
           <a href="/recommend">{t('추천_논문')}</a>
         </div>
         <div className="menus">
-          <a href="/note">
+          <a href="/note/list/1">
             <Image
               src="/images/note.gif"
               alt="연구노트"
