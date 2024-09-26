@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
-import fontSize from '@/app/styles/fontSize';
-import { color } from '@/app/styles/color';
-import fontWeight from '@/app/styles/fontWeight';
+import fontSize from '@/theme/fontSize';
+import { color } from '@/theme/color';
+import fontWeight from '@/theme/fontWeight';
 
 const commonStyle = css`
   border-radius: 5px;
