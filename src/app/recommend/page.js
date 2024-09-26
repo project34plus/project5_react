@@ -7,12 +7,9 @@ const { default: SubMenus } = require('../../thesis/components/SubMenus');
 
 const Recommend = () => {
   return (
-    <>
-      <MemberOnlyContainer>
-      <h1>논문 추천페이지</h1>
+    <MemberOnlyContainer>
       <ThesisRecommendListContainer />
-      </MemberOnlyContainer>
-    </>
+    </MemberOnlyContainer>
   );
 };
 
