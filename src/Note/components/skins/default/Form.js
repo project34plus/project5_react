@@ -14,11 +14,13 @@ const FormBox = styled.form`
     display: flex;
     dt {
       width: 130px;
-      margin-right: 10px;
     }
-
     dd {
-      flex-grow: 1;
+      flex-grow: 1; /* 부모 요소 내에서 dd 요소가 남은 공간을 차지 */
+    }
+    .content {
+      flex-grow: 1; /* .content 요소가 flexbox 내에서 자동으로 높이 조정 */
+      height: auto; /* height를 auto로 설정 */
     }
   }
   dl + dl {
@@ -37,10 +39,6 @@ const Form = ({ form, errors, onSubmit, onChange }) => {
   return (
     <FormBox onSubmit={onSubmit} autoComplete="off">
       <dl>
-        <dt className="sub">
-          <PiChatTeardropTextFill className="icon" />
-          {t('제목')}
-        </dt>
         <dd>
           <InputBox2
             type="text"
@@ -57,10 +55,13 @@ const Form = ({ form, errors, onSubmit, onChange }) => {
         </dd>
       </dl>
       <dl>
-        <dd>
+        <dd className="content">
           {mounted && (
             <CKEditor
               editor={ClassicEditor}
+              config={{
+                height: 400,
+              }}
               data={form?.content}
               onReady={(editor) => {
                 setMounted(true);
