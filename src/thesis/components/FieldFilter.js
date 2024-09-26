@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import classNames from 'classnames';
 import { color } from '@/theme/color';
 import fontSize from '@/theme/fontSize';
 
-const { navy, white, yellow } = color;
-const { small } = fontSize;
+const { navy, white, yellow, gray } = color;
+const { small, normal } = fontSize;
 
-const FieldFilter = ({ fieldList, onFieldChange }) => {
-  const [selectedField, setSelectedField] = useState(null);
-
-  const handleFieldCheck = (value) => {
-    setSelectedField(value);
-    onFieldChange(value); // 부모 컴포넌트에 선택된 필드 전달
-  };
-
+const FieldFilter = ({ fieldList, selected, onFieldChange }) => {
   return (
     <Wrapper>
       {fieldList.map(({ value, name }) => (
-        <Button key={value} onClick={() => handleFieldCheck(value)}>
+        <Button
+          type="button"
+          key={value}
+          className={classNames({ on: selected.includes(value) })}
+          onClick={() => onFieldChange(value)}
+        >
           {name}
         </Button>
       ))}
@@ -32,16 +31,24 @@ const Wrapper = styled.div`
 
 const Button = styled.button`
   padding: 10px 15px;
-  border: 1px solid #ccc;
+  border: 1px solid ${gray};
   background: ${white};
   color: ${navy};
   cursor: pointer;
   border-radius: 15px;
-  font-size: ${small};
+  font-size: ${normal};
 
   &:hover {
     background: ${yellow};
     color: ${white};
+    border-color: ${yellow};
+  }
+
+  &.on {
+    // 선택된 버튼 스타일
+    background: ${yellow}; // 선택된 상태에서 배경색
+    color: ${white}; // 선택된 상태에서 글자색
+    border: none;
   }
 `;
 

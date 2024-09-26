@@ -2,7 +2,7 @@
 import React, { useState, useEffect,useCallback  } from 'react';
 import ThesisUploadForm from '../components/UploadForm';
 import { uploadFile, uploadThesis, updateThesis } from '../apis/apiUpload';
-import { apiGet } from '../apis/apiInfo';
+import { apiGet, apiVersion } from '../apis/apiInfo';
 import Container from '@/commons/components/Container';
 
 const initialFormData = {
@@ -13,7 +13,7 @@ const initialFormData = {
   minorVersion: '0',
   thAbstract: '',
   reference: '',
-  visible: 'true',
+  visible: 'false',
   publisher: '',
   title: '',
   fields: [''],

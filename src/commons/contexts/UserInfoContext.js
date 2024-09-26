@@ -38,10 +38,9 @@ const UserInfoProvider = ({ children }) => {
       (async () => {
         try {
           const user = await apiUser();
-
           setUserInfo(user);
           setIsLogin(true);
-          setIsAdmin(user.userType === 'ADMIN');
+          setIsAdmin(user.authorities === 'ADMIN');
         } catch (err) {
           // 토큰 만료, 토큰이 잘못된 경우
           cookies.remove('token', { path: '/' });
