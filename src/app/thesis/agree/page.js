@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'; // Next.js의 useRouter 사용
 import Container from '@/commons/components/Container';
+import styled from 'styled-components';
 
 const AgreementPage = () => {
   const [agreed, setAgreed] = useState(false); // 동의 여부 상태
@@ -22,7 +23,7 @@ const AgreementPage = () => {
 
   return (
     <Container>
-      <div style={styles.container}>
+      <StyledContainer>
         <h1>서약서 동의</h1>
         <p>
           본인은 본 논문을 작성함에 있어 다음의 사항을 준수할 것을 서약합니다.
@@ -52,54 +53,51 @@ const AgreementPage = () => {
           모든 법적 책임은 본인에게 있음을 서약합니다.
         </p>
         <form onSubmit={handleSubmit}>
-          <div style={styles.checkboxContainer}>
+          <CheckboxContainer>
             <input
               type="checkbox"
               id="agreement"
               checked={agreed}
               onChange={handleAgreeChange}
-              style={styles.checkbox}
             />
-            <label htmlFor="agreement" style={styles.label}>
-              서약서에 동의합니다.
-            </label>
-          </div>
-          <button type="submit" style={styles.submitButton} disabled={!agreed}>
+            <label htmlFor="agreement">서약서에 동의합니다.</label>
+          </CheckboxContainer>
+          <SubmitButton type="submit" disabled={!agreed}>
             동의하고 작성하기
-          </button>
+          </SubmitButton>
         </form>
-      </div>
+      </StyledContainer>
     </Container>
   );
 };
 
 export default AgreementPage;
 
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '20px',
-  },
-  checkboxContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    marginBottom: '20px',
-  },
-  checkbox: {
-    marginRight: '10px',
-  },
-  label: {
-    fontSize: '16px',
-  },
-  submitButton: {
-    padding: '10px 20px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '16px',
-  },
-};
+// Styled components
+const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-size: 17px;
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const SubmitButton = styled.button`
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  &:disabled {
+    background-color: grey;
+  }
+`;
