@@ -13,7 +13,7 @@ const initialFormData = {
   minorVersion: '0',
   thAbstract: '',
   reference: '',
-  visible: 'true',
+  visible: 'false',
   publisher: '',
   title: '',
   fields: [''],
