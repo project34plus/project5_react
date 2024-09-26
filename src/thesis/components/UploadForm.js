@@ -5,6 +5,121 @@ import styled from 'styled-components';
 
 const StyledFileUpload = styled(FileUpload)``;
 
+const FormWrapper = styled.div`
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: ${({ theme }) => theme.color.white};
+  padding: 40px 50px;
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+`;
+
+const Heading = styled.h1`
+  font-size: ${({ theme }) => theme.fontSize.big};
+  font-weight: ${({ theme }) => theme.fontWeight};
+  text-align: center;
+  margin-bottom: 30px;
+  color: ${({ theme }) => theme.color.black};
+`;
+
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+`;
+
+const Label = styled.label`
+  font-size: ${({ theme }) => theme.fontSize.center};
+  font-weight: ${({ theme }) => theme.fontWeight};
+  color: ${({ theme }) => theme.color.navy};
+  margin-bottom: 10px;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  font-size: ${({ theme }) => theme.fontSize.center};
+  border: 2px solid ${({ theme }) => theme.color.whiteGrayNavy};
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: ${({ theme }) => theme.color.grayNavy};
+    outline: none;
+  }
+`;
+
+const Textarea = styled.textarea`
+  padding: 10px;
+  font-size: ${({ theme }) => theme.fontSize.center};
+  border: 2px solid ${({ theme }) => theme.color.whiteGrayNavy};
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  min-height: 100px;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: ${({ theme }) => theme.color.grayNavy};
+    outline: none;
+  }
+`;
+
+const Select = styled.select`
+  padding: 10px;
+  font-size: ${({ theme }) => theme.fontSize.center};
+  border: 2px solid ${({ theme }) => theme.color.whiteGrayNavy};
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: ${({ theme }) => theme.color.grayNavy};
+    outline: none;
+  }
+`;
+
+const RadioGroup = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+const SubmitButton = styled.button`
+  padding: 10px;
+  font-size: ${({ theme }) => theme.fontSize.medium};
+  background-color: ${({ theme }) => theme.color.navy};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.color.darkNavy};
+  }
+`;
+
+const styles = {
+  label: {
+    fontSize: '16px',
+    fontWeight: '500',
+    marginBottom: '5px',
+    marginRight: '10px',
+    color: '#333',
+  },
+  input: {
+    padding: '10px',
+    fontSize: '14px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+  },
+};
+
 const ThesisUploadForm = ({
   formData,
   handleInputChange,
@@ -23,118 +138,110 @@ const ThesisUploadForm = ({
     setSelectedFiles(files); // 선택한 파일을 상태로 저장
   };
   return (
-    <div style={styles.formWrapper}>
-      <h1 style={styles.heading}>{isEditMode ? '논문 수정' : '논문 등록'}</h1>
-      <form onSubmit={handleSubmit} style={styles.formContainer}>
+    <FormWrapper>
+      <Heading>{isEditMode ? '논문 수정' : '논문 등록'}</Heading>
+      <FormContainer onSubmit={handleSubmit}>
         {/* 제목 입력 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>제목</label>
-          <input
+        <FormGroup>
+          <Label>제목</Label>
+          <Input
             type="text"
             name="title"
             placeholder="제목을 입력하세요"
             value={formData.title || ''}
             onChange={(e) => handleInputChange('title', e.target.value)}
-            style={styles.input}
             required
           />
-        </div>
+        </FormGroup>
 
         {/* 카테고리 선택 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>카테고리</label>
-          <select
+        <FormGroup>
+          <Label>카테고리</Label>
+          <Select
             name="category"
             value={formData.category || 'DOMESTIC'}
             onChange={(e) => handleInputChange('category', e.target.value)}
-            style={styles.select}
             required
           >
             <option value="DOMESTIC">국내 논문</option>
             <option value="FOREIGN">해외 논문</option>
-          </select>
-        </div>
+          </Select>
+        </FormGroup>
 
-        {/* 편집자 입력 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>저자</label>
-          <input
+        {/* 저자 입력 필드 */}
+        <FormGroup>
+          <Label>저자</Label>
+          <Input
             type="text"
             name="poster"
             placeholder="저자를 입력하세요"
             value={formData.poster || ''}
             onChange={(e) => handleInputChange('poster', e.target.value)}
-            style={styles.input}
             required
           />
-        </div>
+        </FormGroup>
 
         {/* 기여자 입력 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>기여자</label>
-          <input
+        <FormGroup>
+          <Label>기여자</Label>
+          <Input
             type="text"
             name="contributor"
             placeholder="기여자를 입력하세요"
             value={formData.contributor || ''}
             onChange={(e) => handleInputChange('contributor', e.target.value)}
-            style={styles.input}
           />
-        </div>
+        </FormGroup>
 
         {/* 초록 입력 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>초록</label>
-          <textarea
+        <FormGroup>
+          <Label>초록</Label>
+          <Textarea
             name="thAbstract"
             placeholder="초록을 입력하세요"
             value={formData.thAbstract || ''}
             onChange={(e) => handleInputChange('thAbstract', e.target.value)}
-            style={styles.textarea}
           />
-        </div>
+        </FormGroup>
 
         {/* 참고 문헌 입력 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>참고 문헌</label>
-          <textarea
+        <FormGroup>
+          <Label>참고 문헌</Label>
+          <Textarea
             name="reference"
             placeholder="참고 문헌을 입력하세요"
             value={formData.reference || ''}
             onChange={(e) => handleInputChange('reference', e.target.value)}
-            style={styles.textarea}
           />
-        </div>
+        </FormGroup>
 
         {/* 발행기관 입력 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>발행기관</label>
-          <input
+        <FormGroup>
+          <Label>발행기관</Label>
+          <Input
             type="text"
             name="publisher"
             placeholder="발행기관을 입력하세요"
             value={formData.publisher || ''}
             onChange={(e) => handleInputChange('publisher', e.target.value)}
-            style={styles.input}
           />
-        </div>
+        </FormGroup>
 
         {/* 키워드 입력 필드 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>키워드</label>
-          <textarea
+        <FormGroup>
+          <Label>키워드</Label>
+          <Textarea
             name="keywords"
             placeholder="키워드를 입력하세요"
             value={formData.keywords || ''}
             onChange={(e) => handleInputChange('keywords', e.target.value)}
-            style={styles.textarea}
           />
-        </div>
+        </FormGroup>
 
         {/* 공개 여부 라디오 버튼 */}
-        <div style={styles.formGroup}>
-          <label style={styles.label}>공개 여부</label>
-          <div style={styles.radioGroup}>
+        <FormGroup>
+          <Label>공개 여부</Label>
+          <RadioGroup>
             <label>
               <input
                 type="radio"
@@ -155,14 +262,14 @@ const ThesisUploadForm = ({
               />
               비공개
             </label>
-          </div>
-        </div>
+          </RadioGroup>
+        </FormGroup>
 
         {!isEditMode && (
-          <div style={styles.formGroup}>
-            <label style={styles.label}>학문 분류 코드</label>
+          <FormGroup>
+            <Label>학문 분류 코드</Label>
             {(formData.fields || []).map((field, index) => (
-              <select
+              <Select
                 key={index}
                 name={`field${index}`}
                 value={field}
@@ -326,51 +433,46 @@ const ThesisUploadForm = ({
                 <option value="N-011">천문학</option>
                 <option value="N-012">통계학</option>
                 <option value="N-013">해양학</option>
-                <option value="N-014">화학</option>
-              </select>
+              </Select>
             ))}
-          </div>
+          </FormGroup>
         )}
 
+        {/* 파일 업로드 */}
         {!isEditMode && (
-          <div style={styles.formGroup}>
-            <StyledFileUpload
+          <FormGroup>
+            <FileUpload
               gid={formData?.gid}
               callback={fileUploadCallback}
               color="navy"
             >
               파일 선택
-            </StyledFileUpload>
-            <input
-              type="file"
-              multiple
-              onChange={handleFileChange} // 파일 선택 시 호출
-              style={styles.input}
-            />
-          </div>
+            </FileUpload>
+            <Input type="file" multiple onChange={handleFileChange} />
+          </FormGroup>
         )}
         {/* 선택한 파일 목록 표시 */}
         {selectedFiles.length > 0 && (
-          <div style={styles.formGroup}>
-            <label style={styles.label}>선택한 파일</label>
+          <FormGroup>
+            <Label>선택한 파일</Label>
             <ul>
               {selectedFiles.map((file, index) => (
                 <li key={index}>{file.name}</li>
               ))}
             </ul>
-          </div>
+          </FormGroup>
         )}
 
         {isEditMode && (
-          <div style={styles.formGroup}>
-            <label style={styles.label}>버전 입력</label>
+          <FormGroup>
+            <Label>버전 입력</Label>
             {/* 주 버전 (Major Version) */}
             <div style={styles.formGroup}>
               <label style={styles.label}>주 버전 (Major Version)</label>
               <input
                 type="number"
                 name="majorVersion"
-                placeholder="주 버전을 입력하세요"
+                placeholder="주 버전을 선택하세요"
                 value={
                   majorVersion !== undefined
                     ? majorVersion
@@ -391,7 +493,7 @@ const ThesisUploadForm = ({
               <input
                 type="number"
                 name="minorVersion"
-                placeholder="부 버전을 입력하세요"
+                placeholder="부 버전을 선택하세요"
                 value={
                   minorVersion !== undefined
                     ? minorVersion
@@ -405,84 +507,17 @@ const ThesisUploadForm = ({
                 required
               />
             </div>
-          </div>
+          </FormGroup>
         )}
         {/* 제출 버튼 */}
-        <div style={styles.formGroup}>
-          <button type="submit" style={styles.submitButton}>
+        <FormGroup>
+          <SubmitButton type="submit">
             {isEditMode ? '논문 수정' : '논문 제출'}
-          </button>
-        </div>
-      </form>
-    </div>
+          </SubmitButton>
+        </FormGroup>
+      </FormContainer>
+    </FormWrapper>
   );
 };
 
 export default ThesisUploadForm;
-
-const styles = {
-  formWrapper: {
-    maxWidth: '600px',
-    margin: '0 auto',
-    backgroundColor: '#f9f9f9',
-    padding: '20px',
-    borderRadius: '10px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-  },
-  heading: {
-    fontSize: '28px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: '20px',
-    color: '#333',
-  },
-  formContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '15px',
-  },
-  formGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  label: {
-    fontSize: '16px',
-    fontWeight: '500',
-    marginBottom: '5px',
-    color: '#333',
-  },
-  input: {
-    padding: '10px',
-    fontSize: '14px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-  },
-  textarea: {
-    padding: '10px',
-    fontSize: '14px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    minHeight: '100px',
-  },
-  radioGroup: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '200px',
-  },
-  select: {
-    padding: '10px',
-    fontSize: '14px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-  },
-  submitButton: {
-    padding: '10px',
-    fontSize: '16px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    textAlign: 'center',
-  },
-};
