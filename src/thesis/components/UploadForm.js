@@ -282,7 +282,6 @@ const ThesisUploadForm = ({
                 style={styles.select}
                 required
               >
-                <option value="E-004">공학일반</option>
                 <option value="E-005">교통공학</option>
                 <option value="E-006">금속공학</option>
                 <option value="E-007">기계공학</option>
