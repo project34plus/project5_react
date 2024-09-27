@@ -1,82 +1,162 @@
 'use client';
 import React, { useEffect, useState, useCallback, useContext } from 'react';
-import loadable from '@loadable/component';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { getCommonActions } from '@/commons/contexts/CommonContext';
-import apiConfig from '../apis/apiConfig';
 import UserInfoContext from '@/commons/contexts/UserInfoContext';
-import { write } from '../apis/apiNote';
+import Container from '@/commons/components/Container';
+import Form from '../components/skins/default/Form';
+import { getNote, getInfo, write, update } from '../apis/apiConfig';
+import styled from 'styled-components';
 
 /* 스킨별 양식 가져오기 */
-function getForm(skin) {
-  return loadable(() => import(`../components/skins/${skin}/Form`));
+function getSkin(skin) {
+  return Form;
 }
 
 const FormContainer = ({ params }) => {
   const { t } = useTranslation();
-  const { nid, seq } = params;
+  const nid = params?.nid;
+  const noteSeq = params?.noteSeq;
   const {
     states: { isLogin, isAdmin, userInfo },
   } = useContext(UserInfoContext);
-
   const { setMainTitle } = getCommonActions();
-  const [config, setConfig] = useState(null);
-  const NoteContainer = getForm(params.nid);
+  //const NoteContainer = getForm(params.nid);
   const [errors, setErrors] = useState({});
+  const [note, setNote] = useState(null);
   const [form, setForm] = useState({
-    gid: '' + Date.now(),
-    mode: 'write',
+    nid,
+    gid: Date.now() + '',
+    mode: nid ? 'write' : 'update',
+    poster: userInfo?.userName,
+    //email: userInfo?.email,
     attachFiles: [],
     editorImages: [],
-    username: userInfo?.userName,
+    subject: '',
     content: '',
-    email: userInfo?.email,
-    subject:'',
-
   });
+  const router = useRouter();
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-    console.log('Submitting form data:', form); // 추가
-    write(params.nid, form)
-      .then((res) => {
-        alert('게시글 저장 성공');
-      })
-      .catch((err) => {
-        console.log(err);
-        alert('저장 실패');
-      });
-  }, []);
-  const onChange = useCallback((e) => {
-    setForm((form => ({ ...form, [e.target.name]: e.target.value })));
-  });
-  const onClick = (e, params, form) => {
-    console.log('click!');
-  };
   useEffect(() => {
-    if (nid) {
+    console.log('params.nid:', nid); // params.nid 값이 올바르게 들어오는지 확인
+    //console.log('form', form);
+  }, [nid]);
+
+  useEffect(() => {
+    if (noteSeq) {
+      // 글 수정 - 게시글 정보
       (async () => {
         try {
-          const data = await apiConfig(nid);
-          console.log(data);
+          const data = await getInfo(noteSeq);
+          if (data) {
+            setForm((form) => ({ ...form, ...data, mode: 'update' }));
+            setNote(data.note);
+            setMainTitle(data.subject);
+          }
         } catch (err) {
           console.error(err);
         }
       })();
     }
-  }, [nid]);
+
+    if (nid) {
+      // 게시글 작성
+      (async () => {
+        try {
+          const note = await getNote(nid);
+          if (note) {
+            setNote(note);
+            setMainTitle(`${note.nName} ${t('글쓰기')}`);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      })();
+    }
+  }, [nid, setMainTitle, t, noteSeq, form.nid]);
+
+  const onChange = useCallback((e) => {
+    setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
+  }, []);
+
+  const onClick = useCallback((name, value) => {
+    setForm((form) => ({ ...form, [name]: value }));
+  }, []);
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      /* 유효성 검사 S */
+      const _errors = {};
+      let hasErrors = false;
+      const requiredFields = {
+        subject: t('제목을_입력하세요.'),
+        poster: t('작성자를_입력하세요.'),
+        content: t('내용을_입력하세요.'),
+      };
+
+      for (const [field, message] of Object.entries(requiredFields)) {
+        if (!form[field] || !form[field].trim()) {
+          _errors[field] = _errors[field] ?? [];
+          _errors[field].push(message);
+          hasErrors = true;
+        }
+      }
+      /* 유효성 검사 E */
+      setErrors(_errors);
+      if (hasErrors) {
+        return;
+      }
+
+      // 등록 또는 수정 처리
+      (async () => {
+        try {
+          const noteData =
+            form?.mode === 'update' ? await update(form) : await write(form);
+
+          const redirectUrl =
+            note?.locationAfterWriting === 'view'
+              ? `/note/info/${noteData.noteSeq}`
+              : `/note/list/1`;
+
+          router.replace(redirectUrl);
+        } catch (err) {
+          const message = err.message;
+
+          setErrors(
+            typeof message === 'string' ? { global: [message] } : message,
+          );
+
+          console.error(err);
+        }
+      })();
+    },
+    [t, form, router, note],
+  );
+
   return (
-    <>
-      <NoteContainer
-        note={config}
-        form={form}
-        errors={errors}
-        onSubmit={onSubmit}
-        onChange={onChange}
-        onClick={onClick}
-      />
-    </>
+    <Container>
+      <StyledForm>
+        <Form
+          note={note}
+          form={form}
+          errors={errors}
+          onChange={onChange}
+          onClick={onClick}
+          onSubmit={onSubmit}
+        />
+      </StyledForm>
+    </Container>
   );
 };
+
+const StyledForm = styled.div`
+  width: 100%;
+  padding: 40px 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.6);
+`;
 
 export default React.memo(FormContainer);

@@ -52,15 +52,13 @@ const Wrapper = styled.div`
     margin: 0 5px 0 0;
     padding: 10px 15px;
     cursor: pointer;
-    border-radius: 15px;
+    border-radius: 50px;
     font-size: ${center};
-    // background: ${navy};
     color: ${navy};
     transition: background 0.3s, color 0.3s;
   }
 
   .sort-item:hover {
-    // background: ${midgray};
     color: ${yellow};
   }
 

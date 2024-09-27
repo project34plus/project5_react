@@ -65,12 +65,21 @@ const Wrapper = styled.div`
   .wishButton {
     position: absolute;
     right: 25px;
-    top: calc(100% - 95px);
+    top: calc(100% - 105px);
     z-index: 1000;
   }
   .title {
     font-size: ${medium};
     margin: 5px 0 10px;
+    overflow: hidden; //글자 넘치는 부분 감추기
+    text-overflow: ellipsis; //숨겨지는 영역 끝에 말줄임표 생성
+    white-space: normal; //줄바꿈
+    text-align: left; //텍스트 윈쪽 정렬
+    word-wrap: break-word; //단어 단위로 줄바꿈
+    display: -webkit-box; //영역을 box형태로 지정
+    -webkit-line-clamp: 1; //해당 영역 내 텍스트 최대 라인수
+    -webkit-box-orient: vertical; //박스 방향 설정(가로)
+    width: 95%;
   }
   .total {
     font-size: ${normal};
@@ -83,6 +92,7 @@ const Wrapper = styled.div`
   .publisher {
     margin: 5px 0;
     font-size: ${center};
+    width: 95%;
   }
 
   .fields {

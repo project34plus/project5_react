@@ -1,14 +1,34 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import ViewContainer from '@/Note/containers/ViewContainer';
+import Container from '@/commons/components/Container';
+import { FcViewDetails } from 'react-icons/fc';
+import styled from 'styled-components';
 
-const NoteViewPage = () => {
-  const nid = 'note';
+const Icon = styled.span`
+  position: relative;
+  top: 5px;
+  margin-right: 5px;
+`;
+
+const NoteViewPage = ({ params }) => {
+  const [setPageTitle] = useState('');
+  const { nid } = useParams();
 
   return (
-    <div>
-      <h1>노트 목록</h1>
-    </div>
+    // <MemberOnlyContainer>
+    <Container>
+      <h1>
+        <Icon>
+          <FcViewDetails />
+        </Icon>
+        나의 연구노트
+      </h1>
+      <ViewContainer params={params} />
+    </Container>
+    // </MemberOnlyContainer>
   );
 };
 
-export default NoteViewPage;
+export default React.memo(NoteViewPage);
