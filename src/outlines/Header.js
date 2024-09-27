@@ -69,12 +69,19 @@ const Icon = styled.span`
 `;
 
 const Header = () => {
+  const [login, setLogin] = useState(false);
   const { t } = useTranslation();
   const { showHeader } = getCommonStates();
   const {
     states: { isLogin, userInfo, isAdmin },
     actions: { setIsLogin, setIsAdmin, setUserInfo },
   } = getUserContext();
+
+  useEffect(() => {
+    setLogin(isLogin);
+  }, [isLogin]);
+  
+
   const onLogout = useCallback(() => {
     setIsLogin(false);
     setIsAdmin(false);
