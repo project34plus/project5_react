@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import cookies from 'react-cookies';
 import { useTranslation } from 'react-i18next';
@@ -80,7 +80,6 @@ const Header = () => {
   useEffect(() => {
     setLogin(isLogin);
   }, [isLogin]);
-  
 
   const onLogout = useCallback(() => {
     setIsLogin(false);
@@ -101,7 +100,7 @@ const Header = () => {
               {t('사이트홈')}
             </a>
             <div>
-              {isLogin ? (
+              {login ? (
                 <div>
                   <a href="/mypage/info">{t('마이페이지')}</a>
                   <a onClick={onLogout}>{t('로그아웃')}</a>
